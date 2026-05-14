@@ -24,7 +24,8 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: 'Inter', -apple-system, sans-serif;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-weight: 500;
   overflow-x: hidden;
 }
 
@@ -172,7 +173,7 @@ body::before {
 
 /* ── Text ──────────────────────────────────── */
 .loader-title {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 21px;
   font-weight: 700;
   letter-spacing: 0.35em;
@@ -181,7 +182,7 @@ body::before {
 }
 
 .loader-tagline {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 8px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -195,7 +196,7 @@ body::before {
   align-items: center;
   justify-content: space-between;
   width: 240px;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 8px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -249,7 +250,9 @@ body::before {
 }
 
 .nav-logo {
-  font-family: 'Space Mono', monospace;
+  text-decoration: none;
+  color: inherit;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-weight: 700;
   font-size: 15px;
   letter-spacing: 0.12em;
@@ -279,7 +282,7 @@ body::before {
 }
 
 .nav-badge {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -296,18 +299,18 @@ body::before {
 }
 
 .nav-link {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #fff;
   text-decoration: none;
   transition: color 0.18s;
 }
 .nav-link:hover { color: #fff; }
 
 .nav-btn {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -321,22 +324,53 @@ body::before {
 
 /* ── Hero ──────────────────────────────────── */
 .hero {
-  min-height: 100vh;
-  padding: 64px 24px 0;
+  height: 100vh;
+  padding-top: 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-body {
+  padding: 80px 48px 80px 20%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
+  align-items: flex-start;
+  text-align: left;
+  z-index: 1;
+}
+
+.hero-art {
+  height: 100%;
+}
+
+.hero-sculpture {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50%;
+  height: auto;
+  max-height: 95vh;
+  object-fit: contain;
+  object-position: center;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  opacity: 0.92;
+  mask-image: linear-gradient(to right, transparent 0%, white 28%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, white 28%);
 }
 
 .hero-eyebrow {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 10px;
   letter-spacing: 0.38em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #fff;
   margin-bottom: 40px;
   display: flex;
   align-items: center;
@@ -351,8 +385,9 @@ body::before {
 }
 
 .hero-h1 {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: clamp(56px, 10vw, 136px);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.035em;
   text-transform: uppercase;
@@ -360,12 +395,13 @@ body::before {
 }
 
 .hero-h1-light {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: clamp(56px, 10vw, 136px);
   font-weight: 200;
   line-height: 0.9;
   letter-spacing: -0.025em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #fff;
   margin-bottom: 52px;
   animation: fade-up 0.9s ease 0.25s both;
 }
@@ -374,7 +410,7 @@ body::before {
   font-size: clamp(14px, 1.4vw, 17px);
   font-weight: 300;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.46);
+  color: #fff;
   max-width: 500px;
   margin-bottom: 52px;
   animation: fade-up 0.9s ease 0.35s both;
@@ -384,12 +420,12 @@ body::before {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   animation: fade-up 0.9s ease 0.45s both;
 }
 
 .btn-fill {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -402,11 +438,11 @@ body::before {
 .btn-fill:hover { background: transparent; color: #fff; }
 
 .btn-ghost {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #fff;
   background: transparent;
   border: 1px solid var(--border);
   padding: 14px 38px;
@@ -443,11 +479,81 @@ body::before {
 }
 
 .scroll-label {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 8px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+/* ── How it works section ───────────────────── */
+.how-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Full-bleed background image */
+.how-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.38;
+}
+
+/* Top + bottom fade to blend seamlessly with surrounding sections */
+.how-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    #000 0%,
+    transparent 18%,
+    transparent 80%,
+    #000 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Content sits above image and overlay */
+.how-inner {
+  position: relative;
+  z-index: 2;
+  padding: 120px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Glassmorphism card grid — separate floating cards */
+.how-section .card-grid {
+  background: transparent;
+  border: none;
+  gap: 14px;
+  margin-top: 64px;
+}
+
+/* Glassmorphism cards */
+.how-section .card {
+  background: rgba(0, 0, 0, 0.52);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 2px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.how-section .card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-top-color: rgba(255, 255, 255, 0.28);
 }
 
 /* ── Ticker ──────────────────────────────────── */
@@ -466,11 +572,11 @@ body::before {
 }
 
 .ticker-seg {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 9px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #fff;
   padding: 0 48px;
   white-space: nowrap;
   flex-shrink: 0;
@@ -481,6 +587,78 @@ body::before {
   margin: 0 12px;
 }
 
+/* ── API / Intelligence section ─────────────── */
+.api-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.api-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transform: translateY(-20px) scale(1.2);
+  transform-origin: center top;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.38;
+}
+
+.api-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    #000 0%,
+    transparent 18%,
+    transparent 80%,
+    #000 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.api-inner {
+  position: relative;
+  z-index: 2;
+  padding: 120px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.api-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.api-panel {
+  min-width: 0;
+  background: rgba(0, 0, 0, 0.52);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 2px;
+  padding: 44px 36px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: background 0.2s;
+}
+
+.api-panel:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-top-color: rgba(255, 255, 255, 0.28);
+}
+
 /* ── Sections ────────────────────────────────── */
 .section {
   padding: 120px 48px;
@@ -489,11 +667,11 @@ body::before {
 }
 
 .sec-label {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 9px;
   letter-spacing: 0.36em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #fff;
   margin-bottom: 28px;
   display: flex;
   align-items: center;
@@ -508,7 +686,7 @@ body::before {
 
 .sec-title {
   font-size: clamp(30px, 4vw, 54px);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.08;
   margin-bottom: 18px;
@@ -518,7 +696,7 @@ body::before {
   font-size: 15px;
   font-weight: 300;
   line-height: 1.75;
-  color: var(--muted);
+  color: #fff;
   max-width: 460px;
 }
 
@@ -540,10 +718,10 @@ body::before {
 .card:hover { background: rgba(255, 255, 255, 0.025); }
 
 .card-idx {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 10px;
   letter-spacing: 0.22em;
-  color: rgba(255, 255, 255, 0.22);
+  color: #fff;
   margin-bottom: 28px;
 }
 
@@ -558,18 +736,18 @@ body::before {
   font-size: 13.5px;
   font-weight: 300;
   line-height: 1.75;
-  color: var(--muted);
+  color: #fff;
 }
 
 .coming-soon {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #fff;
   border: 1px solid var(--border);
   padding: 8px 18px;
   margin-top: 48px;
@@ -587,6 +765,19 @@ body::before {
 /* ── Divider ─────────────────────────────────── */
 .rule { height: 1px; background: var(--border); }
 
+/* ── Protocol link (hero) ────────────────────── */
+.hero-protocol-link {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  margin-top: 28px;
+  transition: color 0.18s;
+}
+.hero-protocol-link:hover { color: #fff; }
+
 /* ── Footer ──────────────────────────────────── */
 .footer {
   border-top: 1px solid var(--border);
@@ -597,7 +788,7 @@ body::before {
 }
 
 .footer-logo {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -606,11 +797,24 @@ body::before {
   gap: 10px;
 }
 
+.footer-logo { text-decoration: none; color: inherit; }
+
+.footer-protocol {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+.footer-protocol:hover { color: #fff; }
+
 .footer-copy {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 9px;
   letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 
 /* ── Keyframes ───────────────────────────────── */
@@ -636,13 +840,20 @@ body::before {
 
 /* ── Responsive ──────────────────────────────── */
 @media (max-width: 900px) {
-  .nav        { padding: 0 20px; }
-  .nav-link   { display: none; }
-  .hero       { padding: 80px 20px 0; }
-  .section    { padding: 80px 20px; }
-  .card-grid  { grid-template-columns: 1fr; }
-  .footer     { padding: 24px 20px; flex-direction: column; gap: 14px; text-align: center; }
-  .lc         { display: none; }
+  .nav          { padding: 0 20px; }
+  .nav-link     { display: none; }
+  .hero         { grid-template-columns: 1fr; }
+  .api-panels   { grid-template-columns: 1fr; }
+  .api-spacer   { display: none; }
+  .hero-body    { align-items: center; text-align: center; padding: 80px 24px 48px; }
+  .hero-eyebrow { justify-content: center; }
+  .hero-actions { justify-content: center; }
+  .hero-art     { display: none; }
+  .hero-sculpture { display: none; }
+  .section      { padding: 80px 20px; }
+  .card-grid    { grid-template-columns: 1fr; }
+  .footer       { padding: 24px 20px; flex-direction: column; gap: 14px; text-align: center; }
+  .lc           { display: none; }
 }
 
 /* ══════════════════════════════════════════════
@@ -731,7 +942,7 @@ body::before {
   color: rgba(255, 255, 255, 0.38);
   letter-spacing: 0.05em;
   margin-top: 2px;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
 }
 
 .modal-x {
@@ -830,7 +1041,7 @@ body::before {
   border-radius: 8px;
   padding: 9px 12px;
   font-size: 13px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   color: #fff;
   outline: none;
   transition: border-color 0.15s, background 0.15s;
@@ -913,7 +1124,7 @@ body::before {
   border: 1px solid rgba(255, 255, 255, 0.10);
   background: rgba(255, 255, 255, 0.03);
   font-size: 11px;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   color: rgba(255, 255, 255, 0.45);
   transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
@@ -1002,7 +1213,7 @@ body::before {
   border: none;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.4);
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   letter-spacing: 0.04em;
   transition: color 0.15s;
 }

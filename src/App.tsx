@@ -6,7 +6,6 @@ import Hero             from './components/Hero'
 import Ticker           from './components/Ticker'
 import HowItWorks       from './components/HowItWorks'
 import ApiSection       from './components/ApiSection'
-import PrizesSection    from './components/PrizesSection'
 import Footer           from './components/Footer'
 import RegisterModal    from './components/RegisterModal'
 
@@ -22,6 +21,14 @@ export default function App() {
     <>
       {!loaded && <Loader onComplete={onLoaderDone} />}
 
+      {/* Sculpture behind particle canvas — z-index 0 keeps it below the canvas layer */}
+      <img
+        src="/Website/telegraph_web_10.jpg"
+        className="hero-sculpture"
+        alt=""
+        aria-hidden="true"
+      />
+
       {/* Particle canvas always mounted so it's warm when loader exits */}
       <ParticleCanvas />
 
@@ -30,10 +37,7 @@ export default function App() {
         <Hero  onRegister={openRegister} />
         <Ticker />
         <HowItWorks />
-        <div className="rule" />
         <ApiSection />
-        <div className="rule" />
-        <PrizesSection />
         <Footer />
       </div>
 

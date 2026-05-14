@@ -18,18 +18,28 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section className="section" id="how">
-      <div className="sec-label">How it works</div>
-      <h2 className="sec-title">Build in three steps.</h2>
-      <p className="sec-sub">Access verified intelligence, pay with USDC, ship a real product.</p>
-      <div className="card-grid">
-        {STEPS.map(step => (
-          <div key={step.num} className="card">
-            <div className="card-idx">{step.num}</div>
-            <div className="card-title">{step.title}</div>
-            <div className="card-body">{step.body}</div>
-          </div>
-        ))}
+    <section className="how-section" id="how">
+      <img
+        src="/Website/telegraph_web_2.png"
+        className="how-bg"
+        alt=""
+        aria-hidden="true"
+      />
+
+      <div className="how-inner">
+        <div className="sec-label">How it works</div>
+        <h2 className="sec-title">Build in three steps.</h2>
+        <p className="sec-sub">Access verified intelligence, pay with USDC, ship a real product.</p>
+
+        <div className="card-grid">
+          {STEPS.map(step => (
+            <div key={step.num} className="card">
+              <div className="card-idx">{step.num}</div>
+              <div className="card-title">{step.title}</div>
+              <div className="card-body">{step.body}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
