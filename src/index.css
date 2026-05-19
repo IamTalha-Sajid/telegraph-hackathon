@@ -766,6 +766,15 @@ body::before {
 .rule { height: 1px; background: var(--border); }
 
 /* ── Protocol link (hero) ────────────────────── */
+.hero-meta-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
 .hero-protocol-link {
   font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 10px;
@@ -798,6 +807,12 @@ body::before {
 }
 
 .footer-logo { text-decoration: none; color: inherit; }
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
 
 .footer-protocol {
   font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
@@ -858,6 +873,7 @@ body::before {
   .api-panels   { grid-template-columns: 1fr; }
   .api-spacer   { display: none; }
   .hero-body    { padding: 80px 24px 48px; }
+  .hero-meta-links { justify-content: center; }
   .section      { padding: 80px 20px; }
   .how-inner    { padding: 80px 20px; }
   .api-inner    { padding: 80px 20px; }

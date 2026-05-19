@@ -8,22 +8,18 @@ export default function Hero({ onRegister }: Props) {
         <h1 className="hero-h1">Telegraph</h1>
         <p className="hero-h1-light">Hackathon</p>
         <p className="hero-desc">
-          Plug into Telegraph's verified AI inference subnets, pay via x402,
-          and build real applications on the machine intelligence protocol.
-          The best products win.
+          Pick a task. Build a model. Write an evaluation.
+          The community decides who wins. USDC prizes across two tracks.
         </p>
         <div className="hero-actions">
-          <button className="btn-fill" onClick={onRegister}>Start Building</button>
-          <button className="btn-ghost">Explore APIs →</button>
+          <button className="btn-fill" onClick={onRegister}>Register Now</button>
+          <a href="#how" className="btn-ghost">How It Works →</a>
         </div>
-        <a
-          href="https://telegraphprotocol.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hero-protocol-link"
-        >
-          telegraphprotocol.com ↗
-        </a>
+        <div className="hero-meta-links">
+          <a href="https://telegraph-2.gitbook.io/telegraph" target="_blank" rel="noopener noreferrer" className="hero-protocol-link">Docs ↗</a>
+          <a href="https://github.com/telegraphprotocol" target="_blank" rel="noopener noreferrer" className="hero-protocol-link">GitHub ↗</a>
+          <a href="https://telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="hero-protocol-link">telegraphprotocol.com ↗</a>
+        </div>
       </div>
 
       <div className="hero-art" />

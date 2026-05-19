@@ -12,30 +12,31 @@ export default function ApiSection() {
         <div className="api-panels">
 
           <div className="api-panel">
-            <div className="sec-label">Available Subnets</div>
-            <h2 className="sec-title">The signal you need.</h2>
+            <div className="sec-label">Model Track</div>
+            <h2 className="sec-title">Build the best model.</h2>
             <p className="sec-sub">
-              All subnets are live, verified, and ready to query via a single endpoint.
-              Integration details and full documentation are coming soon.
+              Pick a task and submit a model that solves it. Every model in the competition
+              gets scored by every evaluation script. The one that scores highest overall wins.
             </p>
             <div className="coming-soon">
               <span className="coming-soon-dot" />
-              Subnet docs dropping soon
+              Allowed tasks dropping soon
             </div>
           </div>
 
           <div className="api-spacer" />
 
           <div className="api-panel">
-            <div className="sec-label">Prizes</div>
-            <h2 className="sec-title">Win for building real things.</h2>
+            <div className="sec-label">Evaluation Track</div>
+            <h2 className="sec-title">Write the best eval.</h2>
             <p className="sec-sub">
-              Prize pool and judging criteria to be announced. We reward products that
-              genuinely use Telegraph's verified inference layer to ship real things.
+              Submit a script that scores models on your chosen task. The best eval scripts
+              correctly rank good models above bad ones and are hard to game. This track
+              has its own prize — separate from the model track.
             </p>
             <div className="coming-soon">
               <span className="coming-soon-dot" />
-              Prize pool to be announced
+              Submission format dropping soon
             </div>
           </div>
 

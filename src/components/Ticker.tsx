@@ -1,14 +1,16 @@
 const ITEMS = [
-  'Telegraph Protocol',
-  'Built on Base',
-  'Verified AI Inference',
-  'x402 Payments',
-  'Machina Token',
-  'Permissionless',
-  'zkTLS Proof of Truth',
-  'Machine Intelligence Marketplace',
-  'Open Source',
-  'BFT Consensus',
+  'Telegraph Hackathon V1',
+  'ML Engineers & Quants',
+  'Model Track',
+  'Evaluation Track',
+  'Community Judging',
+  'USDC Prizes',
+  'Signal Intelligence',
+  'Anomaly Detection',
+  'Price Prediction',
+  'Weather Forecasting',
+  'Submit Model + Eval Script',
+  'Built on Telegraph Protocol',
 ]
 
 function Segment({ id }: { id: number }) {

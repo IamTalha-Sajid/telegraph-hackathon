@@ -1,18 +1,18 @@
 const STEPS = [
   {
     num: '01',
-    title: 'Choose a Subnet',
-    body: "Browse Telegraph's available inference subnets. Each subnet is a verified, payable intelligence feed — from weather signals to financial data and beyond.",
+    title: 'Choose Your Task',
+    body: 'Pick a problem you want to solve — forecasting, anomaly detection, prediction, or anything within the allowed use cases. Use the reference dataset to get oriented and start building.',
   },
   {
     num: '02',
-    title: 'Pay via x402',
-    body: 'Request inference and pay in USDC using the x402 HTTP standard. No blockchain expertise required — integrate it exactly like any Web2 API.',
+    title: 'Submit Your Work',
+    body: 'Submit a model that tackles your task, an evaluation script that scores it, or both. Each track is judged independently — you can win one, the other, or both.',
   },
   {
     num: '03',
-    title: 'Ship Your Product',
-    body: 'Build any application on top of cryptographically verified intelligence. Autonomous agents, dashboards, trading bots, prediction markets — anything goes.',
+    title: 'Community Decides',
+    body: 'Every model is tested against every evaluation script. The model that scores best across all evals wins the Model Track. The eval script that most accurately ranks models wins the Eval Track.',
   },
 ]
 
@@ -28,8 +28,8 @@ export default function HowItWorks() {
 
       <div className="how-inner">
         <div className="sec-label">How it works</div>
-        <h2 className="sec-title">Build in three steps.</h2>
-        <p className="sec-sub">Access verified intelligence, pay with USDC, ship a real product.</p>
+        <h2 className="sec-title">Simple as three steps.</h2>
+        <p className="sec-sub">Choose a task, submit your work, let the community decide who wins.</p>
 
         <div className="card-grid">
           {STEPS.map(step => (

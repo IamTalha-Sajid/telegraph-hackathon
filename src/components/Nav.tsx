@@ -12,9 +12,10 @@ export default function Nav({ onRegister }: Props) {
       </div>
       <div className="nav-right">
         <a href="#how"    className="nav-link">How It Works</a>
-        <a href="#apis"   className="nav-link">APIs</a>
+        <a href="#apis"   className="nav-link">Tracks</a>
         <a href="#prizes" className="nav-link">Prizes</a>
-        <a href="https://telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-link">Protocol ↗</a>
+        <a href="https://telegraph-2.gitbook.io/telegraph" target="_blank" rel="noopener noreferrer" className="nav-link">Docs ↗</a>
+        <a href="https://github.com/telegraphprotocol" target="_blank" rel="noopener noreferrer" className="nav-link">GitHub ↗</a>
         <button className="nav-btn" onClick={onRegister}>Register Now</button>
       </div>
     </nav>
