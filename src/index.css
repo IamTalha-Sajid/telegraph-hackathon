@@ -873,7 +873,8 @@ body::before {
 
 /* ── Rules modal ─────────────────────────────── */
 .rules-modal-panel {
-  max-width: 760px;
+  max-width: min(90vw, 1100px) !important;
+  width: 90vw !important;
 }
 
 .rules-modal-hd {
@@ -892,13 +893,13 @@ body::before {
 }
 
 .rules-modal-body-wrap {
-  padding: 24px 28px;
+  padding: 28px 36px;
 }
 
 .rules-grid-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
 }
 
 .rules-card {
@@ -977,10 +978,10 @@ body::before {
 }
 
 @media (max-width: 600px) {
-  .rules-grid-layout { grid-template-columns: 1fr; }
-  .rules-modal-body-wrap { padding: 18px 18px; }
-  .rules-modal-hd  { padding: 18px 18px 14px; }
-  .rules-modal-ft  { padding: 14px 18px 18px; }
+  .rules-grid-layout     { grid-template-columns: 1fr; }
+  .rules-modal-body-wrap { padding: 18px; }
+  .rules-modal-hd        { padding: 18px 18px 14px; }
+  .rules-modal-ft        { padding: 14px 18px 18px; }
 }
 
 /* ── Divider ─────────────────────────────────── */
