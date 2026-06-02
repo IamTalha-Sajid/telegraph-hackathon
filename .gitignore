@@ -45,3 +45,5 @@ dist-ssr
 # Misc
 .DS_Store
 Thumbs.db
+
+.next/

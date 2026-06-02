@@ -1,3 +1,4 @@
+'use client'
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
 interface Props { onClose: () => void }
@@ -64,11 +65,13 @@ function Field({
 
 /* ── Modal ───────────────────────────────────── */
 export default function RegisterModal({ onClose }: Props) {
-  const [step,    setStep]    = useState<1 | 2 | 'done'>(1)
-  const [form,    setForm]    = useState<FormData>(EMPTY)
-  const [errors,  setErrors]  = useState<Errors>({})
-  const [closing, setClosing] = useState(false)
-  const panelRef              = useRef<HTMLDivElement>(null)
+  const [step,      setStep]      = useState<1 | 2 | 'done'>(1)
+  const [form,      setForm]      = useState<FormData>(EMPTY)
+  const [errors,    setErrors]    = useState<Errors>({})
+  const [closing,   setClosing]   = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitErr,  setSubmitErr]  = useState('')
+  const panelRef                  = useRef<HTMLDivElement>(null)
 
   const close = useCallback(() => {
     setClosing(true)
@@ -119,9 +122,33 @@ export default function RegisterModal({ onClose }: Props) {
     return Object.keys(e).length === 0
   }
 
-  const handleNext = () => {
-    if (step === 1 && validate1()) { setErrors({}); setStep(2) }
-    if (step === 2 && validate2()) { setErrors({}); setStep('done') }
+  const handleNext = async () => {
+    if (step === 1) {
+      if (validate1()) { setErrors({}); setStep(2) }
+      return
+    }
+    if (step === 2 && validate2()) {
+      setErrors({})
+      setSubmitting(true)
+      setSubmitErr('')
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(form),
+        })
+        const data = await res.json()
+        if (!res.ok) {
+          setSubmitErr(data.error ?? 'Something went wrong. Please try again.')
+        } else {
+          setStep('done')
+        }
+      } catch {
+        setSubmitErr('Network error. Please try again.')
+      } finally {
+        setSubmitting(false)
+      }
+    }
   }
 
   const cls = `modal-panel${closing ? ' modal-panel-out' : ''}`
@@ -373,14 +400,17 @@ export default function RegisterModal({ onClose }: Props) {
 
         {/* ── Footer ── */}
         {step !== 'done' && (
-          <div className="modal-ft">
-            {step === 2
-              ? <button className="modal-back" onClick={() => { setErrors({}); setStep(1) }}>← Back</button>
-              : <span />
-            }
-            <button className="btn-fill" onClick={handleNext}>
-              {step === 1 ? 'Continue →' : 'Submit Registration'}
-            </button>
+          <div className="modal-ft" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '10px' }}>
+            {submitErr && <p className="mf-err" style={{ textAlign: 'center' }}>{submitErr}</p>}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              {step === 2
+                ? <button className="modal-back" onClick={() => { setErrors({}); setSubmitErr(''); setStep(1) }}>← Back</button>
+                : <span />
+              }
+              <button className="btn-fill" onClick={handleNext} disabled={submitting}>
+                {submitting ? 'Submitting…' : step === 1 ? 'Continue →' : 'Submit Registration'}
+              </button>
+            </div>
           </div>
         )}
 

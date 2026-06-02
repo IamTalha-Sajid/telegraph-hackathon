@@ -1,3 +1,5 @@
+'use client'
+
 interface Props { onRegister: () => void }
 
 export default function Hero({ onRegister }: Props) {
