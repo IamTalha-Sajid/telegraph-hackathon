@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react'
 import Loader        from '@/components/Loader'
-import ParticleCanvas from '@/components/ParticleCanvas'
+import AppBackground  from '@/components/AppBackground'
 import Nav           from '@/components/Nav'
 import Hero          from '@/components/Hero'
 import Ticker        from '@/components/Ticker'
@@ -34,7 +34,7 @@ export default function Home() {
         aria-hidden="true"
       />
 
-      <ParticleCanvas />
+      <AppBackground />
 
       <div className="site">
         <Nav  onRegister={openRegister} onRules={openRules} />

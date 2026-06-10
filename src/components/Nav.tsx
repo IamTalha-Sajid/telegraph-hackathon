@@ -25,7 +25,7 @@ export default function Nav({ onRegister, onRules }: Props) {
   const NAV_LINKS = [
     { href: '#how',    label: 'How It Works' },
     { href: '#apis',   label: 'Tracks'       },
-    { href: 'https://telegraph-2.gitbook.io/telegraph', label: 'Docs ↗',   external: true },
+    { href: 'https://docs.telegraphprotocol.com/', label: 'Docs ↗',   external: true },
     { href: 'https://github.com/telegraphprotocol/telegraph-usecases',     label: 'GitHub ↗', external: true },
   ]
 

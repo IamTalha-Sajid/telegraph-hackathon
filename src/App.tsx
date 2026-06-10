@@ -1,6 +1,8 @@
+'use client';
+
 import { useCallback, useState } from 'react'
 import Loader           from './components/Loader'
-import ParticleCanvas   from './components/ParticleCanvas'
+import AppBackground    from './components/AppBackground'
 import Nav              from './components/Nav'
 import Hero             from './components/Hero'
 import Ticker           from './components/Ticker'
@@ -34,7 +36,7 @@ export default function App() {
       />
 
       {/* Particle canvas always mounted so it's warm when loader exits */}
-      <ParticleCanvas />
+      <AppBackground />
 
       <div className="site">
         <Nav   onRegister={openRegister} onRules={openRules} />
