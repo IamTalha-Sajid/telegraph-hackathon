@@ -4,6 +4,13 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'Telegraph Hackathon',
   description: 'Build on Telegraph\'s verified inference layer. USDC prizes across two tracks.',
+  icons: {
+    icon: [
+      { url: '/Telegraoh-Logo.png', type: 'image/png' },
+    ],
+    shortcut: '/Telegraoh-Logo.png',
+    apple: '/Telegraoh-Logo.png',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
