@@ -23,7 +23,9 @@ interface FormData {
   techStack:   string
 }
 
-type Errors = Partial<Record<keyof FormData, string>>
+type Errors = Partial<Record<keyof FormData | 'discordJoin', string>>
+
+const DISCORD_INVITE = 'https://discord.gg/telegraphprotocol'
 
 const EMPTY: FormData = {
   name: '', email: '', type: 'individual', orgName: '', teamSize: '2 – 5',
@@ -69,8 +71,9 @@ export default function RegisterModal({ onClose }: Props) {
   const [form,      setForm]      = useState<FormData>(EMPTY)
   const [errors,    setErrors]    = useState<Errors>({})
   const [closing,   setClosing]   = useState(false)
-  const [submitting, setSubmitting] = useState(false)
-  const [submitErr,  setSubmitErr]  = useState('')
+  const [submitting,   setSubmitting]   = useState(false)
+  const [submitErr,    setSubmitErr]    = useState('')
+  const [discordJoined, setDiscordJoined] = useState(false)
   const panelRef                  = useRef<HTMLDivElement>(null)
 
   const close = useCallback(() => {
@@ -108,6 +111,8 @@ export default function RegisterModal({ onClose }: Props) {
     if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
       e.email = 'Valid email required'
     if (form.type === 'team' && !form.orgName.trim()) e.orgName = 'Required'
+    if (!form.discord.trim()) e.discord = 'Required'
+    if (!discordJoined) e.discordJoin = 'Please join the Discord server first'
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -317,6 +322,31 @@ export default function RegisterModal({ onClose }: Props) {
                 </Field>
               </div>
 
+              <Field label="Discord Handle" id="r-discord" error={errors.discord}>
+                <input
+                  id="r-discord"
+                  className={`mi${errors.discord ? ' mi-e' : ''}`}
+                  placeholder="username"
+                  value={form.discord}
+                  onChange={e => set('discord', e.target.value)}
+                />
+              </Field>
+
+              <div className="mf">
+                <a
+                  href={DISCORD_INVITE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`btn-discord-join${discordJoined ? ' btn-discord-joined' : ''}`}
+                  onClick={() => setDiscordJoined(true)}
+                >
+                  {discordJoined
+                    ? '✓ Discord Joined'
+                    : '↗ Join Discord Server'}
+                </a>
+                {errors.discordJoin && <p className="mf-err">{errors.discordJoin}</p>}
+              </div>
+
             </div>
           )}
 
@@ -373,26 +403,15 @@ export default function RegisterModal({ onClose }: Props) {
                 />
               </Field>
 
-              <div className="two-col">
-                <Field label="GitHub Repository" id="r-github" error={errors.github}>
-                  <input
-                    id="r-github"
-                    className={`mi${errors.github ? ' mi-e' : ''}`}
-                    placeholder="github.com/you/repo"
-                    value={form.github}
-                    onChange={e => set('github', e.target.value)}
-                  />
-                </Field>
-                <Field label="Discord Handle" id="r-discord" optional>
-                  <input
-                    id="r-discord"
-                    className="mi"
-                    placeholder="username"
-                    value={form.discord}
-                    onChange={e => set('discord', e.target.value)}
-                  />
-                </Field>
-              </div>
+              <Field label="GitHub Repository" id="r-github" error={errors.github}>
+                <input
+                  id="r-github"
+                  className={`mi${errors.github ? ' mi-e' : ''}`}
+                  placeholder="github.com/you/repo"
+                  value={form.github}
+                  onChange={e => set('github', e.target.value)}
+                />
+              </Field>
 
             </div>
           )}
@@ -407,7 +426,7 @@ export default function RegisterModal({ onClose }: Props) {
                 ? <button className="modal-back" onClick={() => { setErrors({}); setSubmitErr(''); setStep(1) }}>← Back</button>
                 : <span />
               }
-              <button className="btn-fill" onClick={handleNext} disabled={submitting}>
+              <button className="btn-register" onClick={handleNext} disabled={submitting}>
                 {submitting ? 'Submitting…' : step === 1 ? 'Continue →' : 'Submit Registration'}
               </button>
             </div>

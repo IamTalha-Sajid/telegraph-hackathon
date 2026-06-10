@@ -53,7 +53,7 @@ export default function Nav({ onRegister, onRules }: Props) {
             </a>
           ))}
           <button className="nav-rules-btn" onClick={onRules}>Rules</button>
-          <button className="nav-btn"       onClick={onRegister}>Register Now</button>
+          <button className="btn-register"   onClick={onRegister}>Register Now</button>
         </div>
 
         {/* Mobile controls */}
@@ -90,7 +90,7 @@ export default function Nav({ onRegister, onRules }: Props) {
               ))}
               <div className="mobile-drawer-divider" />
               <button className="nav-rules-btn mobile-drawer-btn mobile-rules-btn" onClick={handleRules}>Rules</button>
-              <button className="btn-fill mobile-drawer-btn" onClick={handleRegister}>Register Now</button>
+              <button className="btn-register mobile-drawer-btn" onClick={handleRegister}>Register Now</button>
             </div>
           </div>
         </div>
