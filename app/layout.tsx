@@ -4,12 +4,34 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'Telegraph Hackathon',
   description: 'Build on Telegraph\'s verified inference layer. USDC prizes across two tracks.',
+  metadataBase: new URL('https://hackathon.telegraphprotocol.com'),
   icons: {
     icon: [
       { url: '/Telegraoh-Logo.png', type: 'image/png' },
     ],
     shortcut: '/Telegraoh-Logo.png',
     apple: '/Telegraoh-Logo.png',
+  },
+  openGraph: {
+    title: 'Telegraph Hackathon',
+    description: 'Build on Telegraph\'s verified inference layer. USDC prizes across two tracks.',
+    url: 'https://hackathon.telegraphprotocol.com',
+    siteName: 'Telegraph Hackathon',
+    images: [
+      {
+        url: '/telegraph-social-card.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Telegraph Protocol',
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Telegraph Hackathon',
+    description: 'Build on Telegraph\'s verified inference layer. USDC prizes across two tracks.',
+    images: ['/telegraph-social-card.jpg'],
   },
 }
 
