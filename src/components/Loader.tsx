@@ -18,7 +18,7 @@ export default function Loader({ onComplete }: Props) {
 
   useEffect(() => {
     const start = performance.now()
-    const DURATION = 2100
+    const DURATION = 1000
     let raf: number
 
     const tick = (now: number) => {
@@ -28,8 +28,8 @@ export default function Loader({ onComplete }: Props) {
     }
     raf = requestAnimationFrame(tick)
 
-    const t1 = setTimeout(() => setExiting(true), 2500)
-    const t2 = setTimeout(finish, 3050)
+    const t1 = setTimeout(() => setExiting(true), 1200)
+    const t2 = setTimeout(finish, 1750)
 
     return () => {
       cancelAnimationFrame(raf)

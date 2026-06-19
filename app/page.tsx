@@ -5,8 +5,10 @@ import Loader        from '@/components/Loader'
 import AppBackground  from '@/components/AppBackground'
 import Nav           from '@/components/Nav'
 import Hero          from '@/components/Hero'
-import Ticker        from '@/components/Ticker'
-import HowItWorks    from '@/components/HowItWorks'
+import Ticker             from '@/components/Ticker'
+import WhyRegisterEarly   from '@/components/WhyRegisterEarly'
+import HackathonSeries    from '@/components/HackathonSeries'
+import HowItWorks         from '@/components/HowItWorks'
 import ApiSection    from '@/components/ApiSection'
 import Footer        from '@/components/Footer'
 import RegisterModal from '@/components/RegisterModal'
@@ -39,7 +41,9 @@ export default function Home() {
       <div className="site">
         <Nav  onRegister={openRegister} onRules={openRules} />
         <Hero onRegister={openRegister} />
+        <WhyRegisterEarly />
         <Ticker />
+        <HackathonSeries />
         <HowItWorks />
         <ApiSection />
         <Footer />
