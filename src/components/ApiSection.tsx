@@ -1,3 +1,48 @@
+const TRACKS = [
+  {
+    num: '01',
+    label: 'Miner Track',
+    title: 'Provide inference.',
+    sub: 'Build and integrate models into Telegraph. You\'re the intelligence layer — miners serve inference to the network and to applications built on top.',
+    criteria: [
+      'Telegraph ranking & performance',
+      'Number of applications built on your miner',
+      'Total inference consumed',
+      'Progress updates posted on X',
+      'Engagement & reach on those posts',
+    ],
+    timing: 'Open Aug – mid Sep 2026',
+  },
+  {
+    num: '02',
+    label: 'Script Author Track',
+    title: 'Rank quality.',
+    sub: 'Write evaluation scripts that score and rank miners. You define what "good" looks like — your script becomes part of the protocol\'s quality layer.',
+    criteria: [
+      'Telegraph\'s automated eval of your script',
+      'Accuracy of miner rankings produced',
+      'Resistance to gaming',
+      'Progress updates posted on X',
+      'Community engagement & visibility',
+    ],
+    timing: 'Open Aug – mid Sep 2026',
+  },
+  {
+    num: '03',
+    label: 'Application Track',
+    title: 'Drive demand.',
+    sub: 'Build products, agents, automations, and workflows on top of Telegraph. Use live miners. Ship something real. This track only opens after miners and scripts are live.',
+    criteria: [
+      'Users acquired & activity',
+      'Usage and adoption',
+      'Creativity and usefulness',
+      'Must use Telegraph miners',
+      'Engagement on posts showcasing the project',
+    ],
+    timing: 'Opens after Track 1 & 2 close',
+  },
+]
+
 export default function ApiSection() {
   return (
     <section className="api-section" id="apis">
@@ -9,37 +54,28 @@ export default function ApiSection() {
       />
 
       <div className="api-inner">
-        <div className="api-panels">
+        <div className="sec-label">Tracks</div>
+        <h2 className="sec-title">Three tracks. One ecosystem.</h2>
+        <p className="sec-sub">
+          Miners provide intelligence. Scripts rank quality. Applications drive demand — and feed back into how miners are judged.
+        </p>
 
-          <div className="api-panel">
-            <div className="sec-label">Model Track</div>
-            <h2 className="sec-title">Build the best model.</h2>
-            <p className="sec-sub">
-              Pick a task and submit a model that solves it. Every model in the competition
-              gets scored by every evaluation script. The one that scores highest overall wins.
-            </p>
-            <div className="coming-soon">
-              <span className="coming-soon-dot" />
-              Allowed tasks dropping soon
+        <div className="tracks-grid">
+          {TRACKS.map((t) => (
+            <div key={t.num} className="track-card">
+              <div className="track-card-num">{t.num}</div>
+              <div className="sec-label" style={{ marginBottom: 0 }}>{t.label}</div>
+              <h3 className="track-card-title">{t.title}</h3>
+              <p className="track-card-body">{t.sub}</p>
+              <div className="track-criteria-label">Judging criteria</div>
+              <ul className="track-criteria">
+                {t.criteria.map((c, i) => (
+                  <li key={i}>{c}</li>
+                ))}
+              </ul>
+              <div className="track-timing">{t.timing}</div>
             </div>
-          </div>
-
-          <div className="api-spacer" />
-
-          <div className="api-panel">
-            <div className="sec-label">Evaluation Track</div>
-            <h2 className="sec-title">Write the best eval.</h2>
-            <p className="sec-sub">
-              Submit a script that scores models on your chosen task. The best eval scripts
-              correctly rank good models above bad ones and are hard to game. This track
-              has its own prize — separate from the model track.
-            </p>
-            <div className="coming-soon">
-              <span className="coming-soon-dot" />
-              Submission format dropping soon
-            </div>
-          </div>
-
+          ))}
         </div>
       </div>
     </section>

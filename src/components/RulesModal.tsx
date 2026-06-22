@@ -17,8 +17,6 @@ const SECTIONS = [
     num: '02',
     label: 'Submission',
     rules: [
-      'Must integrate at least one Telegraph inference subnet API.',
-      'Must use x402 for payment flows within the app.',
       'Project must be deployed and demo-able — not just a mockup.',
       'Source code must be in a public GitHub repo before the deadline.',
       'Must be built during the hackathon window. Pre-built projects are disqualified.',

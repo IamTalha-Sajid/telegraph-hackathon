@@ -5,7 +5,6 @@ const HACKATHONS = [
     dates: 'Early Aug – Mid Sep 2026',
     duration: '6 weeks',
     prize: '$5K USDC',
-    prizeNote: 'USDC',
     focus: 'Register miners and script authors, build initial models and evaluation scripts, and test the ranking and evaluation flow.',
     muted: false,
     comingSoon: false,
@@ -17,7 +16,6 @@ const HACKATHONS = [
     dates: 'Early Oct – Mid Nov 2026',
     duration: '6 weeks',
     prize: '$10K USDC',
-    prizeNote: 'USDC',
     focus: 'Improve on Hackathon 1, attract more participants, and refine models and evaluation scripts.',
     muted: false,
     comingSoon: false,
@@ -29,7 +27,6 @@ const HACKATHONS = [
     dates: 'December 2026 onwards',
     duration: 'Mainnet',
     prize: '$Machina TBD',
-    prizeNote: 'Machina',
     focus: 'Full mainnet launch with real agent consumption and Machina incentives. Details announced closer to launch.',
     muted: true,
     comingSoon: true,
@@ -37,7 +34,7 @@ const HACKATHONS = [
   },
 ]
 
-const TRACKS = ['Model Track', 'Evaluation Track']
+const TRACKS = ['Miner Track', 'Script Author Track', 'Application Track']
 
 export default function HackathonSeries() {
   return (
@@ -55,51 +52,33 @@ export default function HackathonSeries() {
           Two USDC rounds to bootstrap and test the system, then a mainnet launch with Machina rewards.
         </p>
 
-        <div className="series-grid">
-          {HACKATHONS.map((h, i) => (
+        <div className="tracks-grid">
+          {HACKATHONS.map((h) => (
             <div
               key={h.id}
-              className={`series-card${h.muted ? ' series-card-muted' : ''}`}
-              style={{ animationDelay: `${0.1 + i * 0.12}s` }}
+              className={`track-card${h.muted ? ' track-card-muted' : ''}`}
             >
-              <div className="series-card-top">
-                <span className="series-id">{h.id}</span>
-                {h.comingSoon && (
-                  <span className="series-coming-soon">
-                    <span className="coming-soon-dot" />
-                    Mainnet
-                  </span>
-                )}
-              </div>
-
-              <div className="series-label">{h.label}</div>
-
-              <div className="series-prize-row">
-                <div className="series-prize">{h.prize}</div>
-                <span className="series-prize-tip" aria-label="Prize pool can be changed anytime before the hackathon begins">
-                  ℹ
-                  <span className="series-prize-tip-text">Prize pool can be changed anytime before the hackathon begins</span>
+              <div className="track-card-num">{h.id}</div>
+              <div className="sec-label" style={{ marginBottom: 0 }}>{h.label}</div>
+              {h.comingSoon && (
+                <span className="track-card-chip">
+                  <span className="coming-soon-dot" />
+                  Mainnet
                 </span>
-              </div>
-              <div className="series-prize-note">{h.prizeNote} prizes</div>
-
-              <div className="series-dates">
-                <span className="series-dates-val">{h.dates}</span>
-                <span className="series-duration">· {h.duration}</span>
-              </div>
-
-              <div className="series-tracks">
+              )}
+              <h3 className="track-card-title">{h.prize}</h3>
+              <p className="track-card-body">{h.focus}</p>
+              <div className="track-criteria-label">Tracks</div>
+              <ul className="track-criteria">
                 {TRACKS.map(t => (
-                  <span key={t} className="series-track-pill">{t}</span>
+                  <li key={t}>{t}</li>
                 ))}
-              </div>
-
-              <div className="series-focus">{h.focus}</div>
-
+              </ul>
+              <div className="track-timing">{h.dates} · {h.duration}</div>
               {h.bootstrapNote && (
-                <div className="series-bootstrap-note">
+                <p className="track-card-footnote">
                   USDC-based to bootstrap and test the system before Machina launch
-                </div>
+                </p>
               )}
             </div>
           ))}

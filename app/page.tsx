@@ -41,8 +41,8 @@ export default function Home() {
       <div className="site">
         <Nav  onRegister={openRegister} onRules={openRules} />
         <Hero onRegister={openRegister} />
-        <WhyRegisterEarly />
         <Ticker />
+        <WhyRegisterEarly />
         <HackathonSeries />
         <HowItWorks />
         <ApiSection />

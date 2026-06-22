@@ -13,8 +13,8 @@ export default function Hero({ onRegister }: Props) {
         <p className="hero-h1-light">Hackathon</p>
 
         <p className="hero-desc">
-          Build models and evaluation scripts on Telegraph's verified inference layer.
-          The community decides who wins.
+          Mine inference. Rank quality. Build applications.
+          Three tracks. One ecosystem. Real demand decides who wins.
         </p>
 
         <div className="hero-series-badge">
@@ -29,7 +29,7 @@ export default function Hero({ onRegister }: Props) {
 
         <div className="hero-stats">
           <div className="hero-stat">
-            <span className="hero-stat-val">2</span>
+            <span className="hero-stat-val">3</span>
             <span className="hero-stat-label">Tracks</span>
           </div>
           <div className="hero-stat-divider" />

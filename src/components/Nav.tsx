@@ -4,7 +4,14 @@ import { useCallback, useEffect, useState } from 'react'
 interface Props { onRegister: () => void; onRules: () => void }
 
 export default function Nav({ onRegister, onRules }: Props) {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen,  setMenuOpen]  = useState(false)
+  const [scrolled,  setScrolled]  = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const closeMenu = useCallback(() => setMenuOpen(false), [])
 
@@ -31,11 +38,11 @@ export default function Nav({ onRegister, onRules }: Props) {
 
   return (
     <>
-      <nav className="nav">
+      <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`}>
         <div className="nav-left">
           <a href="https://telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-logo">
             <img src="/Telegraoh-Logo.png" alt="" className="nav-logo-img" aria-hidden="true" />
-            TELEGRAPH
+            <span className="nav-logo-text">TELEGRAPH</span>
           </a>
           <span className="nav-badge">Hackathon</span>
         </div>

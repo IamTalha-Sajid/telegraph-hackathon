@@ -35,16 +35,12 @@ export default function WhyRegisterEarly() {
         <h2 className="sec-title">Why register early?</h2>
         <p className="sec-sub">Early registrants get an unfair advantage. Here&apos;s why.</p>
 
-        <div className="why-grid">
-          {BENEFITS.map((b, i) => (
-            <div
-              key={b.num}
-              className="why-card"
-              style={{ animationDelay: `${0.1 + i * 0.1}s` }}
-            >
-              <div className="why-card-num">{b.num}</div>
-              <div className="why-card-title">{b.title}</div>
-              <div className="why-card-body">{b.body}</div>
+        <div className="card-grid">
+          {BENEFITS.map((b) => (
+            <div key={b.num} className="card">
+              <div className="card-idx">{b.num}</div>
+              <div className="card-title">{b.title}</div>
+              <div className="card-body">{b.body}</div>
             </div>
           ))}
         </div>

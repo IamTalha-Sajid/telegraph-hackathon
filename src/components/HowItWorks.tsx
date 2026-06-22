@@ -1,18 +1,18 @@
 const STEPS = [
   {
     num: '01',
-    title: 'Choose Your Task',
-    body: 'Pick a problem you want to solve — forecasting, anomaly detection, prediction, or anything within the allowed use cases. Use the reference dataset to get oriented and start building.',
+    title: 'Miners & Scripts Build First',
+    body: 'Track 1 (Miners) and Track 2 (Script Authors) open in August. Miners integrate models into Telegraph and provide inference. Script authors write evaluation scripts that score and rank them. Telegraph automatically runs the ranking.',
   },
   {
     num: '02',
-    title: 'Submit Your Work',
-    body: 'Submit a model that tackles your task, an evaluation script that scores it, or both. Each track is judged independently — you can win one, the other, or both.',
+    title: 'Applications Build on Top',
+    body: 'Once Track 1 & 2 close, Track 3 opens. Application builders use live Telegraph miners to build products, agents, automations, and workflows. Real miners. Real inference. Real use cases.',
   },
   {
     num: '03',
-    title: 'Community Decides',
-    body: 'Every model is tested against every evaluation script. The model that scores best across all evals wins the Model Track. The eval script that most accurately ranks models wins the Eval Track.',
+    title: 'Demand Feeds Back to Miners',
+    body: 'Miners are judged not just on benchmark performance, but on actual demand — which miners are applications building with? The more useful your inference, the more it gets consumed, and the better you rank.',
   },
 ]
 
@@ -28,8 +28,8 @@ export default function HowItWorks() {
 
       <div className="how-inner">
         <div className="sec-label">How it works</div>
-        <h2 className="sec-title">Simple as three steps.</h2>
-        <p className="sec-sub">Choose a task, submit your work, let the community decide who wins.</p>
+        <h2 className="sec-title">A complete ecosystem.</h2>
+        <p className="sec-sub">Not just infrastructure. A full cycle from inference to application to demand.</p>
 
         <div className="card-grid">
           {STEPS.map(step => (
