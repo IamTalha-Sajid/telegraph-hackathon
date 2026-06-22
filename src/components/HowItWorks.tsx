@@ -18,15 +18,15 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section className="how-section" id="how">
+    <section className="feature-section" id="how">
       <img
         src="/Website/telegraph_web_2.png"
-        className="how-bg"
+        className="feature-bg feature-bg--how"
         alt=""
         aria-hidden="true"
       />
 
-      <div className="how-inner">
+      <div className="feature-inner">
         <div className="sec-label">How it works</div>
         <h2 className="sec-title">A complete ecosystem.</h2>
         <p className="sec-sub">Not just infrastructure. A full cycle from inference to application to demand.</p>

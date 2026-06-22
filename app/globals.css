@@ -750,32 +750,17 @@ body::before {
   color: #fff;
 }
 
-/* ── How it works section ───────────────────── */
-.how-section {
+/* ── Feature sections (How, Step 00, Tracks, Season I) ── */
+.feature-section {
   position: relative;
   overflow: hidden;
   height: 100vh;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-/* Full-bleed background image */
-.how-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 18%;
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.38;
-}
-
-/* Top + bottom fade to blend seamlessly with surrounding sections */
-.how-section::before {
+.feature-section::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -790,8 +775,22 @@ body::before {
   z-index: 1;
 }
 
-/* Content sits above image and overlay */
-.how-inner {
+.feature-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.feature-bg--how    { object-position: center 18%; opacity: 0.38; }
+.feature-bg--api    { object-position: center top; opacity: 0.38; transform: translateY(-20px) scale(1.2); transform-origin: center top; }
+.feature-bg--why    { object-position: center 30%; opacity: 0.22; mix-blend-mode: screen; }
+.feature-bg--series { object-position: center 18%; opacity: 0.28; mix-blend-mode: screen; }
+
+.feature-inner {
   position: relative;
   z-index: 2;
   padding: 48px 48px;
@@ -800,44 +799,24 @@ body::before {
   width: 100%;
 }
 
-/* Glassmorphism card grid — separate floating cards */
-.how-section .card-grid {
+.feature-section .card-grid {
   background: transparent;
   border: none;
   gap: 14px;
   margin-top: 36px;
 }
 
-/* Glassmorphism cards */
-.how-section .card {
-  background: rgba(0, 0, 0, 0.52);
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 2px;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.how-section .card:hover {
-  background: rgba(0, 0, 0, 0.72);
-  border-top-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 16px 56px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transform: translateY(-4px) scale(1.02);
-}
-
-/* Step 00 — same glass cards as How it works */
-.why-section .card-grid {
-  background: transparent;
-  border: none;
-  gap: 14px;
-  margin-top: 36px;
+.feature-section .card-grid.card-grid--4 {
   grid-template-columns: repeat(4, 1fr);
 }
 
-.why-section .card {
+.feature-section .card-grid.card-grid--4 .card {
+  min-width: 0;
+}
+
+.feature-section .card {
+  display: flex;
+  flex-direction: column;
   background: rgba(0, 0, 0, 0.52);
   backdrop-filter: blur(22px) saturate(160%);
   -webkit-backdrop-filter: blur(22px) saturate(160%);
@@ -847,9 +826,10 @@ body::before {
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: background 0.2s, border-top-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
-.why-section .card:hover {
+.feature-section .card:hover {
   background: rgba(0, 0, 0, 0.72);
   border-top-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 16px 56px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -887,54 +867,6 @@ body::before {
   margin: 0 12px;
 }
 
-/* ── API / Intelligence section ─────────────── */
-.api-section {
-  position: relative;
-  overflow: hidden;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.api-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  transform: translateY(-20px) scale(1.2);
-  transform-origin: center top;
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.38;
-}
-
-.api-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    #000 0%,
-    transparent 18%,
-    transparent 80%,
-    #000 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-.api-inner {
-  position: relative;
-  z-index: 2;
-  padding: 48px 48px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
 
 .api-panels {
   display: grid;
@@ -967,146 +899,6 @@ body::before {
   transform: translateY(-4px) scale(1.02);
 }
 
-/* ── Tracks grid (3-track layout) ───────────── */
-.tracks-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-top: 64px;
-}
-
-.track-card {
-  min-width: 0;
-  background: rgba(0, 0, 0, 0.52);
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 2px;
-  padding: 44px 36px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  display: flex;
-  flex-direction: column;
-  transition: background 0.2s, border-top-color 0.2s, box-shadow 0.2s, transform 0.2s;
-}
-
-.track-card:hover {
-  background: rgba(0, 0, 0, 0.72);
-  border-top-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 16px 56px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transform: translateY(-4px) scale(1.02);
-}
-
-.track-card-num {
-  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.28);
-  margin-bottom: 28px;
-}
-
-.track-card-title {
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  margin-top: 8px;
-  margin-bottom: 14px;
-  color: #fff;
-}
-
-.track-card-body {
-  font-size: 13.5px;
-  font-weight: 300;
-  line-height: 1.75;
-  color: var(--muted);
-  margin-bottom: 28px;
-  flex: 1;
-}
-
-.track-criteria-label {
-  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
-  font-size: 9px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.28);
-  margin-bottom: 14px;
-}
-
-.track-criteria {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  margin-bottom: 28px;
-}
-
-.track-criteria li {
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--muted);
-  line-height: 1.6;
-  padding-left: 16px;
-  position: relative;
-}
-
-.track-criteria li::before {
-  content: '—';
-  position: absolute;
-  left: 0;
-  color: rgba(255, 255, 255, 0.18);
-  font-size: 10px;
-  top: 3px;
-}
-
-.track-timing {
-  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.28);
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-  padding-top: 16px;
-  margin-top: auto;
-}
-
-.track-card-muted {
-  opacity: 0.72;
-}
-
-.track-card-muted:hover {
-  opacity: 1;
-}
-
-.track-card-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  align-self: flex-start;
-  margin-top: 8px;
-  margin-bottom: 4px;
-  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
-  font-size: 8px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 4px 10px;
-  border-radius: 2px;
-}
-
-.track-card-footnote {
-  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
-  font-size: 9px;
-  font-weight: 300;
-  letter-spacing: 0.12em;
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.35);
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-  padding-top: 12px;
-  margin-top: 12px;
-  margin-bottom: 0;
-}
 
 /* ── Sections ────────────────────────────────── */
 .section {
@@ -1159,6 +951,10 @@ body::before {
   margin-top: 64px;
 }
 
+.card-grid.card-grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .card {
   background: #000;
   padding: 44px 36px;
@@ -1179,6 +975,7 @@ body::before {
   font-weight: 700;
   letter-spacing: -0.01em;
   margin-bottom: 14px;
+  color: #fff;
 }
 
 .card-body {
@@ -1186,6 +983,110 @@ body::before {
   font-weight: 300;
   line-height: 1.75;
   color: #fff;
+}
+
+.card-label {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-size: 9px;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-label::before {
+  content: '';
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: rgba(251, 191, 36, 0.6);
+}
+
+.card-meta {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: rgba(251, 191, 36, 0.8);
+  margin-bottom: 14px;
+}
+
+.card-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 28px;
+}
+
+.card-list li {
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: #fff;
+  padding-left: 16px;
+  position: relative;
+}
+
+.card-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: rgba(251, 191, 36, 0.5);
+  font-size: 10px;
+  top: 3px;
+}
+
+.card-foot {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: rgba(251, 191, 36, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 16px;
+  margin-top: auto;
+}
+
+.card-note {
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: #fff;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 12px;
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+.card-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  margin-bottom: 8px;
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 2px;
+}
+
+.card-muted {
+  opacity: 0.72;
+}
+
+.card-muted:hover {
+  opacity: 1;
+}
+
+.card--detailed > .card-body {
+  margin-bottom: 28px;
+  flex: 1;
 }
 
 .coming-soon {
@@ -1347,138 +1248,6 @@ body::before {
 /* ── Divider ─────────────────────────────────── */
 .rule { height: 1px; background: var(--border); }
 
-/* ══════════════════════════════════════════════
-   WHY REGISTER EARLY
-══════════════════════════════════════════════ */
-.why-section {
-  position: relative;
-  overflow: hidden;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.why-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.22;
-  mix-blend-mode: screen;
-}
-
-.why-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    #000 0%,
-    transparent 20%,
-    transparent 78%,
-    #000 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-.why-inner {
-  position: relative;
-  z-index: 2;
-  padding: 48px 48px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/* ══════════════════════════════════════════════
-   HACKATHON SERIES
-══════════════════════════════════════════════ */
-.series-section {
-  position: relative;
-  overflow: hidden;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.series-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 18%;
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.28;
-  mix-blend-mode: screen;
-}
-
-.series-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    #000 0%,
-    transparent 18%,
-    transparent 80%,
-    #000 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-.series-inner {
-  position: relative;
-  z-index: 2;
-  padding: 48px 48px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.series-section .tracks-grid {
-  margin-top: 36px;
-}
-
-/* ── Why / Series responsive ─────────────────── */
-@media (max-width: 1024px) {
-  .why-section .card-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 900px) {
-  .why-inner,
-  .series-inner { padding: 40px 20px; }
-  .why-section .card-grid,
-  .series-section .tracks-grid { gap: 10px; margin-top: 32px; }
-}
-
-@media (max-width: 480px) {
-  .why-bg    { object-position: center center; opacity: 0.14; }
-  .series-bg { object-position: center 25%;  opacity: 0.18; }
-
-  .why-inner,
-  .series-inner { padding: 60px 20px; }
-
-  .why-section .card-grid { grid-template-columns: 1fr; gap: 8px; margin-top: 36px; }
-  .series-section .tracks-grid { gap: 8px; margin-top: 36px; }
-
-  .track-card         { padding: 28px 20px; }
-  .track-card-num     { margin-bottom: 16px; }
-  .track-card-title   { font-size: 17px; margin-bottom: 10px; }
-  .track-card-body    { font-size: 13px; margin-bottom: 20px; }
-}
-
 /* ── Hero stats strip ────────────────────────── */
 .hero-stats {
   display: flex;
@@ -1622,6 +1391,8 @@ body::before {
   .hero-art          { display: none; }
   .hero-sculpture    { display: none; }
   .scroll-hint       { left: 0; right: 0; transform: none; width: fit-content; margin: 0 auto; }
+  .feature-section .card-grid:not(.card-grid--4) { grid-template-columns: 1fr; }
+  .feature-section .card-grid.card-grid--4 { grid-template-columns: repeat(4, 1fr); }
 }
 
 /* ── Mobile (≤ 900px) ───────────────────────── */
@@ -1629,10 +1400,7 @@ body::before {
   .hero           { height: auto; min-height: calc(100vh - 46px); }
   .ticker-seg     { padding: 0 20px; }
   .ticker-dot     { margin: 0 8px; }
-  .how-section,
-  .api-section,
-  .why-section,
-  .series-section { height: auto; min-height: 100vh; overflow: visible; }
+  .feature-section { height: auto; min-height: 100vh; overflow: visible; }
   .nav                  { padding: 0 20px 0 16px; gap: 8px; }
   .nav-right-desktop    { display: none; }
   .nav-right-mobile     { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
@@ -1650,9 +1418,17 @@ body::before {
   .scroll-hint          { display: none; }
 
   .section              { padding: 40px 20px; }
-  .how-inner            { padding: 40px 20px; }
-  .api-inner            { padding: 40px 20px; }
-  .card-grid            { grid-template-columns: 1fr; }
+  .feature-inner        { padding: 40px 20px; }
+  .feature-section .card-grid:not(.card-grid--4),
+  .feature-section .card-grid.card-grid--4 { grid-template-columns: 1fr; gap: 10px; margin-top: 32px; }
+  .feature-section .card { padding: 32px 20px; }
+  .card-idx             { margin-bottom: 16px; }
+  .card-title           { font-size: 17px; margin-bottom: 10px; }
+  .card-body            { font-size: 13px; margin-bottom: 16px; }
+  .card-meta            { margin-bottom: 10px; }
+  .card-list            { gap: 8px; margin-bottom: 20px; }
+  .card-list li         { font-size: 13px; }
+  .feature-section .card:hover { transform: none; }
   .footer               { padding: 24px 20px; flex-direction: column; gap: 14px; text-align: center; }
   .lc                   { display: none; }
 }
@@ -1677,7 +1453,12 @@ body::before {
   .btn-ghost          { padding: 12px 22px; font-size: 10px; }
   .sec-title          { font-size: clamp(24px, 7vw, 42px); }
   .api-panel          { padding: 32px 20px; }
-  .card               { padding: 32px 20px; }
+  .feature-bg--why    { object-position: center center; opacity: 0.14; }
+  .feature-bg--series { object-position: center 25%; opacity: 0.18; }
+  .feature-inner      { padding: 60px 20px; }
+  .feature-section .card-grid,
+  .card-grid--4       { gap: 8px; margin-top: 36px; }
+  .feature-section .card { padding: 32px 20px; }
 }
 
 /* ── Very short viewports (landscape phones) ── */

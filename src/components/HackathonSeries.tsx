@@ -38,45 +38,45 @@ const TRACKS = ['Miner Track', 'Script Author Track', 'Application Track']
 
 export default function HackathonSeries() {
   return (
-    <section className="series-section">
+    <section className="feature-section">
       <img
         src="/Website/telegraph_web_7.png"
-        className="series-bg"
+        className="feature-bg feature-bg--series"
         alt=""
         aria-hidden="true"
       />
-      <div className="series-inner">
+      <div className="feature-inner">
         <div className="sec-label">Season I</div>
         <h2 className="sec-title">A 3-hackathon series.</h2>
         <p className="sec-sub">
           Two USDC rounds to bootstrap and test the system, then a mainnet launch with Machina rewards.
         </p>
 
-        <div className="tracks-grid">
+        <div className="card-grid">
           {HACKATHONS.map((h) => (
             <div
               key={h.id}
-              className={`track-card${h.muted ? ' track-card-muted' : ''}`}
+              className={`card card--detailed${h.muted ? ' card-muted' : ''}`}
             >
-              <div className="track-card-num">{h.id}</div>
-              <div className="sec-label" style={{ marginBottom: 0 }}>{h.label}</div>
+              <div className="card-idx">{h.id}</div>
+              <div className="card-label">{h.label}</div>
               {h.comingSoon && (
-                <span className="track-card-chip">
+                <span className="card-chip">
                   <span className="coming-soon-dot" />
                   Mainnet
                 </span>
               )}
-              <h3 className="track-card-title">{h.prize}</h3>
-              <p className="track-card-body">{h.focus}</p>
-              <div className="track-criteria-label">Tracks</div>
-              <ul className="track-criteria">
+              <div className="card-title">{h.prize}</div>
+              <div className="card-body">{h.focus}</div>
+              <div className="card-meta">Tracks</div>
+              <ul className="card-list">
                 {TRACKS.map(t => (
                   <li key={t}>{t}</li>
                 ))}
               </ul>
-              <div className="track-timing">{h.dates} · {h.duration}</div>
+              <div className="card-foot">{h.dates} · {h.duration}</div>
               {h.bootstrapNote && (
-                <p className="track-card-footnote">
+                <p className="card-note">
                   USDC-based to bootstrap and test the system before Machina launch
                 </p>
               )}

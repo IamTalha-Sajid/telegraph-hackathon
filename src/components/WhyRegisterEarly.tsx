@@ -23,19 +23,19 @@ const BENEFITS = [
 
 export default function WhyRegisterEarly() {
   return (
-    <section className="why-section">
+    <section className="feature-section">
       <img
         src="/Website/thinking_robot.png"
-        className="why-bg"
+        className="feature-bg feature-bg--why"
         alt=""
         aria-hidden="true"
       />
-      <div className="why-inner">
+      <div className="feature-inner">
         <div className="sec-label">Step 00</div>
         <h2 className="sec-title">Why register early?</h2>
         <p className="sec-sub">Early registrants get an unfair advantage. Here&apos;s why.</p>
 
-        <div className="card-grid">
+        <div className="card-grid card-grid--4">
           {BENEFITS.map((b) => (
             <div key={b.num} className="card">
               <div className="card-idx">{b.num}</div>

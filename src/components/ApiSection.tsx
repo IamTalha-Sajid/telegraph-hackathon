@@ -45,35 +45,35 @@ const TRACKS = [
 
 export default function ApiSection() {
   return (
-    <section className="api-section" id="apis">
+    <section className="feature-section" id="apis">
       <img
         src="/Website/telegraph_web_6.png"
-        className="api-bg"
+        className="feature-bg feature-bg--api"
         alt=""
         aria-hidden="true"
       />
 
-      <div className="api-inner">
+      <div className="feature-inner">
         <div className="sec-label">Tracks</div>
         <h2 className="sec-title">Three tracks. One ecosystem.</h2>
         <p className="sec-sub">
           Miners provide intelligence. Scripts rank quality. Applications drive demand — and feed back into how miners are judged.
         </p>
 
-        <div className="tracks-grid">
+        <div className="card-grid">
           {TRACKS.map((t) => (
-            <div key={t.num} className="track-card">
-              <div className="track-card-num">{t.num}</div>
-              <div className="sec-label" style={{ marginBottom: 0 }}>{t.label}</div>
-              <h3 className="track-card-title">{t.title}</h3>
-              <p className="track-card-body">{t.sub}</p>
-              <div className="track-criteria-label">Judging criteria</div>
-              <ul className="track-criteria">
+            <div key={t.num} className="card card--detailed">
+              <div className="card-idx">{t.num}</div>
+              <div className="card-label">{t.label}</div>
+              <div className="card-title">{t.title}</div>
+              <div className="card-body">{t.sub}</div>
+              <div className="card-meta">Judging criteria</div>
+              <ul className="card-list">
                 {t.criteria.map((c, i) => (
                   <li key={i}>{c}</li>
                 ))}
               </ul>
-              <div className="track-timing">{t.timing}</div>
+              <div className="card-foot">{t.timing}</div>
             </div>
           ))}
         </div>
