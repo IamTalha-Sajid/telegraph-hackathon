@@ -195,56 +195,6 @@ export default function ParticleCanvas() {
         fgCtx.fill()
       }
 
-      /* — FG: Σ cursor — */
-      if (!isTouch && mouse.x > -900) {
-        const x = mouse.x
-        const y = mouse.y
-        const r = CURSOR_R * cursorScale
-
-        /* outer glow halo around ring */
-        const glow = fgCtx.createRadialGradient(x, y, r * 0.6, x, y, r + 22)
-        glow.addColorStop(0, 'rgba(255,255,255,0.07)')
-        glow.addColorStop(1, 'rgba(255,255,255,0)')
-        fgCtx.fillStyle = glow
-        fgCtx.fillRect(x - r - 22, y - r - 22, (r + 22) * 2, (r + 22) * 2)
-
-        /* rotating ring */
-        fgCtx.save()
-        fgCtx.translate(x, y)
-        fgCtx.rotate(cursorAngle)
-        fgCtx.globalAlpha = 0.78
-
-        fgCtx.beginPath()
-        fgCtx.arc(0, 0, r, 0, Math.PI * 2)
-        fgCtx.strokeStyle = '#ffffff'
-        fgCtx.lineWidth   = 1
-        fgCtx.stroke()
-
-        /* four tick marks on the ring */
-        const tickLen = 3
-        for (let i = 0; i < 4; i++) {
-          const angle = (i * Math.PI) / 2
-          const cos = Math.cos(angle)
-          const sin = Math.sin(angle)
-          fgCtx.beginPath()
-          fgCtx.moveTo(cos * (r - tickLen), sin * (r - tickLen))
-          fgCtx.lineTo(cos * (r + tickLen), sin * (r + tickLen))
-          fgCtx.lineWidth = 1
-          fgCtx.stroke()
-        }
-
-        fgCtx.restore()
-
-        /* Σ symbol — static (no rotation), sits inside ring */
-        fgCtx.save()
-        fgCtx.globalAlpha = 0.88 * cursorScale
-        fgCtx.font        = `bold ${Math.round(r * 1.18)}px monospace`
-        fgCtx.textAlign    = 'center'
-        fgCtx.textBaseline = 'middle'
-        fgCtx.fillStyle    = '#ffffff'
-        fgCtx.fillText(SIGMA, x, y + 1)
-        fgCtx.restore()
-      }
     }
 
     const frame = () => {
