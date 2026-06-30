@@ -4,8 +4,8 @@ import { useCallback, useEffect, useState } from 'react'
 interface Props { onRegister: () => void; onRules: () => void }
 
 export default function Nav({ onRegister, onRules }: Props) {
-  const [menuOpen,  setMenuOpen]  = useState(false)
-  const [scrolled,  setScrolled]  = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -29,13 +29,6 @@ export default function Nav({ onRegister, onRules }: Props) {
     }
   }, [menuOpen, closeMenu])
 
-  const NAV_LINKS = [
-    { href: '#how',    label: 'How It Works' },
-    { href: '#apis',   label: 'Tracks'       },
-    { href: 'https://docs.telegraphprotocol.com/', label: 'Docs ↗',   external: true },
-    { href: 'https://github.com/telegraphprotocol/telegraph-usecases',     label: 'GitHub ↗', external: true },
-  ]
-
   return (
     <>
       <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`}>
@@ -47,20 +40,13 @@ export default function Nav({ onRegister, onRules }: Props) {
           <span className="nav-badge">Hackathon</span>
         </div>
 
-        {/* Desktop links */}
+        {/* Desktop */}
         <div className="nav-right nav-right-desktop">
-          {NAV_LINKS.map(l => (
-            <a
-              key={l.label}
-              href={l.href}
-              className="nav-link"
-              {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            >
-              {l.label}
-            </a>
-          ))}
           <button className="nav-rules-btn" onClick={onRules}>Rules</button>
-          <button className="btn-register"   onClick={onRegister}>Register Now</button>
+          <a href="https://docs.telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-rules-btn">Docs ↗</a>
+          <a href="https://github.com/telegraphprotocol/telegraph-usecases" target="_blank" rel="noopener noreferrer" className="nav-rules-btn">GitHub ↗</a>
+          <a href="https://telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-rules-btn nav-telegraph">Telegraph ↗</a>
+          <button className="btn-register" onClick={onRegister}>Register Now</button>
         </div>
 
         {/* Mobile controls */}
@@ -84,19 +70,11 @@ export default function Nav({ onRegister, onRules }: Props) {
         <div className="mobile-drawer-bd" onClick={closeMenu}>
           <div className="mobile-drawer" onClick={e => e.stopPropagation()}>
             <div className="mobile-drawer-inner">
-              {NAV_LINKS.map(l => (
-                <a
-                  key={l.label}
-                  href={l.href}
-                  className="mobile-nav-link"
-                  onClick={closeMenu}
-                  {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                >
-                  {l.label}
-                </a>
-              ))}
               <div className="mobile-drawer-divider" />
-              <button className="nav-rules-btn mobile-drawer-btn mobile-rules-btn" onClick={handleRules}>Rules</button>
+              <button className="nav-rules-btn mobile-drawer-btn" onClick={handleRules}>Rules</button>
+              <a href="https://docs.telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>Docs ↗</a>
+              <a href="https://github.com/telegraphprotocol/telegraph-usecases" target="_blank" rel="noopener noreferrer" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>GitHub ↗</a>
+              <a href="https://telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>Telegraph ↗</a>
               <button className="btn-register mobile-drawer-btn" onClick={handleRegister}>Register Now</button>
             </div>
           </div>

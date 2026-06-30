@@ -7,19 +7,22 @@ export default function Hero({ onRegister }: Props) {
     <section className="hero">
       <div className="hero-body">
 
-        <div className="hero-eyebrow">Season I · 2026</div>
+        <div className="hero-eyebrow">Season I · 2026 · For ML Engineers &amp; Quants</div>
 
         <h1 className="hero-h1">Telegraph</h1>
         <p className="hero-h1-light">Hackathon</p>
 
+        <p className="hero-tagline">
+          A new asset class built for machines.
+        </p>
+
         <p className="hero-desc">
-          Mine inference. Rank quality. Build applications.
-          Three tracks. One ecosystem. Real demand decides who wins.
+          Autonomous agents can't act on raw model outputs — they need verifiable signals they can trust. Submit a model, an evaluation script, or both. Winners decided on real performance against ground truth, not opinions.
         </p>
 
         <div className="hero-series-badge">
           <span className="hero-series-dot" />
-          3-Hackathon Series — Up to $15K+ USDC &amp; Machina Rewards
+          3-Hackathon Series — Up to <span className="hero-series-highlight">$15K+ USDC &amp; Machina Rewards</span>
         </div>
 
         <div className="hero-actions">
@@ -44,11 +47,6 @@ export default function Hero({ onRegister }: Props) {
           </div>
         </div>
 
-        <div className="hero-meta-links">
-          <a href="https://docs.telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="hero-protocol-link">Docs ↗</a>
-          <a href="https://github.com/telegraphprotocol/telegraph-usecases" target="_blank" rel="noopener noreferrer" className="hero-protocol-link">GitHub ↗</a>
-          <a href="https://telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="hero-protocol-link">telegraphprotocol.com ↗</a>
-        </div>
       </div>
 
       <div className="hero-art" />
