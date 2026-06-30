@@ -1522,6 +1522,12 @@ a.nav-rules-btn.nav-telegraph:hover {
 
 /* ── Mobile (≤ 900px) ───────────────────────── */
 @media (max-width: 900px) {
+  .nav {
+    border-bottom-color: var(--border);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
   .hero           { height: calc(100dvh - 72px); }
   .ticker-seg     { padding: 0 20px; }
   .ticker-dot     { margin: 0 8px; }
