@@ -491,6 +491,7 @@ body {
 .btn-register {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
   font-size: 14px;
@@ -589,45 +590,111 @@ body {
   background: var(--muted);
 }
 
+/* ── Hero title + prize block ─────────────────── */
+.hero-title-block {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 40px);
+  margin-bottom: clamp(16px, 2.5vh, 32px);
+  animation: fade-up 0.9s ease 0.15s both;
+}
+
+.hero-title-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-title-divider {
+  width: 1px;
+  height: clamp(80px, 12vw, 160px);
+  background: rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+
+.hero-title-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hero-prize-label {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-size: clamp(9px, 0.9vw, 11px);
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(251, 191, 36, 0.4);
+  margin: 0 0 clamp(4px, 0.6vh, 8px);
+}
+
+.hero-prize-amount {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-size: clamp(56px, 12vw, 160px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(251, 191, 36, 1);
+  margin: 0;
+}
+
+.hero-prize-currency {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-size: clamp(18px, 3vw, 42px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  color: rgba(251, 191, 36, 0.75);
+  margin: clamp(2px, 0.4vh, 6px) 0 0;
+}
+
+.hero-prize-sub {
+  font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
+  font-size: clamp(9px, 0.85vw, 11px);
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(251, 191, 36, 0.38);
+  margin: clamp(4px, 0.8vh, 10px) 0 0;
+}
+
 .hero-h1 {
   font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
-  font-size: clamp(40px, 8vw, 110px);
+  font-size: clamp(26px, 5vw, 68px);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.035em;
   text-transform: uppercase;
-  animation: fade-up 0.9s ease 0.15s both;
+  margin: 0;
 }
 
 .hero-h1-light {
   font-family: 'Roboto Mono', 'Roboto Mono Fallback', monospace;
-  font-size: clamp(40px, 8vw, 110px);
+  font-size: clamp(26px, 5vw, 68px);
   font-weight: 200;
   line-height: 0.9;
   letter-spacing: -0.025em;
   text-transform: uppercase;
   color: #fff;
-  margin-bottom: clamp(16px, 3vh, 40px);
-  animation: fade-up 0.9s ease 0.25s both;
+  margin: 0;
 }
 
 .hero-tagline {
-  font-size: clamp(16px, 1.8vw, 22px);
+  font-size: clamp(14px, 1.4vw, 18px);
   font-weight: 500;
   line-height: 1.3;
   color: #fff;
-  max-width: 500px;
-  margin-bottom: clamp(6px, 1vh, 12px);
+  max-width: 540px;
+  margin-bottom: clamp(6px, 1vh, 10px);
   animation: fade-up 0.9s ease 0.28s both;
 }
 
 .hero-desc {
-  font-size: clamp(13px, 1.2vw, 16px);
+  font-size: clamp(12px, 1.1vw, 15px);
   font-weight: 300;
   line-height: 1.7;
-  color: rgba(255,255,255,0.7);
-  max-width: 500px;
-  margin-bottom: clamp(12px, 2vh, 24px);
+  color: rgba(255,255,255,0.6);
+  max-width: 540px;
+  margin-bottom: clamp(10px, 1.8vh, 20px);
   animation: fade-up 0.9s ease 0.35s both;
 }
 
@@ -639,20 +706,13 @@ body {
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(251, 191, 36, 0.85);
-  border: 1px solid rgba(251, 191, 36, 0.22);
-  background: rgba(245, 158, 11, 0.07);
-  padding: 7px 14px;
+  color: rgba(251, 191, 36, 0.7);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  background: rgba(245, 158, 11, 0.06);
+  padding: 6px 12px;
   border-radius: 2px;
-  margin-bottom: clamp(14px, 2.5vh, 28px);
+  margin-bottom: clamp(12px, 2vh, 22px);
   animation: fade-up 0.9s ease 0.38s both;
-}
-
-.hero-series-highlight {
-  font-size: 17px;
-  font-weight: 700;
-  color: rgba(251, 191, 36, 1);
-  letter-spacing: 0.06em;
 }
 
 .hero-series-dot {
@@ -1447,10 +1507,12 @@ a.nav-rules-btn.nav-telegraph:hover {
 /* ── Tablet (Surface Pro 7, iPad, etc.) ─────── */
 @media (max-width: 1024px) {
   .hero              { grid-template-columns: 1fr; }
-  .hero-body         { align-items: center; text-align: center; padding: 80px 48px 48px; }
+  .hero-body         { align-items: center; text-align: center; padding: clamp(24px, 4vh, 48px) 48px; }
   .hero-eyebrow      { justify-content: center; }
   .hero-series-badge { justify-content: center; }
   .hero-actions      { justify-content: center; }
+  .hero-title-block  { justify-content: center; }
+  .hero-title-divider { height: clamp(60px, 10vw, 100px); }
   .hero-art          { display: none; }
   .hero-sculpture    { display: none; }
   .scroll-hint       { left: 0; right: 0; transform: none; width: fit-content; margin: 0 auto; }
@@ -1474,8 +1536,12 @@ a.nav-rules-btn.nav-telegraph:hover {
   .api-panels           { grid-template-columns: 1fr; }
   .api-spacer           { display: none; }
 
-  .hero-body            { padding: clamp(12px, 2vh, 32px) 24px; align-items: center; text-align: center; }
-  .hero-stats           { justify-content: center; margin-top: 32px; }
+  .hero-body            { padding: clamp(12px, 2vh, 28px) 20px; align-items: center; text-align: center; }
+  .hero-title-block     { flex-direction: column; gap: clamp(10px, 2vh, 20px); align-items: center; margin-bottom: clamp(12px, 2vh, 24px); }
+  .hero-title-divider   { width: clamp(48px, 20vw, 120px); height: 1px; }
+  .hero-title-left      { align-items: center; }
+  .hero-title-right     { align-items: center; text-align: center; }
+  .hero-stats           { justify-content: center; margin-top: clamp(12px, 2vh, 24px); }
   .hero-actions         { justify-content: center; }
   .hero-meta-links      { justify-content: center; }
   .scroll-hint          { display: none; }
@@ -1501,17 +1567,18 @@ a.nav-rules-btn.nav-telegraph:hover {
   .nav { padding: 0 16px; }
 
   .hero-h1,
-  .hero-h1-light      { font-size: clamp(42px, 14vw, 72px); }
-  .hero-h1-light      { margin-bottom: 20px; }
-  .hero-eyebrow       { margin-bottom: 18px; font-size: 9px; }
-  .hero-tagline       { font-size: 16px; margin-bottom: 10px; }
-  .hero-desc          { font-size: 13px; margin-bottom: 24px; line-height: 1.7; }
-  .hero-body          { padding: 52px 20px 28px; }
-  .hero-actions       { gap: 8px; }
-  .hero-stats         { gap: 0; margin-top: 24px; justify-content: center; }
-  .hero-stat          { padding: 0 18px; }
-  .hero-stat-val      { font-size: 16px; }
-  .hero-meta-links    { gap: 14px; margin-top: 20px; }
+  .hero-h1-light        { font-size: clamp(20px, 7vw, 36px); }
+  .hero-prize-amount    { font-size: clamp(40px, 13vw, 72px); }
+  .hero-prize-currency  { font-size: clamp(14px, 4vw, 22px); }
+  .hero-eyebrow         { margin-bottom: 12px; font-size: 9px; }
+  .hero-tagline         { font-size: 14px; margin-bottom: 6px; }
+  .hero-desc            { font-size: 12px; margin-bottom: 14px; line-height: 1.65; }
+  .hero-body            { padding: clamp(10px, 1.5vh, 20px) 20px; }
+  .hero-actions         { gap: 8px; }
+  .hero-stats           { gap: 0; margin-top: clamp(10px, 1.8vh, 20px); justify-content: center; }
+  .hero-stat            { padding: 0 14px; }
+  .hero-stat-val        { font-size: 15px; }
+  .hero-series-badge    { margin-bottom: clamp(8px, 1.5vh, 16px); }
 
   .btn-fill,
   .btn-ghost          { padding: 12px 22px; font-size: 10px; }

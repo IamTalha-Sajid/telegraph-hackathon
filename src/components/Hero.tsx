@@ -9,12 +9,22 @@ export default function Hero({ onRegister }: Props) {
 
         <div className="hero-eyebrow">Season I · 2026 · For ML Engineers &amp; Quants</div>
 
-        <h1 className="hero-h1">Telegraph</h1>
-        <p className="hero-h1-light">Hackathon</p>
+        {/* Title + Prize as visual peers */}
+        <div className="hero-title-block">
+          <div className="hero-title-left">
+            <h1 className="hero-h1">Telegraph</h1>
+            <p className="hero-h1-light">Hackathon</p>
+          </div>
+          <div className="hero-title-divider" />
+          <div className="hero-title-right">
+            <p className="hero-prize-label">Up to</p>
+            <p className="hero-prize-amount">$15K+</p>
+            <p className="hero-prize-currency">USDC</p>
+            <p className="hero-prize-sub">+ Machina Rewards</p>
+          </div>
+        </div>
 
-        <p className="hero-tagline">
-          A new asset class built for machines.
-        </p>
+        <p className="hero-tagline">A new asset class built for machines.</p>
 
         <p className="hero-desc">
           Autonomous agents can't act on raw model outputs — they need verifiable signals they can trust. Submit a model, an evaluation script, or both. Winners decided on real performance against ground truth, not opinions.
@@ -22,7 +32,7 @@ export default function Hero({ onRegister }: Props) {
 
         <div className="hero-series-badge">
           <span className="hero-series-dot" />
-          3-Hackathon Series — Up to <span className="hero-series-highlight">$15K+ USDC &amp; Machina Rewards</span>
+          3-Hackathon Series
         </div>
 
         <div className="hero-actions">
