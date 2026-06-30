@@ -23,11 +23,6 @@ export default function Hero({ onRegister }: Props) {
           Autonomous agents can't act on raw model outputs — they need verifiable signals they can trust. Submit a model, an evaluation script, or both. Winners decided on real performance against ground truth, not opinions.
         </p>
 
-        <div className="hero-series-badge">
-          <span className="hero-series-dot" />
-          3-Hackathon Series
-        </div>
-
         <div className="hero-actions">
           <button className="btn-fill" onClick={onRegister}>Register Now</button>
           <a href="#how" className="btn-ghost">How It Works →</a>
