@@ -1,7 +1,7 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-interface Props { onClose: () => void }
+interface Props { onClose: () => void; onRegister?: () => void }
 
 const SECTIONS = [
   {
@@ -20,6 +20,7 @@ const SECTIONS = [
       'Project must be deployed and demo-able — not just a mockup.',
       'Source code must be in a public GitHub repo before the deadline.',
       'Must be built during the hackathon window. Pre-built projects are disqualified.',
+      'Kickoff and all deadlines are at 12:00 UTC.',
     ],
   },
   {
@@ -51,7 +52,7 @@ const SECTIONS = [
   },
 ]
 
-export default function RulesModal({ onClose }: Props) {
+export default function RulesModal({ onClose, onRegister }: Props) {
   const [closing, setClosing] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
 
@@ -125,7 +126,10 @@ export default function RulesModal({ onClose }: Props) {
         {/* Footer */}
         <div className="modal-ft rules-modal-ft">
           <p className="rules-modal-note">By submitting you agree to all rules above.</p>
-          <button className="btn-fill" onClick={close}>Got it</button>
+          <div className="rules-modal-ft-actions">
+            <button className="btn-fill" onClick={close}>Got it</button>
+            <button className="btn-register" onClick={() => { close(); onRegister?.() }}>Register Now</button>
+          </div>
         </div>
 
       </div>

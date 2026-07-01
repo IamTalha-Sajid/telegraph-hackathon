@@ -1,18 +1,18 @@
 'use client'
 
 import { useCallback, useState } from 'react'
-import Loader        from '@/components/Loader'
-import AppBackground  from '@/components/AppBackground'
-import Nav           from '@/components/Nav'
-import Hero          from '@/components/Hero'
-import Ticker             from '@/components/Ticker'
+import Loader             from '@/components/Loader'
+import AppBackground      from '@/components/AppBackground'
+import Nav                from '@/components/Nav'
+import Hero               from '@/components/Hero'
+import ScheduleSection    from '@/components/ScheduleSection'
 import WhyRegisterEarly   from '@/components/WhyRegisterEarly'
 import HackathonSeries    from '@/components/HackathonSeries'
 import HowItWorks         from '@/components/HowItWorks'
-import ApiSection    from '@/components/ApiSection'
-import Footer        from '@/components/Footer'
-import RegisterModal from '@/components/RegisterModal'
-import RulesModal    from '@/components/RulesModal'
+import ApiSection         from '@/components/ApiSection'
+import Footer             from '@/components/Footer'
+import RegisterModal      from '@/components/RegisterModal'
+import RulesModal         from '@/components/RulesModal'
 
 export default function Home() {
   const [loaded,       setLoaded]       = useState(false)
@@ -41,7 +41,7 @@ export default function Home() {
       <div className="site">
         <Nav  onRegister={openRegister} onRules={openRules} />
         <Hero onRegister={openRegister} />
-        <Ticker />
+        <ScheduleSection />
         <WhyRegisterEarly />
         <HackathonSeries />
         <HowItWorks />
@@ -50,7 +50,7 @@ export default function Home() {
       </div>
 
       {showRegister && <RegisterModal onClose={closeRegister} />}
-      {showRules    && <RulesModal    onClose={closeRules}    />}
+      {showRules    && <RulesModal    onClose={closeRules} onRegister={openRegister} />}
     </>
   )
 }

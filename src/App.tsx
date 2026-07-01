@@ -6,6 +6,8 @@ import AppBackground    from './components/AppBackground'
 import Nav              from './components/Nav'
 import Hero             from './components/Hero'
 import Ticker           from './components/Ticker'
+import Countdown        from './components/Countdown'
+import Timeline         from './components/Timeline'
 import HowItWorks       from './components/HowItWorks'
 import ApiSection       from './components/ApiSection'
 import Footer           from './components/Footer'
@@ -41,7 +43,8 @@ export default function App() {
       <div className="site">
         <Nav   onRegister={openRegister} onRules={openRules} />
         <Hero  onRegister={openRegister} />
-        <Ticker />
+        <Countdown />
+        <Timeline />
         <HowItWorks />
         <ApiSection />
         <Footer />

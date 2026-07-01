@@ -11,7 +11,7 @@ const TRACKS = [
       'Progress updates posted on X',
       'Engagement & reach on those posts',
     ],
-    timing: 'Open Aug – mid Sep 2026',
+    timing: 'Aug 17 – Aug 31, 2026 · 15 days',
   },
   {
     num: '02',
@@ -25,7 +25,7 @@ const TRACKS = [
       'Progress updates posted on X',
       'Community engagement & visibility',
     ],
-    timing: 'Open Aug – mid Sep 2026',
+    timing: 'Aug 17 – Aug 31, 2026 · 15 days',
   },
   {
     num: '03',
@@ -39,7 +39,7 @@ const TRACKS = [
       'Must use Telegraph miners',
       'Engagement on posts showcasing the project',
     ],
-    timing: 'Opens after Track 1 & 2 close',
+    timing: 'Aug 31 – Sep 7, 2026 · 7 days',
   },
 ]
 
@@ -73,7 +73,6 @@ export default function ApiSection() {
                   <li key={i}>{c}</li>
                 ))}
               </ul>
-              <div className="card-foot">{t.timing}</div>
             </div>
           ))}
         </div>

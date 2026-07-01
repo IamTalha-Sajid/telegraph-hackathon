@@ -2,8 +2,8 @@ const HACKATHONS = [
   {
     id: 'H1',
     label: 'Hackathon 1',
-    dates: 'Early Aug – Mid Sep 2026',
-    duration: '6 weeks',
+    dates: 'Aug 17 – Sep 7, 2026',
+    duration: '21 days',
     prize: '$5K USDC',
     focus: 'Register miners and script authors, build initial models and evaluation scripts, and test the ranking and evaluation flow.',
     muted: false,
@@ -13,8 +13,8 @@ const HACKATHONS = [
   {
     id: 'H2',
     label: 'Hackathon 2',
-    dates: 'Early Oct – Mid Nov 2026',
-    duration: '6 weeks',
+    dates: 'Mid October 2026',
+    duration: '',
     prize: '$10K USDC',
     focus: 'Improve on Hackathon 1, attract more participants, and refine models and evaluation scripts.',
     muted: false,
@@ -33,8 +33,6 @@ const HACKATHONS = [
     bootstrapNote: false,
   },
 ]
-
-const TRACKS = ['Miner Track', 'Script Author Track', 'Application Track']
 
 export default function HackathonSeries() {
   return (
@@ -68,18 +66,7 @@ export default function HackathonSeries() {
               )}
               <div className="card-title">{h.prize}</div>
               <div className="card-body">{h.focus}</div>
-              <div className="card-meta">Tracks</div>
-              <ul className="card-list">
-                {TRACKS.map(t => (
-                  <li key={t}>{t}</li>
-                ))}
-              </ul>
-              <div className="card-foot">{h.dates} · {h.duration}</div>
-              {h.bootstrapNote && (
-                <p className="card-note">
-                  USDC-based to bootstrap and test the system before Machina launch
-                </p>
-              )}
+              <div className="card-foot">{h.dates}{h.duration ? ` · ${h.duration}` : ''}</div>
             </div>
           ))}
         </div>
