@@ -24,7 +24,7 @@ export default function Hero({ onRegister }: Props) {
         </p>
 
         <div className="hero-actions">
-          <button className="btn-fill" onClick={onRegister}>Register Now</button>
+          <button className="btn-register" onClick={onRegister}>Register Now</button>
           <a href="#how" className="btn-ghost">How It Works →</a>
         </div>
 
