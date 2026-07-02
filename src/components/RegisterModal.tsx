@@ -5,6 +5,7 @@ interface Props { onClose: () => void }
 
 type ParticipantType = 'individual' | 'team'
 type Level           = 'beginner' | 'intermediate' | 'advanced'
+type Step            = 'email' | 'otp' | 'form' | 'done'
 
 interface FormData {
   name:        string
@@ -19,7 +20,6 @@ interface FormData {
   projectName: string
   projectDesc: string
   subnets:     string[]
-  github:      string
   techStack:   string
 }
 
@@ -30,23 +30,28 @@ const DISCORD_INVITE = 'https://discord.gg/telegraphprotocol'
 const EMPTY: FormData = {
   name: '', email: '', type: 'individual', orgName: '', teamSize: '2 – 5',
   wallet: '', twitter: '', discord: '', level: 'intermediate',
-  projectName: '', projectDesc: '', subnets: [], github: '', techStack: '',
+  projectName: '', projectDesc: '', subnets: [], techStack: '',
 }
 
-const SUBNETS = [
+const SUBNETS    = [
   'Financial Data', 'Weather & Climate', 'Social Sentiment',
   'On-chain Analytics', 'AI / LLM Inference', 'Sports & Events',
   'News & Media', 'Custom / Other',
 ]
-
-const TEAM_SIZES  = ['2 – 5', '6 – 10', '11 – 20', '20+']
+const TEAM_SIZES = ['2 – 5', '6 – 10', '11 – 20', '20+']
 const LEVELS: { v: Level; label: string }[] = [
   { v: 'beginner',     label: 'Beginner'     },
   { v: 'intermediate', label: 'Intermediate' },
   { v: 'advanced',     label: 'Advanced'     },
 ]
 
-/* ── Field wrapper ───────────────────────────── */
+const STEP_LABELS: Record<Step, string> = {
+  email: 'Verify your email',
+  otp:   'Enter your code',
+  form:  'Registration',
+  done:  '',
+}
+
 function Field({
   label, id, optional, error, children,
 }: {
@@ -65,16 +70,25 @@ function Field({
   )
 }
 
-/* ── Modal ───────────────────────────────────── */
 export default function RegisterModal({ onClose }: Props) {
-  const [step,      setStep]      = useState<1 | 2 | 'done'>(1)
-  const [form,      setForm]      = useState<FormData>(EMPTY)
-  const [errors,    setErrors]    = useState<Errors>({})
-  const [closing,   setClosing]   = useState(false)
-  const [submitting,   setSubmitting]   = useState(false)
-  const [submitErr,    setSubmitErr]    = useState('')
+  const [step,          setStep]          = useState<Step>('email')
+  const [email,         setEmail]         = useState('')
+  const [emailErr,      setEmailErr]      = useState('')
+  const [sending,       setSending]       = useState(false)
+  const [token,         setToken]         = useState('')
+  const [otp,           setOtp]           = useState(['', '', '', '', '', ''])
+  const [otpErr,        setOtpErr]        = useState('')
+  const [verifying,     setVerifying]     = useState(false)
+  const [isReturning,   setIsReturning]   = useState(false)
+  const [form,          setForm]          = useState<FormData>(EMPTY)
+  const [errors,        setErrors]        = useState<Errors>({})
   const [discordJoined, setDiscordJoined] = useState(false)
-  const panelRef                  = useRef<HTMLDivElement>(null)
+  const [submitting,    setSubmitting]    = useState(false)
+  const [submitErr,     setSubmitErr]     = useState('')
+  const [closing,       setClosing]       = useState(false)
+
+  const panelRef  = useRef<HTMLDivElement>(null)
+  const otpRefs   = useRef<(HTMLInputElement | null)[]>([])
 
   const close = useCallback(() => {
     setClosing(true)
@@ -105,58 +119,115 @@ export default function RegisterModal({ onClose }: Props) {
         : [...f.subnets, s],
     })), [])
 
-  const validate1 = () => {
-    const e: Errors = {}
-    if (!form.name.trim()) e.name = 'Required'
-    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      e.email = 'Valid email required'
-    if (form.type === 'team' && !form.orgName.trim()) e.orgName = 'Required'
-    if (!form.discord.trim()) e.discord = 'Required'
-    if (!discordJoined) e.discordJoin = 'Please join the Discord server first'
-    setErrors(e)
-    return Object.keys(e).length === 0
+  /* ── Email step ── */
+  const handleSendOtp = async (emailOverride?: string) => {
+    const target = emailOverride ?? email
+    if (!target.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(target)) {
+      setEmailErr('Please enter a valid email address')
+      return
+    }
+    setEmailErr('')
+    setSending(true)
+    try {
+      const res  = await fetch('/api/auth/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: target }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setEmailErr(data.error ?? 'Failed to send code'); return }
+      setToken(data.token)
+      setOtp(['', '', '', '', '', ''])
+      setOtpErr('')
+      setStep('otp')
+      setTimeout(() => otpRefs.current[0]?.focus(), 80)
+    } catch {
+      setEmailErr('Network error. Please try again.')
+    } finally {
+      setSending(false)
+    }
   }
 
-  const validate2 = () => {
+  /* ── OTP step ── */
+  const handleOtpInput = (i: number, val: string) => {
+    const digit = val.replace(/\D/g, '').slice(-1)
+    const next  = [...otp]
+    next[i] = digit
+    setOtp(next)
+    if (digit && i < 5) otpRefs.current[i + 1]?.focus()
+  }
+
+  const handleOtpKeyDown = (i: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && !otp[i] && i > 0) otpRefs.current[i - 1]?.focus()
+  }
+
+  const handleVerify = async () => {
+    const code = otp.join('')
+    if (code.length < 6) { setOtpErr('Please enter the full 6-digit code'); return }
+    setOtpErr('')
+    setVerifying(true)
+    try {
+      const res  = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, otp: code }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setOtpErr(data.error ?? 'Verification failed'); return }
+      if (data.existing) {
+        setForm({ ...EMPTY, ...data.existing })
+        setIsReturning(true)
+      } else {
+        setForm({ ...EMPTY, email: data.email })
+        setIsReturning(false)
+      }
+      setErrors({})
+      setStep('form')
+    } catch {
+      setOtpErr('Network error. Please try again.')
+    } finally {
+      setVerifying(false)
+    }
+  }
+
+  /* ── Form step ── */
+  const validateForm = () => {
     const e: Errors = {}
+    if (!form.name.trim())        e.name        = 'Required'
+    if (form.type === 'team' && !form.orgName.trim()) e.orgName = 'Required'
+    if (!form.discord.trim())     e.discord     = 'Required'
+    if (!discordJoined)           e.discordJoin = 'Please join the Discord server first'
     if (!form.projectName.trim()) e.projectName = 'Required'
     if (form.projectDesc.trim().length < 20)
       e.projectDesc = 'Please describe your project (min 20 characters)'
-    if (!form.github.trim()) e.github = 'Required'
     setErrors(e)
     return Object.keys(e).length === 0
   }
 
-  const handleNext = async () => {
-    if (step === 1) {
-      if (validate1()) { setErrors({}); setStep(2) }
-      return
-    }
-    if (step === 2 && validate2()) {
-      setErrors({})
-      setSubmitting(true)
-      setSubmitErr('')
-      try {
-        const res = await fetch('/api/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(form),
-        })
-        const data = await res.json()
-        if (!res.ok) {
-          setSubmitErr(data.error ?? 'Something went wrong. Please try again.')
-        } else {
-          setStep('done')
-        }
-      } catch {
-        setSubmitErr('Network error. Please try again.')
-      } finally {
-        setSubmitting(false)
+  const handleSubmit = async () => {
+    if (!validateForm()) return
+    setSubmitting(true)
+    setSubmitErr('')
+    try {
+      const res  = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setSubmitErr(data.error ?? 'Something went wrong. Please try again.')
+      } else {
+        setStep('done')
       }
+    } catch {
+      setSubmitErr('Network error. Please try again.')
+    } finally {
+      setSubmitting(false)
     }
   }
 
-  const cls = `modal-panel${closing ? ' modal-panel-out' : ''}`
+  const progressPct = step === 'email' ? 25 : step === 'otp' ? 50 : step === 'form' ? 75 : 100
 
   return (
     <div
@@ -164,7 +235,7 @@ export default function RegisterModal({ onClose }: Props) {
       onClick={close}
     >
       <div
-        className={cls}
+        className={`modal-panel${closing ? ' modal-panel-out' : ''}`}
         ref={panelRef}
         tabIndex={-1}
         role="dialog"
@@ -172,39 +243,37 @@ export default function RegisterModal({ onClose }: Props) {
         aria-label="Register for Telegraph Hackathon"
         onClick={e => e.stopPropagation()}
       >
-
-        {/* ── Header ── */}
+        {/* Header */}
         <div className="modal-hd">
           <div className="modal-hd-left">
             <img src="/Telegraoh-Logo.png" alt="" className="modal-sigma" aria-hidden="true" />
             <div>
               <p className="modal-hd-title">Register</p>
               {step !== 'done' && (
-                <p className="modal-hd-sub">
-                  {step === 1 ? 'Step 1 — About you' : 'Step 2 — Your project'}
-                </p>
+                <p className="modal-hd-sub">{STEP_LABELS[step]}</p>
               )}
             </div>
           </div>
           <button className="modal-x" onClick={close} aria-label="Close">✕</button>
         </div>
 
-        {/* ── Step progress ── */}
+        {/* Progress bar */}
         {step !== 'done' && (
-          <div className="modal-prog">
-            <div className={`modal-prog-bar${step >= 1 ? ' on' : ''}`} />
-            <div className={`modal-prog-bar${step === 2 ? ' on' : ''}`} />
+          <div className="modal-prog-wrap">
+            <div className="modal-prog-track">
+              <div className="modal-prog-fill" style={{ width: `${progressPct}%` }} />
+            </div>
           </div>
         )}
 
-        {/* ── Body ── */}
+        {/* Body */}
         <div className="modal-body">
 
-          {/* Done */}
+          {/* ── Done ── */}
           {step === 'done' && (
             <div className="modal-done" key="done">
               <img src="/Telegraoh-Logo.png" alt="" className="done-sigma" />
-              <p className="done-title">You're registered.</p>
+              <p className="done-title">{isReturning ? 'Registration updated.' : "You're registered."}</p>
               <p className="done-sub">
                 We'll reach out to <strong>{form.email}</strong> with next steps.<br />
                 Build something incredible.
@@ -213,9 +282,82 @@ export default function RegisterModal({ onClose }: Props) {
             </div>
           )}
 
-          {/* Step 1 */}
-          {step === 1 && (
-            <div className="modal-fields" key="s1">
+          {/* ── Email step ── */}
+          {step === 'email' && (
+            <div className="modal-fields" key="email">
+              <p className="otp-hint">Enter your email and we'll send you a verification code.</p>
+              <Field label="Email Address" id="r-email" error={emailErr}>
+                <input
+                  id="r-email"
+                  type="email"
+                  className={`mi${emailErr ? ' mi-e' : ''}`}
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleSendOtp()}
+                  autoFocus
+                />
+              </Field>
+            </div>
+          )}
+
+          {/* ── OTP step ── */}
+          {step === 'otp' && (
+            <div className="modal-fields" key="otp">
+              <p className="otp-hint">
+                We sent a 6-digit code to <strong>{email}</strong>. Enter it below.
+              </p>
+              <div className="otp-boxes">
+                {otp.map((digit, i) => (
+                  <input
+                    key={i}
+                    ref={el => { otpRefs.current[i] = el }}
+                    className={`otp-box${otpErr ? ' otp-box-err' : ''}`}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={digit}
+                    onChange={e => handleOtpInput(i, e.target.value)}
+                    onKeyDown={e => handleOtpKeyDown(i, e)}
+                    onPaste={i === 0 ? e => {
+                      e.preventDefault()
+                      const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6)
+                      const next = [...otp]
+                      pasted.split('').forEach((c, j) => { if (j < 6) next[j] = c })
+                      setOtp(next)
+                      otpRefs.current[Math.min(pasted.length, 5)]?.focus()
+                    } : undefined}
+                  />
+                ))}
+              </div>
+              {otpErr && <p className="mf-err" style={{ textAlign: 'center' }}>{otpErr}</p>}
+              <p className="otp-resend">
+                Didn't receive it?{' '}
+                <button
+                  className="otp-resend-btn"
+                  onClick={() => handleSendOtp(email)}
+                  disabled={sending}
+                >
+                  {sending ? 'Sending…' : 'Resend code'}
+                </button>
+              </p>
+            </div>
+          )}
+
+          {/* ── Form step ── */}
+          {step === 'form' && (
+            <div className="modal-fields" key="form">
+
+              {/* Returning user banner */}
+              {isReturning && (
+                <div className="reg-returning-banner">
+                  <span className="reg-returning-icon">✓</span>
+                  Welcome back! Your previous registration has been pre-filled. You can update any details below.
+                </div>
+              )}
+
+              {/* About You */}
+              <p className="form-section-label">About You</p>
 
               <Field label="Full Name" id="r-name" error={errors.name}>
                 <input
@@ -227,18 +369,6 @@ export default function RegisterModal({ onClose }: Props) {
                 />
               </Field>
 
-              <Field label="Email Address" id="r-email" error={errors.email}>
-                <input
-                  id="r-email"
-                  type="email"
-                  className={`mi${errors.email ? ' mi-e' : ''}`}
-                  placeholder="you@example.com"
-                  value={form.email}
-                  onChange={e => set('email', e.target.value)}
-                />
-              </Field>
-
-              {/* Type radio */}
               <Field label="Participating as">
                 <div className="radio-row">
                   {(['individual', 'team'] as const).map(t => (
@@ -255,7 +385,6 @@ export default function RegisterModal({ onClose }: Props) {
                 </div>
               </Field>
 
-              {/* Conditional team fields */}
               {form.type === 'team' && (
                 <div className="two-col">
                   <Field label="Organization / Team Name" id="r-org" error={errors.orgName}>
@@ -284,7 +413,6 @@ export default function RegisterModal({ onClose }: Props) {
                 </div>
               )}
 
-              {/* Experience level */}
               <Field label="Experience Level">
                 <div className="radio-row">
                   {LEVELS.map(({ v, label }) => (
@@ -340,19 +468,13 @@ export default function RegisterModal({ onClose }: Props) {
                   className={`btn-discord-join${discordJoined ? ' btn-discord-joined' : ''}`}
                   onClick={() => setDiscordJoined(true)}
                 >
-                  {discordJoined
-                    ? '✓ Discord Joined'
-                    : '↗ Join Discord Server'}
+                  {discordJoined ? '✓ Discord Joined' : '↗ Join Discord Server'}
                 </a>
                 {errors.discordJoin && <p className="mf-err">{errors.discordJoin}</p>}
               </div>
 
-            </div>
-          )}
-
-          {/* Step 2 */}
-          {step === 2 && (
-            <div className="modal-fields" key="s2">
+              {/* Project */}
+              <p className="form-section-label" style={{ marginTop: '24px' }}>Your Project</p>
 
               <Field label="Project Name" id="r-pname" error={errors.projectName}>
                 <input
@@ -373,9 +495,7 @@ export default function RegisterModal({ onClose }: Props) {
                       className={`subnet-chip${form.subnets.includes(s) ? ' subnet-on' : ''}`}
                       onClick={() => toggleSubnet(s)}
                     >
-                      <span className="subnet-chk">
-                        {form.subnets.includes(s) ? '✓' : ''}
-                      </span>
+                      <span className="subnet-chk">{form.subnets.includes(s) ? '✓' : ''}</span>
                       {s}
                     </button>
                   ))}
@@ -403,32 +523,36 @@ export default function RegisterModal({ onClose }: Props) {
                 />
               </Field>
 
-              <Field label="GitHub Repository" id="r-github" error={errors.github}>
-                <input
-                  id="r-github"
-                  className={`mi${errors.github ? ' mi-e' : ''}`}
-                  placeholder="github.com/you/repo"
-                  value={form.github}
-                  onChange={e => set('github', e.target.value)}
-                />
-              </Field>
-
             </div>
           )}
         </div>
 
-        {/* ── Footer ── */}
+        {/* Footer */}
         {step !== 'done' && (
           <div className="modal-ft" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '10px' }}>
             {submitErr && <p className="mf-err" style={{ textAlign: 'center' }}>{submitErr}</p>}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              {step === 2
-                ? <button className="modal-back" onClick={() => { setErrors({}); setSubmitErr(''); setStep(1) }}>← Back</button>
+              {step === 'otp'
+                ? <button className="modal-back" onClick={() => setStep('email')}>← Back</button>
+                : step === 'form'
+                ? <button className="modal-back" onClick={() => setStep('otp')}>← Back</button>
                 : <span />
               }
-              <button className="btn-register" onClick={handleNext} disabled={submitting}>
-                {submitting ? 'Submitting…' : step === 1 ? 'Continue →' : 'Submit Registration'}
-              </button>
+              {step === 'email' && (
+                <button className="btn-register" onClick={() => handleSendOtp()} disabled={sending}>
+                  {sending ? 'Sending…' : 'Send Code →'}
+                </button>
+              )}
+              {step === 'otp' && (
+                <button className="btn-register" onClick={handleVerify} disabled={verifying}>
+                  {verifying ? 'Verifying…' : 'Verify →'}
+                </button>
+              )}
+              {step === 'form' && (
+                <button className="btn-register" onClick={handleSubmit} disabled={submitting}>
+                  {submitting ? 'Submitting…' : isReturning ? 'Update Registration' : 'Submit Registration'}
+                </button>
+              )}
             </div>
           </div>
         )}
