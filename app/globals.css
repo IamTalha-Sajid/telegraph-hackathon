@@ -2057,6 +2057,21 @@ a.nav-rules-btn.nav-telegraph:hover {
 .otp-resend-btn:hover { color: rgba(251, 191, 36, 1); }
 .otp-resend-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+.otp-spam-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+.otp-spam-notice strong { color: rgba(255, 255, 255, 0.7); }
+
 /* Returning user banner */
 .reg-returning-banner {
   display: flex;

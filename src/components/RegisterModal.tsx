@@ -196,7 +196,7 @@ export default function RegisterModal({ onClose }: Props) {
     if (!form.name.trim())        e.name        = 'Required'
     if (form.type === 'team' && !form.orgName.trim()) e.orgName = 'Required'
     if (!form.discord.trim())     e.discord     = 'Required'
-    if (!discordJoined)           e.discordJoin = 'Please join the Discord server first'
+    if (!isReturning && !discordJoined) e.discordJoin = 'Please join the Discord server first'
     if (!form.projectName.trim()) e.projectName = 'Required'
     if (form.projectDesc.trim().length < 20)
       e.projectDesc = 'Please describe your project (min 20 characters)'
@@ -307,6 +307,10 @@ export default function RegisterModal({ onClose }: Props) {
               <p className="otp-hint">
                 We sent a 6-digit code to <strong>{email}</strong>. Enter it below.
               </p>
+              <div className="otp-spam-notice">
+                <span>📬</span>
+                <span>Can't find it? Check your <strong>spam or junk</strong> folder — it may have been filtered.</span>
+              </div>
               <div className="otp-boxes">
                 {otp.map((digit, i) => (
                   <input
@@ -460,6 +464,7 @@ export default function RegisterModal({ onClose }: Props) {
                 />
               </Field>
 
+              {!isReturning && (
               <div className="mf">
                 <a
                   href={DISCORD_INVITE}
@@ -472,6 +477,7 @@ export default function RegisterModal({ onClose }: Props) {
                 </a>
                 {errors.discordJoin && <p className="mf-err">{errors.discordJoin}</p>}
               </div>
+              )}
 
               {/* Project */}
               <p className="form-section-label" style={{ marginTop: '24px' }}>Your Project</p>
