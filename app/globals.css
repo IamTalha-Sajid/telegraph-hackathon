@@ -2771,6 +2771,12 @@ a.nav-rules-btn.nav-telegraph:hover {
   margin: 0;
 }
 
+.criteria-x-link {
+  color: rgba(96,165,250,0.8);
+  text-decoration: none;
+}
+.criteria-x-link:hover { color: rgba(96,165,250,1); text-decoration: underline; }
+
 /* Info box */
 .rules-info-box {
   margin-top: 28px;

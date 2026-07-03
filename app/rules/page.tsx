@@ -41,18 +41,18 @@ const TRACKS = [
 
 const MINER_CRITERIA = [
   { pct: 75, label: 'Normalized Performance (within Intent)', desc: 'Your average Canonical Score divided by the highest average score achieved inside your specific Intent. The best miner in every Intent automatically gets full points — ensuring fairness across Intents of different difficulty.' },
-  { pct: 25, label: 'Engagement & Updates on X',              desc: 'Quality, consistency, reach, and meaningful engagement of updates posted on X. Tag @Telegraphprotoc in all update posts.' },
+  { pct: 25, label: 'Engagement & Updates on X',              desc: 'Quality, consistency, reach, and meaningful engagement of updates posted on X. Tag <a href="https://x.com/Telegraphprotoc" target="_blank" rel="noopener noreferrer" class="criteria-x-link">@Telegraphprotoc</a> in all update posts.' },
 ]
 const SCRIPT_CRITERIA = [
   { pct: 50, label: 'Improvement over Baseline',          desc: 'How accurately and effectively the script evaluates miner outputs vs the current Canonical Script.' },
   { pct: 30, label: 'Robustness & Code Quality',          desc: 'Clean code structure, proper handling of edge cases, and adherence to WASM/sandbox constraints.' },
-  { pct: 10, label: 'Engagement & Updates on X',          desc: 'Quality, consistency, reach, and engagement of updates posted on X. Tag @Telegraphprotoc in all update posts.' },
+  { pct: 10, label: 'Engagement & Updates on X',          desc: 'Quality, consistency, reach, and engagement of updates posted on X. Tag <a href="https://x.com/Telegraphprotoc" target="_blank" rel="noopener noreferrer" class="criteria-x-link">@Telegraphprotoc</a> in all update posts.' },
   { pct: 10, label: 'Community Engagement & Adoption',    desc: 'Mentions, feedback, and actual adoption of your script by others.' },
 ]
 const APP_CRITERIA = [
   { pct: 45, label: 'Real Usage & Adoption',                        desc: 'Number of real users + actual volume of Telegraph calls made by your application.' },
   { pct: 25, label: 'Usefulness, Creativity & Depth of Integration', desc: 'How useful and creative the application is, and how deeply it leverages Telegraph\'s intelligence layer (off-chain and on-chain).' },
-  { pct: 25, label: 'Engagement & Updates on X',                    desc: 'Quality, reach, and meaningful engagement of updates posted on X. Tag @Telegraphprotoc in all update posts.' },
+  { pct: 25, label: 'Engagement & Updates on X',                    desc: 'Quality, reach, and meaningful engagement of updates posted on X. Tag <a href="https://x.com/Telegraphprotoc" target="_blank" rel="noopener noreferrer" class="criteria-x-link">@Telegraphprotoc</a> in all update posts.' },
   { pct: 5,  label: 'Technical Execution & Integration Quality',     desc: 'Cleanliness and reliability of the integration with Telegraph.' },
 ]
 
@@ -99,7 +99,7 @@ function CriteriaBar({ pct, label, desc, delay }: { pct: number; label: string; 
       <div className="criteria-track">
         <div className="criteria-fill" style={{ width: vis ? `${pct}%` : '0%' }} />
       </div>
-      <p className="criteria-desc">{desc}</p>
+      <p className="criteria-desc" dangerouslySetInnerHTML={{ __html: desc }} />
     </div>
   )
 }
