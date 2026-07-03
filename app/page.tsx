@@ -12,18 +12,14 @@ import HowItWorks         from '@/components/HowItWorks'
 import ApiSection         from '@/components/ApiSection'
 import Footer             from '@/components/Footer'
 import RegisterModal      from '@/components/RegisterModal'
-import RulesModal         from '@/components/RulesModal'
 
 export default function Home() {
   const [loaded,       setLoaded]       = useState(false)
   const [showRegister, setShowRegister] = useState(false)
-  const [showRules,    setShowRules]    = useState(false)
 
   const onLoaderDone  = useCallback(() => setLoaded(true),        [])
   const openRegister  = useCallback(() => setShowRegister(true),  [])
   const closeRegister = useCallback(() => setShowRegister(false), [])
-  const openRules     = useCallback(() => setShowRules(true),     [])
-  const closeRules    = useCallback(() => setShowRules(false),    [])
 
   return (
     <>
@@ -39,7 +35,7 @@ export default function Home() {
       <AppBackground />
 
       <div className="site">
-        <Nav  onRegister={openRegister} onRules={openRules} />
+        <Nav  onRegister={openRegister} />
         <Hero onRegister={openRegister} />
         <ScheduleSection />
         <WhyRegisterEarly />
@@ -50,7 +46,6 @@ export default function Home() {
       </div>
 
       {showRegister && <RegisterModal onClose={closeRegister} />}
-      {showRules    && <RulesModal    onClose={closeRules} onRegister={openRegister} />}
     </>
   )
 }

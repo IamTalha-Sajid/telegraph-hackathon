@@ -41,7 +41,7 @@ export default function App() {
       <AppBackground />
 
       <div className="site">
-        <Nav   onRegister={openRegister} onRules={openRules} />
+        <Nav   onRegister={openRegister} />
         <Hero  onRegister={openRegister} />
         <Countdown />
         <Timeline />

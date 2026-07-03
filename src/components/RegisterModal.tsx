@@ -53,9 +53,9 @@ const STEP_LABELS: Record<Step, string> = {
 }
 
 function Field({
-  label, id, optional, error, children,
+  label, id, optional, error, hint, children,
 }: {
-  label: string; id?: string; optional?: boolean; error?: string; children: ReactNode
+  label: string; id?: string; optional?: boolean; error?: string; hint?: string; children: ReactNode
 }) {
   return (
     <div className="mf">
@@ -64,6 +64,7 @@ function Field({
         {label}
         {optional && <span className="mf-opt"> · optional</span>}
       </label>
+      {hint && <p className="mf-hint">{hint}</p>}
       {children}
       {error && <p className="mf-err">{error}</p>}
     </div>
@@ -482,17 +483,26 @@ export default function RegisterModal({ onClose }: Props) {
               {/* Project */}
               <p className="form-section-label" style={{ marginTop: '24px' }}>Your Project</p>
 
-              <Field label="Project Name" id="r-pname" error={errors.projectName}>
+              <Field
+                label="Project Name"
+                id="r-pname"
+                error={errors.projectName}
+                hint="What's your project called? It doesn't have to be final — you can change it later."
+              >
                 <input
                   id="r-pname"
                   className={`mi${errors.projectName ? ' mi-e' : ''}`}
-                  placeholder="My Intelligence App"
+                  placeholder="e.g. AlphaSignal, WeatherOracle, TruthNet"
                   value={form.projectName}
                   onChange={e => set('projectName', e.target.value)}
                 />
               </Field>
 
-              <Field label="Miners you plan to use" optional>
+              <Field
+                label="Miners you plan to use"
+                optional
+                hint="Miners are Telegraph's data providers — each one serves a different type of verified data feed. Select the ones relevant to your project. Not sure yet? Pick your best guess."
+              >
                 <div className="subnet-grid">
                   {MINERS.map(s => (
                     <button
@@ -508,22 +518,32 @@ export default function RegisterModal({ onClose }: Props) {
                 </div>
               </Field>
 
-              <Field label="Project Description" id="r-desc" error={errors.projectDesc}>
+              <Field
+                label="Project Description"
+                id="r-desc"
+                error={errors.projectDesc}
+                hint="Briefly describe what you're building and how it uses Telegraph's verified data. 2–3 sentences is enough."
+              >
                 <textarea
                   id="r-desc"
                   className={`mi mi-ta${errors.projectDesc ? ' mi-e' : ''}`}
-                  placeholder="Describe what you're building and how you'll use Telegraph's verified inference layer…"
+                  placeholder="e.g. A trading bot that pulls verified price feeds from Telegraph miners and only executes when signal confidence exceeds 95%. Built with Python and deployed on Base."
                   rows={4}
                   value={form.projectDesc}
                   onChange={e => set('projectDesc', e.target.value)}
                 />
               </Field>
 
-              <Field label="Tech Stack" id="r-stack" optional>
+              <Field
+                label="Tech Stack"
+                id="r-stack"
+                optional
+                hint="Languages, frameworks, or tools you plan to use. Helps us tailor support during the hackathon."
+              >
                 <input
                   id="r-stack"
                   className="mi"
-                  placeholder="React, Solidity, Python, Next.js…"
+                  placeholder="e.g. Python, Next.js, Solidity, Hardhat, FastAPI"
                   value={form.techStack}
                   onChange={e => set('techStack', e.target.value)}
                 />
