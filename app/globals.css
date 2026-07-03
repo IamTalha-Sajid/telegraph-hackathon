@@ -2475,6 +2475,7 @@ a.nav-rules-btn.nav-telegraph:hover {
   align-items: center;
   gap: 10px;
   text-decoration: none;
+  color: #fff;
 }
 
 .rules-nav-back {
