@@ -6,7 +6,7 @@ export const SHEET_TAB = 'Sheet1'
 export const HEADERS = [
   'Timestamp', 'Name', 'Email', 'Type', 'Org / Team Name', 'Team Size',
   'Wallet', 'Twitter', 'Discord', 'Level',
-  'Project Name', 'Subnets', 'Project Description', 'Tech Stack',
+  'Project Name', 'Miners', 'Project Description', 'Tech Stack',
 ]
 
 export function getAuth() {

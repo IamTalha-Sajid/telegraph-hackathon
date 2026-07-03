@@ -33,7 +33,7 @@ const EMPTY: FormData = {
   projectName: '', projectDesc: '', subnets: [], techStack: '',
 }
 
-const SUBNETS    = [
+const MINERS    = [
   'Financial Data', 'Weather & Climate', 'Social Sentiment',
   'On-chain Analytics', 'AI / LLM Inference', 'Sports & Events',
   'News & Media', 'Custom / Other',
@@ -111,7 +111,7 @@ export default function RegisterModal({ onClose }: Props) {
   const set = useCallback(<K extends keyof FormData>(k: K, v: FormData[K]) =>
     setForm(f => ({ ...f, [k]: v })), [])
 
-  const toggleSubnet = useCallback((s: string) =>
+  const toggleMiner = useCallback((s: string) =>
     setForm(f => ({
       ...f,
       subnets: f.subnets.includes(s)
@@ -285,7 +285,7 @@ export default function RegisterModal({ onClose }: Props) {
           {/* ── Email step ── */}
           {step === 'email' && (
             <div className="modal-fields" key="email">
-              <p className="otp-hint">Enter your email and we'll send you a verification code.</p>
+              <p className="otp-hint">Enter your email and we'll send you a verification code so we can detect spam and keep the hackathon fair.</p>
               <Field label="Email Address" id="r-email" error={emailErr}>
                 <input
                   id="r-email"
@@ -492,14 +492,14 @@ export default function RegisterModal({ onClose }: Props) {
                 />
               </Field>
 
-              <Field label="Subnets you plan to use" optional>
+              <Field label="Miners you plan to use" optional>
                 <div className="subnet-grid">
-                  {SUBNETS.map(s => (
+                  {MINERS.map(s => (
                     <button
                       key={s}
                       type="button"
                       className={`subnet-chip${form.subnets.includes(s) ? ' subnet-on' : ''}`}
-                      onClick={() => toggleSubnet(s)}
+                      onClick={() => toggleMiner(s)}
                     >
                       <span className="subnet-chk">{form.subnets.includes(s) ? '✓' : ''}</span>
                       {s}
