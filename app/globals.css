@@ -2918,6 +2918,79 @@ a.nav-rules-btn.nav-telegraph:hover {
   border-top: 1px solid rgba(255,255,255,0.05);
 }
 
+/* Purpose list */
+.purpose-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.purpose-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.65;
+}
+
+.purpose-check {
+  color: rgba(134,239,172,0.8);
+  flex-shrink: 0;
+  font-size: 14px;
+  margin-top: 1px;
+}
+
+/* Intent box */
+.intent-box {
+  background: rgba(96,165,250,0.06);
+  border: 1px solid rgba(96,165,250,0.2);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin: 28px 0 0;
+}
+
+.intent-box-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(96,165,250,0.7);
+  margin: 0 0 10px;
+}
+
+.intent-box-body {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Info box list */
+.info-box-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-box-list li {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.info-box-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: rgba(134,239,172,0.5);
+}
+
 /* Rules page responsive */
 @media (max-width: 640px) {
   .rules-hero    { padding: 72px 20px 48px; }
