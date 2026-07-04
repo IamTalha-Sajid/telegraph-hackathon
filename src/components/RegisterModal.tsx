@@ -82,6 +82,7 @@ export default function RegisterModal({ onClose }: Props) {
   const [submitting,    setSubmitting]    = useState(false)
   const [submitErr,     setSubmitErr]     = useState('')
   const [closing,       setClosing]       = useState(false)
+  const [lookingUp,     setLookingUp]     = useState(false)
 
   // OTP state — commented out, re-enable with OTP flow
   // const [sending,   setSending]   = useState(false)
@@ -122,15 +123,34 @@ export default function RegisterModal({ onClose }: Props) {
         : [...f.subnets, s],
     })), [])
 
-  /* ── Email step — validates format then proceeds directly to form ── */
-  const handleEmailContinue = () => {
+  /* ── Email step — validates format, looks up existing data, then proceeds to form ── */
+  const handleEmailContinue = async () => {
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setEmailErr('Please enter a valid email address')
       return
     }
     setEmailErr('')
-    setForm(f => ({ ...f, email }))
-    setIsReturning(false)
+    setLookingUp(true)
+    try {
+      const res  = await fetch('/api/auth/lookup-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (data.existing) {
+        setForm({ ...EMPTY, ...data.existing })
+        setIsReturning(true)
+      } else {
+        setForm(f => ({ ...f, email }))
+        setIsReturning(false)
+      }
+    } catch {
+      setForm(f => ({ ...f, email }))
+      setIsReturning(false)
+    }
+    setErrors({})
+    setLookingUp(false)
     setStep('form')
   }
 
@@ -568,8 +588,8 @@ export default function RegisterModal({ onClose }: Props) {
                 : <span />
               }
               {step === 'email' && (
-                <button className="btn-register" onClick={handleEmailContinue}>
-                  Continue →
+                <button className="btn-register" onClick={handleEmailContinue} disabled={lookingUp}>
+                  {lookingUp ? 'Checking…' : 'Continue →'}
                 </button>
               )}
               {/* OTP verify button — re-enable with OTP flow
