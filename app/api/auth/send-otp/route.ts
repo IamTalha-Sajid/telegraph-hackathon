@@ -5,13 +5,14 @@ import nodemailer from 'nodemailer'
 const secret = new TextEncoder().encode(process.env.OTP_SECRET!)
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST ?? 'smtp.elasticemail.com',
-  port: Number(process.env.SMTP_PORT ?? 2525),
+  host: process.env.SMTP_HOST ?? 'smtp.office365.com',
+  port: Number(process.env.SMTP_PORT ?? 587),
   secure: false,
   auth: {
     user: process.env.OUTLOOK_USER!,
     pass: process.env.OUTLOOK_PASS!,
   },
+  tls: { ciphers: 'SSLv3' },
 })
 
 export async function POST(req: NextRequest) {

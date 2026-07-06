@@ -5,7 +5,7 @@ interface Props { onClose: () => void }
 
 type ParticipantType = 'individual' | 'team'
 type Level           = 'beginner' | 'intermediate' | 'advanced'
-type Step            = 'email' | 'form' | 'done' // 'otp' step removed temporarily
+type Step            = 'email' | 'otp' | 'form' | 'done'
 
 interface FormData {
   name:        string
@@ -46,8 +46,8 @@ const LEVELS: { v: Level; label: string }[] = [
 ]
 
 const STEP_LABELS: Record<Step, string> = {
-  email: 'Enter your email',
-  // otp: 'Enter your code',  // OTP step — re-enable when email delivery is confirmed
+  email: 'Verify your email',
+  otp:   'Enter your code',
   form:  'Registration',
   done:  '',
 }
@@ -75,6 +75,11 @@ export default function RegisterModal({ onClose }: Props) {
   const [step,          setStep]          = useState<Step>('email')
   const [email,         setEmail]         = useState('')
   const [emailErr,      setEmailErr]      = useState('')
+  const [sending,       setSending]       = useState(false)
+  const [token,         setToken]         = useState('')
+  const [otp,           setOtp]           = useState(['', '', '', '', '', ''])
+  const [otpErr,        setOtpErr]        = useState('')
+  const [verifying,     setVerifying]     = useState(false)
   const [isReturning,   setIsReturning]   = useState(false)
   const [form,          setForm]          = useState<FormData>(EMPTY)
   const [errors,        setErrors]        = useState<Errors>({})
@@ -82,17 +87,9 @@ export default function RegisterModal({ onClose }: Props) {
   const [submitting,    setSubmitting]    = useState(false)
   const [submitErr,     setSubmitErr]     = useState('')
   const [closing,       setClosing]       = useState(false)
-  const [lookingUp,     setLookingUp]     = useState(false)
-
-  // OTP state — commented out, re-enable with OTP flow
-  // const [sending,   setSending]   = useState(false)
-  // const [token,     setToken]     = useState('')
-  // const [otp,       setOtp]       = useState(['', '', '', '', '', ''])
-  // const [otpErr,    setOtpErr]    = useState('')
-  // const [verifying, setVerifying] = useState(false)
-  // const otpRefs = useRef<(HTMLInputElement | null)[]>([])
 
   const panelRef = useRef<HTMLDivElement>(null)
+  const otpRefs  = useRef<(HTMLInputElement | null)[]>([])
 
   const close = useCallback(() => {
     setClosing(true)
@@ -123,105 +120,76 @@ export default function RegisterModal({ onClose }: Props) {
         : [...f.subnets, s],
     })), [])
 
-  /* ── Email step — validates format, looks up existing data, then proceeds to form ── */
-  const handleEmailContinue = async () => {
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  /* ── Email step ── */
+  const handleSendOtp = async (emailOverride?: string) => {
+    const target = emailOverride ?? email
+    if (!target.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(target)) {
       setEmailErr('Please enter a valid email address')
       return
     }
     setEmailErr('')
-    setLookingUp(true)
+    setSending(true)
     try {
-      const res  = await fetch('/api/auth/lookup-email', {
+      const res  = await fetch('/api/auth/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: target }),
       })
       const data = await res.json()
+      if (!res.ok) { setEmailErr(data.error ?? 'Failed to send code'); return }
+      setToken(data.token)
+      setOtp(['', '', '', '', '', ''])
+      setOtpErr('')
+      setStep('otp')
+      setTimeout(() => otpRefs.current[0]?.focus(), 80)
+    } catch {
+      setEmailErr('Network error. Please try again.')
+    } finally {
+      setSending(false)
+    }
+  }
+
+  /* ── OTP step ── */
+  const handleOtpInput = (i: number, val: string) => {
+    const digit = val.replace(/\D/g, '').slice(-1)
+    const next  = [...otp]
+    next[i] = digit
+    setOtp(next)
+    if (digit && i < 5) otpRefs.current[i + 1]?.focus()
+  }
+
+  const handleOtpKeyDown = (i: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && !otp[i] && i > 0) otpRefs.current[i - 1]?.focus()
+  }
+
+  const handleVerify = async () => {
+    const code = otp.join('')
+    if (code.length < 6) { setOtpErr('Please enter the full 6-digit code'); return }
+    setOtpErr('')
+    setVerifying(true)
+    try {
+      const res  = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, otp: code }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setOtpErr(data.error ?? 'Verification failed'); return }
       if (data.existing) {
         setForm({ ...EMPTY, ...data.existing })
         setIsReturning(true)
       } else {
-        setForm(f => ({ ...f, email }))
+        setForm({ ...EMPTY, email: data.email })
         setIsReturning(false)
       }
+      setErrors({})
+      setStep('form')
     } catch {
-      setForm(f => ({ ...f, email }))
-      setIsReturning(false)
+      setOtpErr('Network error. Please try again.')
+    } finally {
+      setVerifying(false)
     }
-    setErrors({})
-    setLookingUp(false)
-    setStep('form')
   }
-
-  // OTP send handler — re-enable when email delivery is confirmed
-  // const handleSendOtp = async (emailOverride?: string) => {
-  //   const target = emailOverride ?? email
-  //   if (!target.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(target)) {
-  //     setEmailErr('Please enter a valid email address')
-  //     return
-  //   }
-  //   setEmailErr('')
-  //   setSending(true)
-  //   try {
-  //     const res  = await fetch('/api/auth/send-otp', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ email: target }),
-  //     })
-  //     const data = await res.json()
-  //     if (!res.ok) { setEmailErr(data.error ?? 'Failed to send code'); return }
-  //     setToken(data.token)
-  //     setOtp(['', '', '', '', '', ''])
-  //     setOtpErr('')
-  //     setStep('otp')
-  //     setTimeout(() => otpRefs.current[0]?.focus(), 80)
-  //   } catch {
-  //     setEmailErr('Network error. Please try again.')
-  //   } finally {
-  //     setSending(false)
-  //   }
-  // }
-
-  // OTP input handlers — re-enable with OTP flow
-  // const handleOtpInput = (i: number, val: string) => {
-  //   const digit = val.replace(/\D/g, '').slice(-1)
-  //   const next  = [...otp]
-  //   next[i] = digit
-  //   setOtp(next)
-  //   if (digit && i < 5) otpRefs.current[i + 1]?.focus()
-  // }
-  // const handleOtpKeyDown = (i: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === 'Backspace' && !otp[i] && i > 0) otpRefs.current[i - 1]?.focus()
-  // }
-  // const handleVerify = async () => {
-  //   const code = otp.join('')
-  //   if (code.length < 6) { setOtpErr('Please enter the full 6-digit code'); return }
-  //   setOtpErr('')
-  //   setVerifying(true)
-  //   try {
-  //     const res  = await fetch('/api/auth/verify-otp', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ token, otp: code }),
-  //     })
-  //     const data = await res.json()
-  //     if (!res.ok) { setOtpErr(data.error ?? 'Verification failed'); return }
-  //     if (data.existing) {
-  //       setForm({ ...EMPTY, ...data.existing })
-  //       setIsReturning(true)
-  //     } else {
-  //       setForm({ ...EMPTY, email: data.email })
-  //       setIsReturning(false)
-  //     }
-  //     setErrors({})
-  //     setStep('form')
-  //   } catch {
-  //     setOtpErr('Network error. Please try again.')
-  //   } finally {
-  //     setVerifying(false)
-  //   }
-  // }
 
   /* ── Form step ── */
   const validateForm = () => {
@@ -260,7 +228,7 @@ export default function RegisterModal({ onClose }: Props) {
     }
   }
 
-  const progressPct = step === 'email' ? 33 : step === 'form' ? 66 : 100
+  const progressPct = step === 'email' ? 25 : step === 'otp' ? 50 : step === 'form' ? 75 : 100
 
   return (
     <div
@@ -318,7 +286,7 @@ export default function RegisterModal({ onClose }: Props) {
           {/* ── Email step ── */}
           {step === 'email' && (
             <div className="modal-fields" key="email">
-              <p className="otp-hint">Enter your email to get started.</p>
+              <p className="otp-hint">Enter your email and we'll send you a verification code so we can detect spam and keep the hackathon fair.</p>
               <Field label="Email Address" id="r-email" error={emailErr}>
                 <input
                   id="r-email"
@@ -327,14 +295,14 @@ export default function RegisterModal({ onClose }: Props) {
                   placeholder="you@example.com"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && handleEmailContinue()}
+                  onKeyDown={e => e.key === 'Enter' && handleSendOtp()}
                   autoFocus
                 />
               </Field>
             </div>
           )}
 
-          {/* OTP step — re-enable when email delivery is confirmed
+          {/* ── OTP step ── */}
           {step === 'otp' && (
             <div className="modal-fields" key="otp">
               <p className="otp-hint">
@@ -342,7 +310,7 @@ export default function RegisterModal({ onClose }: Props) {
               </p>
               <div className="otp-spam-notice">
                 <span>📬</span>
-                <span>Can't find it? Check your <strong>spam or junk</strong> folder.</span>
+                <span>Can't find it? Check your <strong>spam or junk</strong> folder — it may have been filtered.</span>
               </div>
               <div className="otp-boxes">
                 {otp.map((digit, i) => (
@@ -370,12 +338,16 @@ export default function RegisterModal({ onClose }: Props) {
               {otpErr && <p className="mf-err" style={{ textAlign: 'center' }}>{otpErr}</p>}
               <p className="otp-resend">
                 Didn't receive it?{' '}
-                <button className="otp-resend-btn" onClick={() => handleSendOtp(email)} disabled={sending}>
+                <button
+                  className="otp-resend-btn"
+                  onClick={() => handleSendOtp(email)}
+                  disabled={sending}
+                >
                   {sending ? 'Sending…' : 'Resend code'}
                 </button>
               </p>
             </div>
-          )} */}
+          )}
 
           {/* ── Form step ── */}
           {step === 'form' && (
@@ -583,21 +555,22 @@ export default function RegisterModal({ onClose }: Props) {
           <div className="modal-ft" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '10px' }}>
             {submitErr && <p className="mf-err" style={{ textAlign: 'center' }}>{submitErr}</p>}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              {step === 'form'
+              {step === 'otp'
                 ? <button className="modal-back" onClick={() => setStep('email')}>← Back</button>
+                : step === 'form'
+                ? <button className="modal-back" onClick={() => setStep('otp')}>← Back</button>
                 : <span />
               }
               {step === 'email' && (
-                <button className="btn-register" onClick={handleEmailContinue} disabled={lookingUp}>
-                  {lookingUp ? 'Checking…' : 'Continue →'}
+                <button className="btn-register" onClick={() => handleSendOtp()} disabled={sending}>
+                  {sending ? 'Sending…' : 'Send Code →'}
                 </button>
               )}
-              {/* OTP verify button — re-enable with OTP flow
               {step === 'otp' && (
                 <button className="btn-register" onClick={handleVerify} disabled={verifying}>
                   {verifying ? 'Verifying…' : 'Verify →'}
                 </button>
-              )} */}
+              )}
               {step === 'form' && (
                 <button className="btn-register" onClick={handleSubmit} disabled={submitting}>
                   {submitting ? 'Submitting…' : isReturning ? 'Update Registration' : 'Submit Registration'}
