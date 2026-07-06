@@ -23,9 +23,7 @@ interface FormData {
   techStack:   string
 }
 
-type Errors = Partial<Record<keyof FormData | 'discordJoin', string>>
-
-const DISCORD_INVITE = 'https://discord.gg/telegraphprotocol'
+type Errors = Partial<Record<keyof FormData, string>>
 
 const EMPTY: FormData = {
   name: '', email: '', type: 'individual', orgName: '', teamSize: '2 – 5',
@@ -62,7 +60,7 @@ function Field({
       <label className="mf-label" htmlFor={id}>
         {!optional && <span className="mf-req">* </span>}
         {label}
-        {optional && <span className="mf-opt"> · optional</span>}
+        {optional && <span className="mf-opt">optional</span>}
       </label>
       {hint && <p className="mf-hint">{hint}</p>}
       {children}
@@ -83,7 +81,6 @@ export default function RegisterModal({ onClose }: Props) {
   const [isReturning,   setIsReturning]   = useState(false)
   const [form,          setForm]          = useState<FormData>(EMPTY)
   const [errors,        setErrors]        = useState<Errors>({})
-  const [discordJoined, setDiscordJoined] = useState(false)
   const [submitting,    setSubmitting]    = useState(false)
   const [submitErr,     setSubmitErr]     = useState('')
   const [closing,       setClosing]       = useState(false)
@@ -197,9 +194,8 @@ export default function RegisterModal({ onClose }: Props) {
     if (!form.name.trim())        e.name        = 'Required'
     if (form.type === 'team' && !form.orgName.trim()) e.orgName = 'Required'
     if (!form.discord.trim())     e.discord     = 'Required'
-    if (!isReturning && !discordJoined) e.discordJoin = 'Please join the Discord server first'
     if (!form.projectName.trim()) e.projectName = 'Required'
-    if (form.projectDesc.trim().length < 20)
+    if (form.projectDesc.trim().length > 0 && form.projectDesc.trim().length < 20)
       e.projectDesc = 'Please describe your project (min 20 characters)'
     setErrors(e)
     return Object.keys(e).length === 0
@@ -463,20 +459,6 @@ export default function RegisterModal({ onClose }: Props) {
                 />
               </Field>
 
-              {!isReturning && (
-              <div className="mf">
-                <a
-                  href={DISCORD_INVITE}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`btn-discord-join${discordJoined ? ' btn-discord-joined' : ''}`}
-                  onClick={() => setDiscordJoined(true)}
-                >
-                  {discordJoined ? '✓ Discord Joined' : '↗ Join Discord Server'}
-                </a>
-                {errors.discordJoin && <p className="mf-err">{errors.discordJoin}</p>}
-              </div>
-              )}
 
               <p className="form-section-label" style={{ marginTop: '24px' }}>Your Project</p>
 
@@ -518,6 +500,7 @@ export default function RegisterModal({ onClose }: Props) {
               <Field
                 label="Project Description"
                 id="r-desc"
+                optional
                 error={errors.projectDesc}
                 hint="Briefly describe what you're building and how it uses Telegraph's verified data. 2–3 sentences is enough."
               >
