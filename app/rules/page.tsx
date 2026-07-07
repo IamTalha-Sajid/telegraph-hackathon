@@ -32,7 +32,7 @@ function Reveal({ children, delay = 0, className = '' }: { children: React.React
 }
 
 const TRACKS = [
-  { track: 'Track 1: Miners',        focus: 'Building and running high-quality miners',              dates: 'Aug 17 – Aug 31', duration: '15 days', color: '#86efac' },
+  { track: 'Track 1: Miners',        focus: 'Building and running high-quality Miners',              dates: 'Aug 17 – Aug 31', duration: '15 days', color: '#86efac' },
   { track: 'Track 2: Script Authors', focus: 'Writing and improving evaluation scripts',              dates: 'Aug 17 – Aug 31', duration: '15 days', color: '#86efac' },
   { track: 'Track 3: Applications',  focus: 'Building real applications and agents using Telegraph',  dates: 'Aug 31 – Sep 7',  duration: '7 days',  color: '#60a5fa' },
   { track: 'Winner Selection',       focus: 'Selecting winners across all 3 tracks',                 dates: 'Sep 8 – Sep 18',  duration: '10 days', color: '#a78bfa' },
@@ -40,11 +40,11 @@ const TRACKS = [
 ]
 
 const MINER_CRITERIA = [
-  { pct: 75, label: 'Normalized Performance (within Intent)', desc: 'Your average Canonical Score divided by the highest average score achieved inside your specific Intent. The best miner in every Intent automatically gets full points — ensuring fairness across Intents of different difficulty.' },
+  { pct: 75, label: 'Normalized Performance (within Intent)', desc: 'Your average Canonical Score divided by the highest average score achieved inside your specific Intent. The best Miner in every Intent automatically gets full points — ensuring fairness across Intents of different difficulty.' },
   { pct: 25, label: 'Engagement & Updates on X',              desc: 'Quality, consistency, reach, and meaningful engagement of updates posted on X. Tag <a href="https://x.com/Telegraphprotoc" target="_blank" rel="noopener noreferrer" class="criteria-x-link">@Telegraphprotoc</a> in all update posts.' },
 ]
 const SCRIPT_CRITERIA = [
-  { pct: 50, label: 'Improvement over Baseline',          desc: 'How accurately and effectively the script evaluates miner outputs vs the current Canonical Script.' },
+  { pct: 50, label: 'Improvement over Baseline',          desc: 'How accurately and effectively the script evaluates Miner outputs vs the current Canonical Script.' },
   { pct: 30, label: 'Robustness & Code Quality',          desc: 'Clean code structure, proper handling of edge cases, and adherence to WASM/sandbox constraints.' },
   { pct: 10, label: 'Engagement & Updates on X',          desc: 'Quality, consistency, reach, and engagement of updates posted on X. Tag <a href="https://x.com/Telegraphprotoc" target="_blank" rel="noopener noreferrer" class="criteria-x-link">@Telegraphprotoc</a> in all update posts.' },
   { pct: 10, label: 'Community Engagement & Adoption',    desc: 'Mentions, feedback, and actual adoption of your script by others.' },
@@ -63,11 +63,11 @@ const PRIZES = [
 ]
 
 const HOW_STEPS = [
-  { n: '01', title: 'Miners Are Ranked, Not Just Listed', body: 'Anyone can bring their model, data source, or specialized system into Telegraph as a miner. Miners are ranked based on performance, domain relevance, and historical quality. Validators continuously evaluate miner outputs against ground truth using evaluation scripts. Higher and more consistent performance leads to a higher rank on the leaderboard.' },
-  { n: '02', title: 'Probabilistic Routing Based on Intent', body: 'When an agent needs intelligence, it does not choose a specific miner. Instead, it declares its intent — the domain (e.g. AI detection, weather, finance), a minimum confidence threshold, and a deadline. Telegraph routes probabilistically to the top-ranked miners for that intent. Higher-performing miners receive more traffic and more USDC per query.' },
-  { n: '03', title: 'The Quality Flywheel', body: 'Better miners → more routed demand → more real USDC earnings → stronger earnings attract better miners → network compounds in quality, reliability, and coverage. Fundamentally different from simple aggregator models.' },
+  { n: '01', title: 'Miners Are Ranked, Not Just Listed', body: 'Anyone can bring their model, API, dataset, or specialized system into Telegraph as a Miner. Miners are ranked based on performance, domain relevance, and historical quality. Validators continuously evaluate Miner outputs against ground truth using evaluation scripts. Higher and more consistent performance leads to a higher rank on the leaderboard.' },
+  { n: '02', title: 'Probabilistic Routing Based on Intent', body: 'When an agent needs intelligence, it does not choose a specific Miner. Instead, it declares its intent — the domain (e.g. AI detection, weather, finance), a minimum confidence threshold, and a deadline. Telegraph routes probabilistically to the top-ranked Miners for that intent. Higher-performing Miners receive more traffic and more USDC per query.' },
+  { n: '03', title: 'The Quality Flywheel', body: 'Better Miners → more routed demand → more real USDC earnings → stronger earnings attract better Miners → network compounds in quality, reliability, and coverage. Fundamentally different from simple aggregator models.' },
   { n: '04', title: 'Independent Leaderboards per Intent', body: 'Each intent (e.g. AI text detection) has its own independent leaderboard. Miners are only ranked against others in the same domain. Miners solving completely different tasks do not affect your ranking or routing share. This ensures fair competition within each domain.' },
-  { n: '05', title: 'Why This Architecture Matters', body: 'Simple aggregator approaches lack ranking, verification, probabilistic routing, and the incentive flywheel that turns raw model output into reliable, monetizable, machine-grade intelligence. Telegraph is designed to become stronger with real usage, not weaker.' },
+  { n: '05', title: 'Why This Architecture Matters', body: 'Simple aggregator approaches lack ranking, verification, probabilistic routing, and the incentive flywheel that turns raw, unverified API output into reliable, monetizable, machine-grade intelligence. Telegraph is designed to become stronger with real usage, not weaker.' },
 ]
 
 const FOCUS_AREAS = [
@@ -80,11 +80,11 @@ const FOCUS_AREAS = [
 ]
 
 const RULES = [
-  'Applications in Track 3 must use real Telegraph miners. Simulated or mocked data is not allowed.',
+  'Applications in Track 3 must use real Telegraph Miners. Simulated or mocked data is not allowed.',
   'Miners and Script Authors must remain live and operational throughout Track 3.',
   'All updates used for judging must be publicly posted on X and properly tagged.',
   'Artificial inflation of metrics or gaming the system will result in disqualification.',
-  'Each intent operates with its own independent leaderboard. You only compete with miners in the same domain for Normalized Performance scoring. Cash prizes are awarded to the Top 3 miners with the highest overall normalized scores across all intents.',
+  'Each intent operates with its own independent leaderboard. You only compete with Miners in the same domain for Normalized Performance scoring. Cash prizes are awarded to the Top 3 Miners with the highest overall normalized scores across all intents.',
   'All participants must join the official Hackathon Discord. Important discussions, announcements, and support will happen there. Staying active in the Discord is expected.',
 ]
 
@@ -146,7 +146,7 @@ export default function RulesPage() {
           <div className="purpose-list">
             {[
               'Miners can be properly ranked based on real performance.',
-              'Real demand from applications gets routed to better miners through probabilistic routing.',
+              'Real demand from applications gets routed to better Miners through probabilistic routing.',
               'This ranking and routing system creates a self-reinforcing loop where quality compounds over time.',
               'The result is a competitive, high-quality intelligence layer that gets stronger with usage.',
             ].map((item, i) => (
@@ -177,7 +177,7 @@ export default function RulesPage() {
             <div className="intent-box">
               <p className="intent-box-label">What is an Intent?</p>
               <p className="intent-box-body">
-                An Intent is a specific category of intelligence that applications can request — for example, AI text detection, weather data, financial signals, or logistics information. Each intent operates with its own independent leaderboard. You only compete with miners in the same domain for Normalized Performance scoring.
+                An Intent is a specific category of intelligence that applications can request — for example, AI text detection, weather data, financial signals, or logistics information. Each intent operates with its own independent leaderboard. You only compete with Miners in the same domain for Normalized Performance scoring.
               </p>
             </div>
           </Reveal>
@@ -271,15 +271,15 @@ export default function RulesPage() {
               <div className="rules-info-box" style={{ marginTop: '32px' }}>
                 <strong>How Miner Track Winners Are Selected</strong>
                 <p style={{ marginTop: '10px' }}>Winners are determined using <em>Intradomain Normalization</em> to ensure fairness across intents of different difficulty and volume.</p>
-                <p style={{ marginTop: '8px' }}>Every miner is scored out of 100 points:</p>
+                <p style={{ marginTop: '8px' }}>Every Miner is scored out of 100 points:</p>
                 <ul className="info-box-list">
-                  <li><strong>75 points</strong> — Normalized Performance (your score relative to the best miner in your specific Intent)</li>
+                  <li><strong>75 points</strong> — Normalized Performance (your score relative to the best Miner in your specific Intent)</li>
                   <li><strong>25 points</strong> — X Engagement & Transparency</li>
                 </ul>
                 <p style={{ marginTop: '10px', color: 'rgba(251,191,36,0.7)', fontSize: '12px' }}>
-                  Guardrail: An Intent must have at least 3 active miners and receive at least 100 real requests from Track 3 applications to be eligible for global cash prizes.
+                  Guardrail: An Intent must have at least 3 active Miners and receive at least 100 real requests from Track 3 applications to be eligible for global cash prizes.
                 </p>
-                <p style={{ marginTop: '10px' }}>The Top 3 miners with the highest total normalized scores across all intents win cash prizes. This ensures the best miner in every intent has a fair chance to win, regardless of how strict or easy their intent's Canonical Script is.</p>
+                <p style={{ marginTop: '10px' }}>The Top 3 Miners with the highest total normalized scores across all intents win cash prizes. This ensures the best Miner in every intent has a fair chance to win, regardless of how strict or easy their intent's Canonical Script is.</p>
               </div>
             </Reveal>
           )}
@@ -289,7 +289,7 @@ export default function RulesPage() {
             <Reveal delay={200}>
               <div className="rules-info-box" style={{ marginTop: '32px' }}>
                 <strong>What is the Canonical Script?</strong>
-                <p style={{ marginTop: '10px' }}>For each Intent, the protocol has one official evaluation script called the Canonical Script. This is the current benchmark used to score miner responses for that Intent.</p>
+                <p style={{ marginTop: '10px' }}>For each Intent, the protocol has one official evaluation script called the Canonical Script. This is the current benchmark used to score Miner responses for that Intent.</p>
                 <p style={{ marginTop: '8px' }}>In Track 2, participants submit improved evaluation scripts, reviewed against the current Canonical Script to measure improvement in accuracy, robustness, and code quality.</p>
                 <p style={{ marginTop: '8px', color: 'rgba(134,239,172,0.7)', fontSize: '12px' }}>The current Canonical Script for each participating Intent will be shared in the official hackathon repository before the hackathon starts.</p>
                 <p style={{ marginTop: '10px' }}>The Top 3 scripts with the highest overall scores win the global cash prizes ($500 / $300 / $200). Winners are determined through a focused manual review by the core team.</p>
