@@ -40,7 +40,7 @@ const TRACKS = [
 ]
 
 const MINER_CRITERIA = [
-  { pct: 75, label: 'Normalized Performance (within Intent)', desc: 'Your average Canonical Score divided by the highest average score achieved inside your specific Intent. The best miner in every Intent automatically gets full points — ensuring fairness across Intents of different difficulty.' },
+  { pct: 75, label: 'Normalized Performance (within Intent)', desc: 'Your average Canonical Score divided by the highest average score achieved inside your specific Intent. The best miner in every Intent automatically gets full points, so scoring stays fair across Intents of different difficulty.' },
   { pct: 25, label: 'Engagement & Updates on X',              desc: 'Quality, consistency, reach, and meaningful engagement of updates posted on X. Tag <a href="https://x.com/Telegraphprotoc" target="_blank" rel="noopener noreferrer" class="criteria-x-link">@Telegraphprotoc</a> in all update posts.' },
 ]
 const SCRIPT_CRITERIA = [
@@ -51,7 +51,7 @@ const SCRIPT_CRITERIA = [
 ]
 const APP_CRITERIA = [
   { pct: 45, label: 'Real Usage & Adoption',                        desc: 'Number of real users + actual volume of Telegraph calls made by your application.' },
-  { pct: 25, label: 'Usefulness, Creativity & Depth of Integration', desc: 'How useful and creative the application is, and how deeply it leverages Telegraph\'s intelligence layer (off-chain and on-chain).' },
+  { pct: 25, label: 'Usefulness, Creativity & Depth of Integration', desc: 'How useful and creative the application is, and how deeply it uses Telegraph\'s intelligence layer (off-chain and on-chain).' },
   { pct: 25, label: 'Engagement & Updates on X',                    desc: 'Quality, reach, and meaningful engagement of updates posted on X. Tag <a href="https://x.com/Telegraphprotoc" target="_blank" rel="noopener noreferrer" class="criteria-x-link">@Telegraphprotoc</a> in all update posts.' },
   { pct: 5,  label: 'Technical Execution & Integration Quality',     desc: 'Cleanliness and reliability of the integration with Telegraph.' },
 ]
@@ -64,14 +64,14 @@ const PRIZES = [
 
 const HOW_STEPS = [
   { n: '01', title: 'Miners Are Ranked, Not Just Listed', body: 'Anyone can bring their model, data source, or specialized system into Telegraph as a miner. Miners are ranked based on performance, domain relevance, and historical quality. Validators continuously evaluate miner outputs against ground truth using evaluation scripts. Higher and more consistent performance leads to a higher rank on the leaderboard.' },
-  { n: '02', title: 'Probabilistic Routing Based on Intent', body: 'When an agent needs intelligence, it does not choose a specific miner. Instead, it declares its intent — the domain (e.g. AI detection, weather, finance), a minimum confidence threshold, and a deadline. Telegraph routes probabilistically to the top-ranked miners for that intent. Higher-performing miners receive more traffic and more USDC per query.' },
+  { n: '02', title: 'Probabilistic Routing Based on Intent', body: 'When an agent needs intelligence, it does not choose a specific miner. Instead, it declares its intent: the domain (e.g. AI detection, weather, finance), a minimum confidence threshold, and a deadline. Telegraph routes probabilistically to the top-ranked miners for that intent. Higher-performing miners receive more traffic and more USDC per query.' },
   { n: '03', title: 'The Quality Flywheel', body: 'Better miners → more routed demand → more real USDC earnings → stronger earnings attract better miners → network compounds in quality, reliability, and coverage. Fundamentally different from simple aggregator models.' },
   { n: '04', title: 'Independent Leaderboards per Intent', body: 'Each intent (e.g. AI text detection) has its own independent leaderboard. Miners are only ranked against others in the same domain. Miners solving completely different tasks do not affect your ranking or routing share. This ensures fair competition within each domain.' },
   { n: '05', title: 'Why This Architecture Matters', body: 'Simple aggregator approaches lack ranking, verification, probabilistic routing, and the incentive flywheel that turns raw model output into reliable, monetizable, machine-grade intelligence. Telegraph is designed to become stronger with real usage, not weaker.' },
 ]
 
 const FOCUS_AREAS = [
-  { title: 'On-Chain & Blockchain Intelligence Pipelines',   body: 'Build agents that consume verified intelligence and directly trigger on-chain actions — trading, liquidations, arbitrage, compliance checks, treasury management. One of the highest-value use cases.' },
+  { title: 'On-Chain & Blockchain Intelligence Pipelines',   body: 'Build agents that consume verified intelligence and directly trigger on-chain actions: trading, liquidations, arbitrage, compliance checks, treasury management. One of the highest-value use cases.' },
   { title: 'Autonomous Agents & Workflows',                   body: 'Build agents that subscribe to real-time signals and take automated actions without human intervention.' },
   { title: 'Multi-Intent & Cross-Domain Intelligence',        body: 'Combine signals from multiple intents to create more powerful decision-making systems.' },
   { title: 'Confidence Thresholds & Routing Behavior',        body: 'Experiment with different confidence levels and understand how routing changes based on requirements.' },
@@ -160,7 +160,7 @@ export default function RulesPage() {
           </div>
           <Reveal delay={300}>
             <p className="rules-body" style={{ marginTop: '24px' }}>
-              We are testing whether Telegraph's core mechanism — ranking + probabilistic routing + real economic incentives — produces a stronger intelligence layer for machines.
+              We are testing whether Telegraph's core mechanism (ranking + probabilistic routing + real economic incentives) produces a stronger intelligence layer for machines.
             </p>
           </Reveal>
         </section>
@@ -177,7 +177,7 @@ export default function RulesPage() {
             <div className="intent-box">
               <p className="intent-box-label">What is an Intent?</p>
               <p className="intent-box-body">
-                An Intent is a specific category of intelligence that applications can request — for example, AI text detection, weather data, financial signals, or logistics information. Each intent operates with its own independent leaderboard. You only compete with miners in the same domain for Normalized Performance scoring.
+                An Intent is a specific category of intelligence that applications can request, such as AI text detection, weather data, financial signals, or logistics information. Each intent operates with its own independent leaderboard. You only compete with miners in the same domain for Normalized Performance scoring.
               </p>
             </div>
           </Reveal>
@@ -202,7 +202,7 @@ export default function RulesPage() {
           <Reveal>
             <p className="rules-section-eyebrow">Maximize your chances</p>
             <h2 className="rules-section-h2">High-Value Areas to Explore</h2>
-            <p className="rules-body">Surface-level integrations will not stand out. The strongest submissions come from teams that deeply understand and leverage Telegraph's full capability as an intelligence layer — not just an API.</p>
+            <p className="rules-body">Surface-level integrations will not stand out. The strongest submissions come from teams that deeply understand and use Telegraph's full capability as an intelligence layer, not just an API.</p>
           </Reveal>
           <div className="focus-grid">
             {FOCUS_AREAS.map((f, i) => (
@@ -273,8 +273,8 @@ export default function RulesPage() {
                 <p style={{ marginTop: '10px' }}>Winners are determined using <em>Intradomain Normalization</em> to ensure fairness across intents of different difficulty and volume.</p>
                 <p style={{ marginTop: '8px' }}>Every miner is scored out of 100 points:</p>
                 <ul className="info-box-list">
-                  <li><strong>75 points</strong> — Normalized Performance (your score relative to the best miner in your specific Intent)</li>
-                  <li><strong>25 points</strong> — X Engagement & Transparency</li>
+                  <li><strong>75 points</strong>: Normalized Performance (your score relative to the best miner in your specific Intent)</li>
+                  <li><strong>25 points</strong>: X Engagement & Transparency</li>
                 </ul>
                 <p style={{ marginTop: '10px', color: 'rgba(251,191,36,0.7)', fontSize: '12px' }}>
                   Guardrail: An Intent must have at least 3 active miners and receive at least 100 real requests from Track 3 applications to be eligible for global cash prizes.

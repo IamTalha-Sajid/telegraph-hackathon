@@ -2,7 +2,7 @@ const BENEFITS = [
   {
     num: '00',
     title: 'Early Track Access',
-    body: 'Get submission details and task specs before the public launch — more time to plan your approach.',
+    body: 'Get submission details and task specs before the public launch. More time to plan your approach.',
   },
   {
     num: '01',
@@ -17,7 +17,7 @@ const BENEFITS = [
   {
     num: '03',
     title: 'Protocol Head Start',
-    body: 'Get familiar with the Telegraph protocol before the full launch — understand the system others will be learning on day one.',
+    body: 'Get familiar with the Telegraph protocol before the full launch. Understand the system others will be learning on day one.',
   },
 ]
 

@@ -306,7 +306,7 @@ export default function RegisterModal({ onClose }: Props) {
               </p>
               <div className="otp-spam-notice">
                 <span>📬</span>
-                <span>Can't find it? Check your <strong>spam or junk</strong> folder — it may have been filtered.</span>
+                <span>Can't find it? Check your <strong>spam or junk</strong> folder. It may have been filtered.</span>
               </div>
               <div className="otp-boxes">
                 {otp.map((digit, i) => (
@@ -466,7 +466,7 @@ export default function RegisterModal({ onClose }: Props) {
                 label="Project Name"
                 id="r-pname"
                 error={errors.projectName}
-                hint="What's your project called? It doesn't have to be final — you can change it later."
+                hint="What's your project called? It doesn't have to be final. You can change it later."
               >
                 <input
                   id="r-pname"
@@ -480,7 +480,7 @@ export default function RegisterModal({ onClose }: Props) {
               <Field
                 label="Miners you plan to use"
                 optional
-                hint="Miners are Telegraph's data providers — each one serves a different type of verified data feed. Select the ones relevant to your project. Not sure yet? Pick your best guess."
+                hint="Miners are Telegraph's data providers. Each one serves a different type of verified data feed. Select the ones relevant to your project. Not sure yet? Pick your best guess."
               >
                 <div className="subnet-grid">
                   {MINERS.map(s => (

@@ -3,7 +3,7 @@ const TRACKS = [
     num: '01',
     label: 'Miner Track',
     title: 'Provide inference.',
-    sub: 'Build and integrate models into Telegraph. You\'re the intelligence layer — miners serve inference to the network and to applications built on top.',
+    sub: 'Build and integrate models into Telegraph. You\'re the intelligence layer. Miners serve inference to the network and to applications built on top.',
     criteria: [
       'Telegraph ranking & performance',
       'Number of applications built on your miner',
@@ -17,7 +17,7 @@ const TRACKS = [
     num: '02',
     label: 'Script Author Track',
     title: 'Rank quality.',
-    sub: 'Write evaluation scripts that score and rank miners. You define what "good" looks like — your script becomes part of the protocol\'s quality layer.',
+    sub: 'Write evaluation scripts that score and rank miners. You define what "good" looks like. Your script becomes part of the protocol\'s quality layer.',
     criteria: [
       'Telegraph\'s automated eval of your script',
       'Accuracy of miner rankings produced',
@@ -57,7 +57,7 @@ export default function ApiSection() {
         <div className="sec-label">Tracks</div>
         <h2 className="sec-title">Three tracks. One ecosystem.</h2>
         <p className="sec-sub">
-          Miners provide intelligence. Scripts rank quality. Applications drive demand — and feed back into how miners are judged.
+          Miners provide intelligence. Scripts rank quality. Applications drive demand and feed back into how miners are judged.
         </p>
 
         <div className="card-grid">

@@ -530,7 +530,7 @@ body {
 
 /* ── Hero ──────────────────────────────────── */
 .hero {
-  height: calc(100dvh - 72px);
+  min-height: calc(100dvh - 72px);
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -830,7 +830,7 @@ body {
 .feature-section {
   position: relative;
   overflow: hidden;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
