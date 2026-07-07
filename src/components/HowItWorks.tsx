@@ -12,7 +12,7 @@ const STEPS = [
   {
     num: '03',
     title: 'Demand Feeds Back to Miners',
-    body: 'Miners are judged not just on benchmark performance, but on actual demand — which miners are applications building with? The more useful your inference, the more it gets consumed, and the better you rank.',
+    body: 'Miners are judged not just on benchmark performance, but on actual demand: which miners are applications building with? The more useful your inference, the more it gets consumed, and the better you rank.',
   },
 ]
 

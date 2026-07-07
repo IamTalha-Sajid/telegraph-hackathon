@@ -20,7 +20,7 @@ export default function Hero({ onRegister }: Props) {
         <p className="hero-tagline">A new asset class built for machines.</p>
 
         <p className="hero-desc">
-          Autonomous agents can't act on raw model outputs — they need verifiable signals they can trust. Submit a model, an evaluation script, or both. Winners decided on real performance against ground truth, not opinions.
+          Autonomous agents can't act on raw model outputs. They need verifiable signals they can trust. Submit a model, an evaluation script, or both. Winners decided on real performance against ground truth, not opinions.
         </p>
 
         <div className="hero-actions">
