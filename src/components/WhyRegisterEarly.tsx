@@ -7,7 +7,7 @@ const BENEFITS = [
   {
     num: '01',
     title: 'More Time to Build',
-    body: 'Extra runway means more iterations, better models, and a higher chance of winning.',
+    body: 'Extra runway means more iterations, a stronger submission, and a higher chance of winning.',
   },
   {
     num: '02',

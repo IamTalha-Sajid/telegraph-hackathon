@@ -7,7 +7,7 @@ export default function Hero({ onRegister }: Props) {
     <section className="hero">
       <div className="hero-body">
 
-        <div className="hero-eyebrow">Season I · 2026 · For ML Engineers &amp; Quants</div>
+        <div className="hero-eyebrow">Season I · 2026 · Open to Any Developer</div>
 
         <h1 className="hero-h1">Telegraph</h1>
         <p className="hero-h1-light">Hackathon</p>
@@ -20,7 +20,7 @@ export default function Hero({ onRegister }: Props) {
         <p className="hero-tagline">A new asset class built for machines.</p>
 
         <p className="hero-desc">
-          Autonomous agents can't act on raw model outputs — they need verifiable signals they can trust. Submit a model, an evaluation script, or both. Winners decided on real performance against ground truth, not opinions.
+          Autonomous agents can't act on raw, unverified API responses — they need verifiable signals they can trust. Submit a Miner (any API, model, dataset, or tool), an evaluation script, or both. Winners decided on real performance against ground truth, not opinions.
         </p>
 
         <div className="hero-actions">

@@ -2,12 +2,12 @@ const TRACKS = [
   {
     num: '01',
     label: 'Miner Track',
-    title: 'Provide inference.',
-    sub: 'Build and integrate models into Telegraph. You\'re the intelligence layer — miners serve inference to the network and to applications built on top.',
+    title: 'Provide intelligence.',
+    sub: 'Wrap any API, model, dataset, or tool and integrate it into Telegraph. You\'re the supply layer — Miners serve answers to the network and to applications built on top.',
     criteria: [
       'Telegraph ranking & performance',
-      'Number of applications built on your miner',
-      'Total inference consumed',
+      'Number of applications built on your Miner',
+      'Total requests served',
       'Progress updates posted on X',
       'Engagement & reach on those posts',
     ],

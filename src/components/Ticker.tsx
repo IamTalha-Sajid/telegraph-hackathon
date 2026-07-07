@@ -10,7 +10,7 @@ const ITEMS = [
   'Miner Track',
   'Evaluation Script Track',
   'Application Track',
-  'Provide Inference',
+  'Provide Intelligence',
   'Rank Quality',
   'Build Use Cases',
   'Real Demand Decides',
