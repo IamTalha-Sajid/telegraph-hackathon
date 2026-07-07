@@ -27,7 +27,7 @@ export default function PrizesSection() {
       <h2 className="sec-title">Three rounds. Real rewards.</h2>
       <p className="sec-sub">
         Two USDC rounds to bootstrap the system, then a mainnet launch with Machina incentives.
-        Submit a model, an evaluation script, or both — you can win across tracks.
+        Submit a Miner (any API, model, dataset, or tool), an evaluation script, or both — you can win across tracks.
       </p>
 
       <div className="prizes-grid">

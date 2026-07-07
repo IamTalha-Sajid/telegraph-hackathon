@@ -27,7 +27,7 @@ const SECTIONS = [
     num: '03',
     label: 'Judging',
     rules: [
-      'Real, meaningful use of Telegraph\'s verified inference layer.',
+      'Real, meaningful use of Telegraph\'s verified intelligence layer.',
       'Product completeness — a working demo beats a polished idea.',
       'Technical execution and code quality.',
       'Innovation and originality of the concept.',

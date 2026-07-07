@@ -7,7 +7,7 @@ const RULES = [
   {
     num: '02',
     title: 'Use Telegraph APIs',
-    body: 'Your submission must integrate at least one Telegraph Subnet API. The protocol is the foundation — build on top of it.',
+    body: 'Your submission must integrate at least one Telegraph Miner API. The protocol is the foundation — build on top of it.',
   },
   {
     num: '03',
