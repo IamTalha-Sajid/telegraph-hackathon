@@ -10,6 +10,7 @@ import Countdown        from './components/Countdown'
 import Timeline         from './components/Timeline'
 import HowItWorks       from './components/HowItWorks'
 import ApiSection       from './components/ApiSection'
+import FinalCta         from './components/FinalCta'
 import Footer           from './components/Footer'
 import RegisterModal    from './components/RegisterModal'
 import RulesModal       from './components/RulesModal'
@@ -47,6 +48,7 @@ export default function App() {
         <Timeline />
         <HowItWorks />
         <ApiSection />
+        <FinalCta onRegister={openRegister} />
         <Footer />
       </div>
 

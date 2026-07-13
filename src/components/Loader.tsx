@@ -17,8 +17,12 @@ export default function Loader({ onComplete }: Props) {
   }, [onComplete])
 
   useEffect(() => {
+    const isMobile = window.matchMedia('(max-width: 640px)').matches
+    const DURATION = isMobile ? 450 : 1000
+    const EXIT_DELAY = isMobile ? 550 : 1200
+    const FINISH_DELAY = isMobile ? 800 : 1750
+
     const start = performance.now()
-    const DURATION = 1000
     let raf: number
 
     const tick = (now: number) => {
@@ -28,8 +32,8 @@ export default function Loader({ onComplete }: Props) {
     }
     raf = requestAnimationFrame(tick)
 
-    const t1 = setTimeout(() => setExiting(true), 1200)
-    const t2 = setTimeout(finish, 1750)
+    const t1 = setTimeout(() => setExiting(true), EXIT_DELAY)
+    const t2 = setTimeout(finish, FINISH_DELAY)
 
     return () => {
       cancelAnimationFrame(raf)
