@@ -1,7 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
-import Loader             from '@/components/Loader'
+import { useCallback, useEffect, useState } from 'react'
 import AppBackground      from '@/components/AppBackground'
 import Nav                from '@/components/Nav'
 import Hero               from '@/components/Hero'
@@ -12,19 +11,22 @@ import HowItWorks         from '@/components/HowItWorks'
 import ApiSection         from '@/components/ApiSection'
 import Footer             from '@/components/Footer'
 import RegisterModal      from '@/components/RegisterModal'
+import WelcomeModal       from '@/components/WelcomeModal'
 
 export default function Home() {
-  const [loaded,       setLoaded]       = useState(false)
   const [showRegister, setShowRegister] = useState(false)
+  const [showWelcome,  setShowWelcome]  = useState(false)
 
-  const onLoaderDone  = useCallback(() => setLoaded(true),        [])
+  useEffect(() => {
+    if (window.innerWidth > 900) setShowWelcome(true)
+  }, [])
+
   const openRegister  = useCallback(() => setShowRegister(true),  [])
   const closeRegister = useCallback(() => setShowRegister(false), [])
+  const closeWelcome  = useCallback(() => setShowWelcome(false),  [])
 
   return (
     <>
-      {!loaded && <Loader onComplete={onLoaderDone} />}
-
       <img
         src="/Website/telegraph_web_10.jpg"
         className="hero-sculpture"
@@ -46,6 +48,9 @@ export default function Home() {
       </div>
 
       {showRegister && <RegisterModal onClose={closeRegister} />}
+      {showWelcome && !showRegister && (
+        <WelcomeModal onClose={closeWelcome} onRegister={openRegister} />
+      )}
     </>
   )
 }

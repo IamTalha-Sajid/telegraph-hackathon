@@ -10,18 +10,19 @@ export default function Hero({ onRegister }: Props) {
         <div className="hero-eyebrow">Season I · 2026 · Open to Any Developer</div>
 
         <h1 className="hero-h1">Wrap any API, model, or service.</h1>
-        <p className="hero-h1-light hero-h1-compete">Compete for</p>
-        <p className="hero-h1-light hero-h1-prize">$15,000 USDC</p>
 
-        <p className="hero-tagline">Built for developers, not just crypto natives.</p>
+        <div className="hero-prize-badge">
+          <span className="hero-prize-badge-label">Prize pool</span>
+          <span className="hero-prize-badge-amount">$15,000 <span className="hero-prize-badge-unit">USDC</span></span>
+        </div>
 
         <p className="hero-desc">
           Autonomous agents can't act on raw, unverified API responses — they need verifiable signals they can trust. Submit a Miner (any API, model, dataset, or tool), an evaluation script, or both. Winners decided on real performance against ground truth, not opinions.
         </p>
 
         <div className="hero-actions">
-          <button className="btn-register" onClick={onRegister}>Register Now</button>
-          <a href="#how" className="btn-ghost">How It Works →</a>
+          <button className="btn-register hero-cta-primary" onClick={onRegister}>Register Now →</button>
+          <a href="#how" className="btn-ghost">How It Works</a>
         </div>
 
         <p className="hero-social-proof">300+ builders have already registered</p>

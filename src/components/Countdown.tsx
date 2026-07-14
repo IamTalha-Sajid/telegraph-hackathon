@@ -17,14 +17,15 @@ function getTimeLeft() {
 const UNITS = ['Days', 'Hours', 'Minutes', 'Seconds'] as const
 
 export default function Countdown() {
-  const [time, setTime] = useState(getTimeLeft())
+  const [time, setTime] = useState<ReturnType<typeof getTimeLeft> | null>(null)
 
   useEffect(() => {
+    setTime(getTimeLeft())
     const id = setInterval(() => setTime(getTimeLeft()), 1000)
     return () => clearInterval(id)
   }, [])
 
-  const values = [time.days, time.hours, time.minutes, time.seconds]
+  const values = time ? [time.days, time.hours, time.minutes, time.seconds] : [0, 0, 0, 0]
 
   return (
     <section className="countdown-section">
