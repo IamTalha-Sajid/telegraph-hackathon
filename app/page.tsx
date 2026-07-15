@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import AppBackground      from '@/components/AppBackground'
 import Nav                from '@/components/Nav'
 import Hero               from '@/components/Hero'
@@ -11,19 +11,12 @@ import HowItWorks         from '@/components/HowItWorks'
 import ApiSection         from '@/components/ApiSection'
 import Footer             from '@/components/Footer'
 import RegisterModal      from '@/components/RegisterModal'
-import WelcomeModal       from '@/components/WelcomeModal'
 
 export default function Home() {
   const [showRegister, setShowRegister] = useState(false)
-  const [showWelcome,  setShowWelcome]  = useState(false)
-
-  useEffect(() => {
-    if (window.innerWidth > 900) setShowWelcome(true)
-  }, [])
 
   const openRegister  = useCallback(() => setShowRegister(true),  [])
   const closeRegister = useCallback(() => setShowRegister(false), [])
-  const closeWelcome  = useCallback(() => setShowWelcome(false),  [])
 
   return (
     <>
@@ -48,9 +41,6 @@ export default function Home() {
       </div>
 
       {showRegister && <RegisterModal onClose={closeRegister} />}
-      {showWelcome && !showRegister && (
-        <WelcomeModal onClose={closeWelcome} onRegister={openRegister} />
-      )}
     </>
   )
 }
