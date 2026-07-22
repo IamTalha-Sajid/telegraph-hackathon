@@ -1,6 +1,10 @@
 'use client'
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
+declare global {
+  interface Window { twq?: (...args: unknown[]) => void }
+}
+
 interface Props { onClose: () => void }
 
 type ParticipantType = 'individual' | 'team'
@@ -216,6 +220,7 @@ export default function RegisterModal({ onClose }: Props) {
         setSubmitErr(data.error ?? 'Something went wrong. Please try again.')
       } else {
         setStep('done')
+        window.twq?.('event', 'tw-rcv9y-re0ue', { email_address: form.email })
       }
     } catch {
       setSubmitErr('Network error. Please try again.')
