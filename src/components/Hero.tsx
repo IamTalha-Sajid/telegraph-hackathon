@@ -13,7 +13,7 @@ export default function Hero({ onRegister }: Props) {
 
         <div className="hero-prize-badge">
           <span className="hero-prize-badge-label">Prize pool</span>
-          <span className="hero-prize-badge-amount">$15,000 <span className="hero-prize-badge-unit">USDC</span></span>
+          <span className="hero-prize-badge-amount">$15,000 <span className="hero-prize-badge-unit">USD</span></span>
         </div>
 
         <p className="hero-desc">

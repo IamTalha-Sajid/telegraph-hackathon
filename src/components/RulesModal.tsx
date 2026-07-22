@@ -38,7 +38,7 @@ const SECTIONS = [
     label: 'Prizes & IP',
     rules: [
       'Teams retain full intellectual property of their project.',
-      'Prize pool paid in USDC and / or MACHINA token.',
+      'Prize pool paid in USD and / or MACHINA token.',
       'Judges\' decisions are final and non-negotiable.',
     ],
   },

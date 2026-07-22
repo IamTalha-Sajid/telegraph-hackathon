@@ -3,7 +3,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Telegraph Hackathon',
-  description: 'Build on Telegraph\'s verified inference layer. USDC prizes across three tracks.',
+  description: 'Build on Telegraph\'s verified inference layer. USD prizes across three tracks.',
   metadataBase: new URL('https://hackathon.telegraphprotocol.com'),
   icons: {
     icon: [
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Telegraph Hackathon',
-    description: 'Build on Telegraph\'s verified inference layer. USDC prizes across 3 tracks.',
+    description: 'Build on Telegraph\'s verified inference layer. USD prizes across 3 tracks.',
     url: 'https://hackathon.telegraphprotocol.com',
     siteName: 'Telegraph Hackathon',
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Telegraph Hackathon',
-    description: 'Build on Telegraph\'s verified inference layer. USDC prizes across 3 tracks.',
+    description: 'Build on Telegraph\'s verified inference layer. USD prizes across 3 tracks.',
     images: ['/telegraph-social-card.jpg'],
   },
 }

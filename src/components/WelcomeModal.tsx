@@ -51,7 +51,7 @@ export default function WelcomeModal({ onClose, onRegister }: Props) {
         </div>
 
         <div className="modal-body welcome-modal-body">
-          <p className="welcome-modal-prize">$15,000 USDC prize pool</p>
+          <p className="welcome-modal-prize">$15,000 USD prize pool</p>
           <p className="welcome-modal-desc">
             Build on Telegraph — a verifiable intelligence layer for autonomous agents. Wrap an API, write an evaluation script, or ship an app on top of live miners. Three tracks, open to any developer.
           </p>

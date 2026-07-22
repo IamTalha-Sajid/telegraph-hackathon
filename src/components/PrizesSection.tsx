@@ -2,13 +2,13 @@ const PRIZES = [
   {
     round: 'Round 1',
     dates: 'Early Aug – Mid Sep 2026',
-    amount: '$5K USDC',
+    amount: '$5K USD',
     note: 'Miner, Script Author & Application tracks',
   },
   {
     round: 'Round 2',
     dates: 'Early Oct – Mid Nov 2026',
-    amount: '$10K USDC',
+    amount: '$10K USD',
     note: 'Miner, Script Author & Application tracks',
   },
   {
@@ -26,7 +26,7 @@ export default function PrizesSection() {
       <div className="sec-label">Prizes</div>
       <h2 className="sec-title">Three rounds. Real rewards.</h2>
       <p className="sec-sub">
-        Two USDC rounds to bootstrap the system, then a mainnet launch with Machina incentives.
+        Two USD rounds to bootstrap the system, then a mainnet launch with Machina incentives.
         Submit a Miner (any API, model, dataset, or tool), an evaluation script, or both — you can win across tracks.
       </p>
 

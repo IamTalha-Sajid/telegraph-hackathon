@@ -4,7 +4,7 @@ const HACKATHONS = [
     label: 'Hackathon 1',
     dates: 'Aug 17 – Sep 7, 2026',
     duration: '21 days',
-    prize: '$5K USDC',
+    prize: '$5K USD',
     focus: 'Register Miners and Script Authors, build initial APIs, models, and evaluation scripts, and test the ranking and evaluation flow.',
     muted: false,
     comingSoon: false,
@@ -15,7 +15,7 @@ const HACKATHONS = [
     label: 'Hackathon 2',
     dates: 'Mid October 2026',
     duration: '',
-    prize: '$10K USDC',
+    prize: '$10K USD',
     focus: 'Improve on Hackathon 1, attract more participants, and refine Miners and evaluation scripts.',
     muted: false,
     comingSoon: false,
@@ -47,7 +47,7 @@ export default function HackathonSeries() {
         <div className="sec-label">Season I</div>
         <h2 className="sec-title">A 3-hackathon series.</h2>
         <p className="sec-sub">
-          Two USDC rounds to bootstrap and test the system, then a mainnet launch with Machina rewards.
+          Two USD rounds to bootstrap and test the system, then a mainnet launch with Machina rewards.
         </p>
 
         <div className="card-grid">

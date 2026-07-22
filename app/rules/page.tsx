@@ -64,8 +64,8 @@ const PRIZES = [
 
 const HOW_STEPS = [
   { n: '01', title: 'Miners Are Ranked, Not Just Listed', body: 'Anyone can bring their model, API, dataset, or specialized system into Telegraph as a Miner. Miners are ranked based on performance, domain relevance, and historical quality. Validators continuously evaluate Miner outputs against ground truth using evaluation scripts. Higher and more consistent performance leads to a higher rank on the leaderboard.' },
-  { n: '02', title: 'Probabilistic Routing Based on Intent', body: 'When an agent needs intelligence, it does not choose a specific Miner. Instead, it declares its intent — the domain (e.g. AI detection, weather, finance), a minimum confidence threshold, and a deadline. Telegraph routes probabilistically to the top-ranked Miners for that intent. Higher-performing Miners receive more traffic and more USDC per query.' },
-  { n: '03', title: 'The Quality Flywheel', body: 'Better Miners → more routed demand → more real USDC earnings → stronger earnings attract better Miners → network compounds in quality, reliability, and coverage. Fundamentally different from simple aggregator models.' },
+  { n: '02', title: 'Probabilistic Routing Based on Intent', body: 'When an agent needs intelligence, it does not choose a specific Miner. Instead, it declares its intent — the domain (e.g. AI detection, weather, finance), a minimum confidence threshold, and a deadline. Telegraph routes probabilistically to the top-ranked Miners for that intent. Higher-performing Miners receive more traffic and more USD per query.' },
+  { n: '03', title: 'The Quality Flywheel', body: 'Better Miners → more routed demand → more real USD earnings → stronger earnings attract better Miners → network compounds in quality, reliability, and coverage. Fundamentally different from simple aggregator models.' },
   { n: '04', title: 'Independent Leaderboards per Intent', body: 'Each intent (e.g. AI text detection) has its own independent leaderboard. Miners are only ranked against others in the same domain. Miners solving completely different tasks do not affect your ranking or routing share. This ensures fair competition within each domain.' },
   { n: '05', title: 'Why This Architecture Matters', body: 'Simple aggregator approaches lack ranking, verification, probabilistic routing, and the incentive flywheel that turns raw, unverified API output into reliable, monetizable, machine-grade intelligence. Telegraph is designed to become stronger with real usage, not weaker.' },
 ]
@@ -321,7 +321,7 @@ export default function RulesPage() {
           <Reveal>
             <p className="rules-section-eyebrow">What you can win</p>
             <h2 className="rules-section-h2">Prize Distribution</h2>
-            <p className="rules-body">All prizes paid in USDC after final results are announced.</p>
+            <p className="rules-body">All prizes paid in USD after final results are announced.</p>
           </Reveal>
           <div className="prizes-grid">
             {PRIZES.map((p, i) => (
@@ -350,7 +350,7 @@ export default function RulesPage() {
           <Reveal delay={200}>
             <div className="prize-total-row">
               <span className="prize-total-label">Total Prize Pool</span>
-              <span className="prize-total-val">$5,000 USDC</span>
+              <span className="prize-total-val">$5,000 USD</span>
             </div>
           </Reveal>
         </section>
