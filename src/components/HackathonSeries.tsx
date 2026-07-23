@@ -26,8 +26,8 @@ const HACKATHONS = [
     label: 'Hackathon 3',
     dates: 'December 2026 onwards',
     duration: 'Mainnet',
-    prize: '$Machina TBD',
-    focus: 'Full mainnet launch with real agent consumption and Machina incentives. Details announced closer to launch.',
+    prize: 'TBD',
+    focus: 'Full mainnet launch with real agent consumption and rewards. Details announced closer to launch.',
     muted: true,
     comingSoon: true,
     bootstrapNote: false,
@@ -47,7 +47,7 @@ export default function HackathonSeries() {
         <div className="sec-label">Season I</div>
         <h2 className="sec-title">A 3-hackathon series.</h2>
         <p className="sec-sub">
-          Two USD rounds to bootstrap and test the system, then a mainnet launch with Machina rewards.
+          Two USD rounds to bootstrap and test the system, then a mainnet launch with rewards TBD.
         </p>
 
         <div className="card-grid">

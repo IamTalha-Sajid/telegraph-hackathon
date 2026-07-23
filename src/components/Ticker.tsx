@@ -6,7 +6,7 @@ const ITEMS = [
   'Mainnet Dec 2026',
   '$5K – $7K USD',
   '$10K USD',
-  'Machina Rewards',
+  'Rewards TBD',
   'Miner Track',
   'Evaluation Script Track',
   'Application Track',
