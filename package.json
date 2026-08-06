@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "send-reminders": "node --env-file=.env.local scripts/send-reminder-emails.mjs",
+    "send-reminders:dry-run": "node --env-file=.env.local scripts/send-reminder-emails.mjs --dry-run"
   },
   "dependencies": {
     "googleapis": "^173.0.0",

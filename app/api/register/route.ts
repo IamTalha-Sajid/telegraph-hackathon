@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSheets, findRowByEmail, ensureHeaders, SHEET_ID, SHEET_TAB } from '@/lib/sheets'
+import { sendConfirmationEmail } from '@/lib/email'
 import { google } from 'googleapis'
+
+const REMINDER_TRACKING_COL = 'P' // "Reminder Sent At" -- keep in sync with scripts/send-reminder-emails.mjs
 
 export async function POST(req: NextRequest) {
   try {
@@ -37,6 +40,7 @@ export async function POST(req: NextRequest) {
     ]
 
     const found = await findRowByEmail(sheets, auth, email)
+    let newRowNumber: number | null = null
 
     if (found) {
       // Update existing row
@@ -49,7 +53,7 @@ export async function POST(req: NextRequest) {
       })
     } else {
       // Append new row
-      await sheets.spreadsheets.values.append({
+      const appendRes = await sheets.spreadsheets.values.append({
         auth,
         spreadsheetId: SHEET_ID,
         range: `${SHEET_TAB}!A1`,
@@ -57,6 +61,28 @@ export async function POST(req: NextRequest) {
         insertDataOption: 'INSERT_ROWS',
         requestBody: { values: [row] },
       })
+      const updatedRange = appendRes.data.updates?.updatedRange // e.g. "Sheet1!A123:N123"
+      const match = updatedRange?.match(/!A(\d+):/)
+      newRowNumber = match ? Number(match[1]) : null
+    }
+
+    // Only email brand-new registrants, not people re-submitting/updating their entry.
+    if (!found) {
+      try {
+        await sendConfirmationEmail(email, name)
+        if (newRowNumber) {
+          await sheets.spreadsheets.values.update({
+            auth,
+            spreadsheetId: SHEET_ID,
+            range: `${SHEET_TAB}!${REMINDER_TRACKING_COL}${newRowNumber}`,
+            valueInputOption: 'RAW',
+            requestBody: { values: [[new Date().toISOString()]] },
+          })
+        }
+      } catch (emailErr) {
+        // Registration already succeeded -- don't fail the request over email delivery.
+        console.error('[register] confirmation email failed', emailErr)
+      }
     }
 
     return NextResponse.json({ ok: true })
