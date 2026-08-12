@@ -120,6 +120,7 @@ export default function RulesPage() {
         </Link>
         <span className="nav-badge">Hackathon</span>
         <div style={{ flex: 1 }} />
+        <Link href="/supported-intents" className="rules-nav-back">Intents</Link>
         <Link href="/" className="rules-nav-back">← Back to site</Link>
       </nav>
 

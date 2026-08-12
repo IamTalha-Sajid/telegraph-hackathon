@@ -3013,6 +3013,179 @@ a.nav-rules-btn.nav-telegraph:hover {
   margin: 0;
 }
 
+/* Supported intents */
+.intents-stat-row {
+  display: flex;
+  gap: 40px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+.intents-stat { display: flex; flex-direction: column; gap: 6px; }
+.intents-stat-val {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.intents-stat-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+.intents-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-bottom: 8px;
+}
+
+.intents-search {
+  flex: 1;
+  min-width: 220px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.intents-search::placeholder { color: rgba(255,255,255,0.3); }
+.intents-search:focus { border-color: rgba(251,191,36,0.4); background: rgba(255,255,255,0.05); }
+
+.intents-group { margin-top: 44px; }
+.intents-group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.intents-group-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.intents-group-count {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+
+.intent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+.intent-card-wrap { height: 100%; }
+
+.intent-card {
+  height: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-left: 2px solid var(--intent-color, #fbbf24);
+  border-radius: 6px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+.intent-card:hover {
+  background: rgba(255,255,255,0.055);
+  border-color: rgba(255,255,255,0.14);
+  border-left-color: var(--intent-color, #fbbf24);
+  transform: translateY(-2px);
+}
+
+.intent-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.intent-card-tier {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+.intent-card-tier[data-tier="A"] {
+  background: rgba(134,239,172,0.12);
+  color: rgba(134,239,172,0.9);
+}
+.intent-card-tier[data-tier="B"] {
+  background: rgba(96,165,250,0.12);
+  color: rgba(96,165,250,0.9);
+}
+
+.intent-card-cat {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  text-align: right;
+}
+
+.intent-card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin: 0;
+  font-family: 'Roboto Mono', monospace;
+  word-break: break-word;
+}
+
+.intent-card-use {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.intent-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.intent-card-mech {
+  font-size: 9.5px;
+  color: rgba(255,255,255,0.3);
+}
+
+.intent-card-gt {
+  font-size: 9.5px;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+}
+.intent-card-gt-on { color: rgba(251,191,36,0.7); }
+
+@media (max-width: 640px) {
+  .intent-grid { grid-template-columns: 1fr 1fr; }
+  .intents-controls { flex-direction: column; align-items: stretch; }
+}
+@media (max-width: 420px) {
+  .intent-grid { grid-template-columns: 1fr; }
+}
+
 /* Footer */
 .rules-footer {
   text-align: center;

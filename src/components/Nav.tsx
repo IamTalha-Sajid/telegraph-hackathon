@@ -42,6 +42,7 @@ export default function Nav({ onRegister }: Props) {
         {/* Desktop */}
         <div className="nav-right nav-right-desktop">
           <Link href="/rules" className="nav-rules-btn">Rules</Link>
+          <Link href="/supported-intents" className="nav-rules-btn">Intents</Link>
           <a href="https://docs.telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-rules-btn">Docs ↗</a>
           <a href="https://github.com/telegraphprotocol/telegraph-usecases" target="_blank" rel="noopener noreferrer" className="nav-rules-btn">GitHub ↗</a>
           <a href="https://telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-rules-btn nav-telegraph">Telegraph ↗</a>
@@ -71,6 +72,7 @@ export default function Nav({ onRegister }: Props) {
             <div className="mobile-drawer-inner">
               <div className="mobile-drawer-divider" />
               <Link href="/rules" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>Rules</Link>
+              <Link href="/supported-intents" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>Intents</Link>
               <a href="https://docs.telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>Docs ↗</a>
               <a href="https://github.com/telegraphprotocol/telegraph-usecases" target="_blank" rel="noopener noreferrer" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>GitHub ↗</a>
               <a href="https://telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>Telegraph ↗</a>
