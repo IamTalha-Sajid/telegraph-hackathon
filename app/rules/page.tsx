@@ -82,6 +82,7 @@ const FOCUS_AREAS = [
 const RULES = [
   'Applications in Track 3 must use real Telegraph Miners. Simulated or mocked data is not allowed.',
   'Miners and Script Authors must remain live and operational throughout Track 3.',
+  'No commits may be pushed to your Track 3 repository after the submission deadline. Any commits after the deadline will result in disqualification.',
   'All updates used for judging must be publicly posted on X and properly tagged.',
   'Artificial inflation of metrics or gaming the system will result in disqualification.',
   'Each intent operates with its own independent leaderboard. You only compete with Miners in the same domain for Normalized Performance scoring. Cash prizes are awarded to the Top 3 Miners with the highest overall normalized scores across all intents.',
