@@ -6,7 +6,7 @@ export const SHEET_TAB = 'Sheet1'
 export const HEADERS = [
   'Timestamp', 'Name', 'Email', 'Type', 'Org / Team Name', 'Team Size',
   'Wallet', 'Twitter', 'Discord', 'Level',
-  'Project Name', 'Miners', 'Project Description', 'Tech Stack',
+  'Project Name', 'Miners', 'Project Description', 'Tech Stack', 'GitHub',
 ]
 
 export function getAuth() {
@@ -32,7 +32,7 @@ export async function findRowByEmail(
   const res = await sheets.spreadsheets.values.get({
     auth,
     spreadsheetId: SHEET_ID,
-    range: `${SHEET_TAB}!A:N`,
+    range: `${SHEET_TAB}!A:O`,
   })
   const rows = (res.data.values ?? []) as string[][]
   for (let i = 1; i < rows.length; i++) {
@@ -50,10 +50,10 @@ export async function ensureHeaders(
   const res = await sheets.spreadsheets.values.get({
     auth,
     spreadsheetId: SHEET_ID,
-    range: `${SHEET_TAB}!A1:N1`,
+    range: `${SHEET_TAB}!A1:O1`,
   })
   const firstRow = res.data.values?.[0]
-  if (!firstRow || firstRow[0] !== 'Timestamp') {
+  if (!firstRow || firstRow[0] !== 'Timestamp' || firstRow[14] !== 'GitHub') {
     await sheets.spreadsheets.values.update({
       auth,
       spreadsheetId: SHEET_ID,

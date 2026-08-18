@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "send-reminders": "node --env-file=.env.local scripts/send-reminder-emails.mjs",
-    "send-reminders:dry-run": "node --env-file=.env.local scripts/send-reminder-emails.mjs --dry-run"
+    "send-reminders:dry-run": "node --env-file=.env.local scripts/send-reminder-emails.mjs --dry-run",
+    "send-links": "node --env-file=.env.local scripts/send-links-emails.mjs",
+    "send-links:dry-run": "node --env-file=.env.local scripts/send-links-emails.mjs --dry-run"
   },
   "dependencies": {
     "googleapis": "^173.0.0",

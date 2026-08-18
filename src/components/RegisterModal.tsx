@@ -25,6 +25,7 @@ interface FormData {
   projectDesc: string
   subnets:     string[]
   techStack:   string
+  github:      string
 }
 
 type Errors = Partial<Record<keyof FormData, string>>
@@ -32,7 +33,7 @@ type Errors = Partial<Record<keyof FormData, string>>
 const EMPTY: FormData = {
   name: '', email: '', type: 'individual', orgName: '', teamSize: '2 – 5',
   wallet: '', twitter: '', discord: '', level: 'intermediate',
-  projectName: '', projectDesc: '', subnets: [], techStack: '',
+  projectName: '', projectDesc: '', subnets: [], techStack: '', github: '',
 }
 
 const MINERS     = [
@@ -531,6 +532,21 @@ export default function RegisterModal({ onClose }: Props) {
                   placeholder="e.g. Python, Next.js, Solidity, Hardhat, FastAPI"
                   value={form.techStack}
                   onChange={e => set('techStack', e.target.value)}
+                />
+              </Field>
+
+              <Field
+                label="GitHub Repo"
+                id="r-github"
+                optional
+                hint="Link to your project's repository. Doesn't need to be public or final yet — you can add or update it later."
+              >
+                <input
+                  id="r-github"
+                  className="mi"
+                  placeholder="https://github.com/you/project"
+                  value={form.github}
+                  onChange={e => set('github', e.target.value)}
                 />
               </Field>
 

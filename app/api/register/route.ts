@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const {
       name, email, type, orgName, teamSize,
       wallet, twitter, discord, level,
-      projectName, projectDesc, subnets, techStack,
+      projectName, projectDesc, subnets, techStack, github,
     } = body
 
     if (!name || !email || !projectName || !discord) {
@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
       Array.isArray(subnets) ? subnets.join(', ') : '',
       projectDesc || '',
       techStack   || '',
+      github      || '',
     ]
 
     const found = await findRowByEmail(sheets, auth, email)
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
       await sheets.spreadsheets.values.update({
         auth,
         spreadsheetId: SHEET_ID,
-        range: `${SHEET_TAB}!A${found.rowIndex}:N${found.rowIndex}`,
+        range: `${SHEET_TAB}!A${found.rowIndex}:O${found.rowIndex}`,
         valueInputOption: 'RAW',
         requestBody: { values: [row] },
       })
