@@ -44,6 +44,7 @@ export async function POST(req: NextRequest) {
         subnets:     r[11] ? r[11].split(', ').filter(Boolean) : [],
         projectDesc: r[12] ?? '',
         techStack:   r[13] ?? '',
+        github:      r[14] ?? '',
       }
     }
 
