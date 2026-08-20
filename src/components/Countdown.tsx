@@ -1,10 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-const TARGET = new Date('2026-08-17T00:00:00Z')
+const START  = new Date('2026-08-17T00:00:00Z')
+const END    = new Date('2026-09-07T00:00:00Z')
 
-function getTimeLeft() {
-  const diff = TARGET.getTime() - Date.now()
+function getTimeLeft(target: Date) {
+  const diff = target.getTime() - Date.now()
   if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
   return {
     days:    Math.floor(diff / (1000 * 60 * 60 * 24)),
@@ -17,20 +18,22 @@ function getTimeLeft() {
 const UNITS = ['Days', 'Hours', 'Minutes', 'Seconds'] as const
 
 export default function Countdown() {
+  const hasStarted = Date.now() >= START.getTime()
+  const target = hasStarted ? END : START
   const [time, setTime] = useState<ReturnType<typeof getTimeLeft> | null>(null)
 
   useEffect(() => {
-    setTime(getTimeLeft())
-    const id = setInterval(() => setTime(getTimeLeft()), 1000)
+    setTime(getTimeLeft(target))
+    const id = setInterval(() => setTime(getTimeLeft(target)), 1000)
     return () => clearInterval(id)
-  }, [])
+  }, [target])
 
   const values = time ? [time.days, time.hours, time.minutes, time.seconds] : [0, 0, 0, 0]
 
   return (
     <section className="countdown-section">
       <div className="countdown-inner">
-        <p className="countdown-label">Hackathon starts in</p>
+        <p className="countdown-label">{hasStarted ? 'Hackathon ends in' : 'Hackathon starts in'}</p>
 
         <div className="countdown-grid">
           {UNITS.map((label, i) => (
@@ -46,7 +49,9 @@ export default function Countdown() {
           ))}
         </div>
 
-        <p className="countdown-date">Aug 17, 2026 · Track 1 &amp; 2 Open</p>
+        <p className="countdown-date">
+          {hasStarted ? 'Sep 7, 2026 · Submissions Close' : 'Aug 17, 2026 · Track 1 & 2 Open'}
+        </p>
       </div>
     </section>
   )
