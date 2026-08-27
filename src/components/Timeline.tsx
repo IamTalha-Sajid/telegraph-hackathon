@@ -1,8 +1,8 @@
 'use client'
 
 const PHASE1_START = new Date('2026-08-17T00:00:00Z').getTime()
-const PHASE1_END   = new Date('2026-08-31T00:00:00Z').getTime()
-const PHASE2_END   = new Date('2026-09-07T00:00:00Z').getTime()
+const PHASE1_END   = new Date('2026-08-31T23:59:59Z').getTime()
+const PHASE2_END   = new Date('2026-09-07T23:59:59Z').getTime()
 
 export default function Timeline() {
   const now = Date.now()

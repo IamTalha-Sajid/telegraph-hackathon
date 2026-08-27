@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react'
 
 const HACKATHON_START = new Date('2026-08-17T12:00:00Z').getTime()
-const PHASE1_END      = new Date('2026-08-31T12:00:00Z').getTime()
-const PHASE2_END      = new Date('2026-09-07T12:00:00Z').getTime()
+const PHASE1_END      = new Date('2026-08-31T23:59:59Z').getTime()
+const PHASE2_END      = new Date('2026-09-07T23:59:59Z').getTime()
 
 function getTimeLeft(target: number) {
   const diff = target - Date.now()
@@ -75,7 +75,7 @@ export default function ScheduleSection() {
             ))}
           </div>
           <p className="countdown-date">
-            {hasStarted ? 'Sep 7, 2026 · 12:00 UTC · Submissions Close' : 'Aug 17, 2026 · 12:00 UTC · Track 1 & 2 Open'}
+            {hasStarted ? 'Sep 7, 2026 · 23:59 UTC · Submissions Close' : 'Aug 17, 2026 · 12:00 UTC · Track 1 & 2 Open'}
           </p>
         </div>
 
