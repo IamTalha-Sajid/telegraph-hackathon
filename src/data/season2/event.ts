@@ -1,5 +1,5 @@
 // Season II event content. Structure and copy follow the Season II deck;
-// judging weights follow the updated criteria (commercial legibility leads).
+// judging weights follow the updated criteria (mainnet readiness leads).
 
 export const START = new Date('2026-11-16T00:00:00Z')
 export const END   = new Date('2026-12-16T23:59:59Z')
@@ -84,11 +84,11 @@ export const SHIP = [
 ]
 
 export const JUDGING = [
-  { weight: 30, title: 'Commercial legibility', body: 'A specific use case, a problem someone has today, and a plain answer to what this replaces and what that costs now. This is what decides whether anyone will buy it.' },
-  { weight: 25, title: 'Correct use of the network', body: 'The agent buys through Telegraph and consumes the ranked, verified answer rather than shortcutting to a direct API call.' },
+  { weight: 35, title: 'Mainnet readiness', body: 'Build quality on par with mainnet. Same contracts, same settlement path, same proof format, and chain ID, token address and price source are configuration, not code. It works when opened cold.' },
+  { weight: 30, title: 'Commercial viability', body: 'A specific use case, a problem someone has today, and a plain answer to what this replaces and what that costs now. This is what decides whether anyone will buy it.' },
   { weight: 20, title: 'Verifiable transaction volume', body: 'Settled requests on chain, not a screenshot. Volume a judge can count.' },
-  { weight: 15, title: 'Novelty', body: 'Something nobody has shown before, rather than a familiar app with a payment bolted on.' },
-  { weight: 10, title: 'Mainnet ready', body: 'Build quality on par with mainnet: it works when opened cold, and chain ID, token address and price source are configuration, not code.' },
+  { weight: 10, title: 'Network usage', body: 'The agent buys through Telegraph and consumes the ranked, verified answer rather than shortcutting to a direct API call.' },
+  { weight: 5, title: 'Novelty', body: 'Something nobody has shown before, rather than a familiar app with a payment bolted on.' },
 ]
 
 export const PRIZES = [

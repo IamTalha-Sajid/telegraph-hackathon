@@ -10,13 +10,13 @@ export default function JudgingPage() {
       <PageHero
         page="/judging"
         title="Judging."
-        sub="Optimise for commercial legibility. What decides the network's demand is whether someone would buy what you built."
+        sub="Optimise for mainnet readiness. A build that does not convert to mainnet will not qualify, and after that, what matters most is whether someone would buy it."
       >
         <ul className="s2-weights">
           {JUDGING.map(j => (
             <li key={j.title}>
               <span className="s2-weight-n">{j.weight}%</span>
-              <span className="s2-weight-bar"><span style={{ width: `${(j.weight / 30) * 100}%` }} /></span>
+              <span className="s2-weight-bar"><span style={{ width: `${(j.weight / JUDGING[0].weight) * 100}%` }} /></span>
               <span className="s2-weight-text"><strong>{j.title}</strong><span>{j.body}</span></span>
             </li>
           ))}
