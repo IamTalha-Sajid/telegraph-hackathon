@@ -34,13 +34,13 @@ export default function Overview() {
             <div className="s2-actions">
               <RegisterButton>Register for Season II</RegisterButton>
               <Link className="s2-btn s2-btn-lg" href="/tracks">Explore the 15 tracks</Link>
+              <Countdown start={START} end={END} />
             </div>
             <dl className="s2-facts">
               <div><dt>Tracks</dt><dd>15</dd></div>
               <div><dt>Winners</dt><dd>1 per track</dd></div>
               <div><dt>Network</dt><dd>Testnet</dd></div>
             </dl>
-            <Countdown start={START} end={END} />
           </div>
           <div className="s2-hero-visual">
             <img src="/Website/season2-mascot.png" alt="" aria-hidden="true" className="s2-hero-art" />
