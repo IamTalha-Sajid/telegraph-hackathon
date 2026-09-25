@@ -25,7 +25,7 @@ export default function Overview() {
             <h1 className="s2-hero-title">Build the market the machines will buy from.</h1>
             <div className="hero-prize-badge">
               <span className="hero-prize-badge-label">Prize pool</span>
-              <span className="hero-prize-badge-amount">$15,000 <span className="hero-prize-badge-unit">USD</span></span>
+              <span className="hero-prize-badge-amount">TBA</span>
             </div>
             <p className="s2-hero-lede">
               Thirty days on Sepolia to build an agent that buys verified, ranked intelligence for a real

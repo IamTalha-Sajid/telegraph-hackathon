@@ -36,7 +36,7 @@ export default function WhyPage() {
             </li>
           ))}
         </ul>
-        <p className="s2-note">One winner per track, with runners-up named per use case. $15,000 USD prize pool.</p>
+        <p className="s2-note">One winner per track, with runners-up named per use case. Prize pool to be announced.</p>
       </Section>
 
       <NextPage page="/why" />

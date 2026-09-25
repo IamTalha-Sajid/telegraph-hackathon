@@ -42,7 +42,7 @@ export default function JudgingPage() {
       <Section
         label="Prizes"
         title="Fifteen track winners, not one grand prize."
-        sub="$15,000 USD prize pool, split across the fifteen tracks."
+        sub="Prize pool to be announced, split across the fifteen tracks."
       >
         <ul className="s2-grid s2-grid-4">
           {PRIZES.map(p => (
