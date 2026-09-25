@@ -317,8 +317,6 @@ a.s2-chip:hover { border-color: var(--accent); color: var(--accent); }
 .s2-chip-deterministic::before { background: var(--fg); }
 .s2-chip-hybrid::before { background: linear-gradient(90deg, var(--fg) 50%, transparent 50%); border: 1px solid var(--fg); }
 .s2-chip-nondeterministic::before { border: 1px solid var(--fg); border-radius: 50%; }
-.s2-chip-need { border-style: dashed; border-color: var(--accent-line); color: var(--muted); background: transparent; cursor: help; }
-.s2-chip-need::before { content: '+'; width: auto; height: auto; color: var(--accent); }
 
 /* Timeline */
 .s2-timeline { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; padding: 0; }
@@ -584,7 +582,6 @@ a.s2-chip:hover { border-color: var(--accent); color: var(--accent); }
 .tv-intent-name { font-size: 13px; font-weight: 500; overflow-wrap: anywhere; }
 .tv-intent-meta { font-size: 11px; color: var(--muted); margin-top: auto; }
 .tv-more { margin-top: 14px; }
-.tv-gaps { margin-top: 28px; padding: 22px; border: 1px dashed var(--accent-line); border-radius: 2px; display: grid; gap: 10px; }
 
 /* ── Intent explorer ─────────────────────── */
 .ix-classes { list-style: none; display: grid; gap: 10px; padding: 0; font-size: 13px; font-weight: 400; color: var(--text); }

@@ -24,10 +24,6 @@ export function IntentChip({ name }: { name: string }) {
   )
 }
 
-export function NeedChip({ label }: { label: string }) {
-  return <span className="s2-chip s2-chip-need" title="No catalogue intent yet. Open for Miners to supply.">{label}</span>
-}
-
 function left(target: Date) {
   const d = Math.max(0, target.getTime() - Date.now())
   return {

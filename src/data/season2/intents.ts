@@ -1,9 +1,11 @@
 // Telegraph intent catalogue (Season II).
 // An intent is one primitive category of intelligence Telegraph can rank and route.
-// Source: internal intent catalogue sheet. Group reflects the sheet's sections.
+// Only intents registered on-chain are listed: IntentRegistry.getCanonicalIntentsWithDescriptions()
+// on Base Sepolia (0x5a2324aA18613FAD4e44bDF0d6c73Ec1f6D87ff8), 134 intents as of 25 Sep 2026.
+// Details come from the internal catalogue sheet where it has the intent; group reflects its sections.
 
 export type IntentClass = 'Deterministic' | 'Hybrid' | 'Non-deterministic'
-export type IntentGroup = 'priority' | 'extended' | 'core'
+export type IntentGroup = 'priority' | 'core'
 export type Scoring = 'comparator only' | 'comparator + adapter' | 'adapter only'
 
 export interface Intent {
@@ -12,22 +14,22 @@ export interface Intent {
   priority?: number
   category: string
   cls: IntentClass
-  why: string
+  why?: string
   scoring: Scoring
   description: string
-  source: string
+  source?: string
   hubs?: string
   scale?: string
-  latency: string
-  complexity: 'Low' | 'Medium' | 'High'
+  latency?: string
+  complexity?: 'Low' | 'Medium' | 'High'
   method?: string
   /** Set when the catalogue marks the intent as hard to verify independently. */
   verifyNote?: string
 }
 
 type Row = [
-  number | null, string, string, IntentClass, string, Scoring, string, string,
-  string | null, string | null, string, Intent['complexity'], string | null, string | null,
+  number | null, string, string, IntentClass, string | null, Scoring, string, string | null,
+  string | null, string | null, string | null, Intent['complexity'] | null, string | null, string | null,
 ]
 
 const D: IntentClass = 'Deterministic'
@@ -104,37 +106,13 @@ const PRIORITY: Row[] = [
   [5, 'Logistics', 'SHIPMENT_DELAY_RISK', N, 'Forward-looking risk over weather, congestion and customs; truth arrives later.', A, 'Assesses predictive delay risk based on customs processing times, port congestion, weather conditions, and transport nodes.', 'Predictive Logistics Engine', 'Project44 / FourKites / RapidAPI', 'Miners use distinct risk models to weigh port congestion against weather delay factors.', '< 2s', 'High', null, null],
 ]
 
-const EXTENDED: Row[] = [
-  [null, 'AI & Machine Learning', 'RAG_GROUNDING_VERIFY', H, 'Citation presence is checkable; whether it actually supports the claim is not.', CA, 'Evaluates retrieval-augmented generation output faithfulness against retrieved document context snippets.', 'Vector DB / LLM Evaluator', null, null, '< 1.5s', 'High', null, null],
-  [null, 'AI & Machine Learning', 'PROMPT_INJECTION_DETECT', H, 'Labelled corpora exist for known attacks; novel phrasings need inference.', CA, 'Detects direct and indirect adversarial prompt injection attempts and jailbreak patterns in user inputs.', 'Guardrail Classifier', null, null, '< 250ms', 'High', null, null],
-  [null, 'AI & Machine Learning', 'AGENT_TOOL_CALL_AUDIT', H, 'Schema and policy compliance are mechanical; appropriateness of the call is judgment.', CA, 'Validates deterministic schema arguments and authorization scopes for AI agent function invocations.', 'API Gateway Telemetry', null, null, '< 400ms', 'Medium', null, null],
-  [null, 'AI & Machine Learning', 'SYNTHETIC_DATA_FIDELITY', H, 'Statistical tests are deterministic; overall fidelity is a judgment over them.', CA, 'Measures statistical distribution alignment and privacy preservation metrics for synthetically generated datasets.', 'Statistical Test Engine', null, null, '< 10s', 'High', null, null],
-  [null, 'Geospatial & Remote Sensing', 'WILDFIRE_PERIMETER_MONITOR', H, 'Thermal anomalies are measured; perimeter delineation is a modelled boundary.', CA, 'Tracks infrared thermal anomalies and active fire perimeter expansion boundaries from geostationary orbit.', 'Thermal Satellite Sensor', null, null, '< 5s', 'High', null, null],
-  [null, 'Geospatial & Remote Sensing', 'DEFORESTATION_SURVEILLANCE', H, 'Radar change detection is measurable; attribution to deforestation is inferred.', CA, 'Evaluates canopy loss anomalies and unauthorized road clearings within protected forest conservation zones.', 'SAR / Multispectral Radar', null, null, '< 15s', 'High', null, null],
-  [null, 'Geospatial & Remote Sensing', 'METHANE_EMISSION_DETECTION', H, 'Spectral signature is measured; plume attribution and rate are inferred.', CA, 'Quantifies point-source industrial methane plumes and flaring leakage using high-resolution spectral imagery.', 'Hyperspectral Satellite Feed', null, null, '< 20s', 'High', null, null],
-  [null, 'Legal & Compliance', 'GDPR_DATA_ERASURE_AUDIT', H, 'Ledger entries are checkable; sufficiency of erasure is judgment.', CA, 'Audits and confirms cryptographic deletion proofs for user data removal requests across distributed storage.', 'Storage Ledger Audit Log', null, null, '< 3s', 'Medium', null, null],
-  [null, 'Legal & Compliance', 'EXPORT_CONTROL_CLASSIFICATION', H, 'The ECCN matrix is rule-based; applying it to a novel product is interpretive.', CA, 'Reconciles harmonized tariff codes and dual-use technological specifications against export regulations.', 'Trade Compliance Matrix', null, null, '< 1.5s', 'High', null, null],
-  [null, 'Climate & Weather', 'CARBON_OFFSET_RETIREMENT', D, 'Retirement record exists in the registry.', C, 'Verifies the serial number retirement and non-double-spending of voluntary carbon credits on registries.', 'Environmental Registry', null, null, '< 2.5s', 'Medium', null, null],
-  [null, 'Climate & Weather', 'FLOOD_EXTENT_MAPPING', H, 'SAR inundation signal is measured; extent boundary is modelled.', CA, 'Maps surface water accumulation and flood inundation zones from synthetic aperture radar data.', 'SAR Satellite Inundation', null, null, '< 8s', 'High', null, null],
-  [null, 'IoT & Telemetry', 'COLD_CHAIN_TEMPERATURE_BREACH', D, 'Logged temperature against a threshold.', C, 'Detects excursions above critical pharmaceutical or perishables refrigeration thresholds in transit.', 'IoT Temperature Logger', null, null, '< 300ms', 'Low', null, null],
-  [null, 'IoT & Telemetry', 'SMART_METER_TAMPER_DETECT', H, 'Threshold breaches are mechanical; tamper vs fault is judgment.', CA, 'Identifies power bypass, magnetic interference, or meter enclosure breaches across utility distribution grids.', 'AMI Smart Grid Headend', null, null, '< 800ms', 'Medium', null, null],
-  [null, 'Financial / Transactional', 'CROSS_BORDER_REMITTANCE_STATUS', D, 'SWIFT GPI returns a status code.', C, 'Tracks settlement rails, intermediary SWIFT messaging, and local payout statuses for cross-border wires.', 'SWIFT GPI / Banking Gateway', null, null, '< 1s', 'Medium', null, null],
-  [null, 'Financial / Transactional', 'COLLATERAL_HAIRCUT_VALUATION', H, 'Market inputs are observable; the haircut model is a judgment call.', CA, 'Calculates mark-to-market valuations and risk haircuts for pledged securities and digital collateral.', 'Margin Engine / Market Feeds', null, null, '< 350ms', 'Medium', null, null],
-  [null, 'Enterprise Operations', 'ACCESS_PRIVILEGE_DRIFT_AUDIT', H, 'Diff against policy is mechanical; which drift matters is judgment.', CA, 'Discovers unapproved privilege escalations, dormant service accounts, and entitlement drift across cloud IAM.', 'IAM Directory / SIEM', null, null, '< 4s', 'High', null, null],
-]
-
 const CORE: Row[] = [
   [7, 'Financial / Transactional', 'CURRENCY_EXCHANGE', D, 'Spot exchange rate at timestamp within numeric tolerance band.', C, 'Calculates fiat currency conversion rates and mid-market spot pricing across global currency pairs.', 'FX Liquidity Feed', 'OANDA / XE.com / Frankfurter', 'Miners query distinct FX liquidity providers and calculate median mid-market rate.', '< 250ms', 'Low', 'Numeric Tolerance Comparator', null],
-  [7, 'Blockchain & Web3', 'CRYPTO_PRICE_LOOKUP', D, 'Aggregated volume-weighted average price across major exchange spot pairs.', C, 'Fetches real-time spot and volume-weighted average prices for crypto assets across major exchanges.', 'CEX/DEX Spot Aggregator', 'CoinGecko / CoinMarketCap / Binance', 'Miners fetch spot trades across independent centralized and decentralized exchange orderbooks.', '< 400ms', 'Low', 'Numeric Tolerance Comparator', null],
-  [7, 'Financial / Transactional', 'STOCK_PRICE_QUOTE', D, 'NBBO consolidated tape quote at specific execution timestamp.', C, 'Retrieves live and official market-close equity quotes, bid-ask spreads, and trading volume.', 'Equity Market Data Feed', 'Polygon.io / Alpha Vantage / IEX Cloud', 'Miners query distinct market data feeds and verify against consolidated equity tapes.', '< 350ms', 'Low', 'Numeric Tolerance Comparator', null],
   [7, 'Blockchain & Web3', 'CRYPTO_TRANSFER_VERIFY', D, 'Transaction inclusion and confirmation count are verified directly on-chain.', C, 'Verifies on-chain transaction status, gas fee burn, sender/recipient addresses, and block confirmations.', 'Blockchain RPC Node', 'Etherscan / Alchemy / QuickNode', 'Miners query diverse archive RPC nodes to cross-verify transaction receipt status and events.', '< 1.5s', 'Medium', 'Exact Match Comparator', null],
-  [6, 'Blockchain & Web3', 'GAS_PRICE_ESTIMATION', D, 'Pending mempool base fee and priority fee percentiles are observable metrics.', C, 'Estimates dynamic base fee, tip priority, and gas limits across standard transaction speed tiers.', 'Mempool / Gas Oracle', 'Blocknative / Etherscan Gas Tracker', 'Miners sample local node mempools to compute 25th/50th/75th percentile gas prices.', '< 500ms', 'Low', 'Numeric Tolerance Comparator', null],
   [7, 'Blockchain & Web3', 'SMART_CONTRACT_AUDIT', H, 'Automated vulnerability patterns are mechanical; business logic flaws require semantic analysis.', CA, 'Inspects bytecode and smart contract source code for reentrancy, access control, and integer overflows.', 'Static Analysis / Symbolic Execution', 'Slither / Mythril / OpenZeppelin Defender', 'Miners run distinct open-source static analyzers and automated formal verification suites.', '< 8s', 'High', 'Multi-Engine Heuristic Scoring', null],
-  [6, 'Climate & Weather', 'WEATHER_CURRENT', D, 'Physical weather station observations at time and geo-coordinates.', C, 'Provides real-time ambient temperature, humidity, precipitation rate, and wind vectors by coordinates.', 'Surface Weather Observation', 'Open-Meteo / NOAA / Tomorrow.io', 'Miners fetch readings from nearby METAR airport stations and national weather networks.', '< 600ms', 'Low', 'Numeric Tolerance Comparator', null],
   [6, 'Climate & Weather', 'AIR_QUALITY_INDEX', D, 'Sensor measurements of PM2.5, PM10, and ozone concentrations.', C, 'Aggregates particulate matter, ground ozone, and composite AQI metrics from monitoring stations.', 'Environmental Sensor Network', 'OpenAQ / WAQI / EPA AirNow', 'Miners cross-reference municipal air monitoring station telemetry and calibrated sensor APIs.', '< 800ms', 'Low', 'Numeric Tolerance Comparator', null],
   [7, 'Cybersecurity', 'THREAT_IP_REPUTATION', H, 'Blocklist presence is a deterministic lookup; composite confidence score is an inference.', CA, 'Assesses malicious IP address risk scores, botnet associations, and brute-force history across threat registries.', 'Threat Intelligence Engine', 'AbuseIPDB / AlienVault OTX / GreyNoise', 'Miners query diverse global IP threat feeds and aggregate historical abuse report counts.', '< 400ms', 'Medium', 'Consensus Scoring Comparator', null],
   [6, 'Cybersecurity', 'DNS_RECORD_LOOKUP', D, 'Authoritative nameserver response for requested record type.', C, 'Resolves and validates authoritative DNS records (A, AAAA, CNAME, MX, TXT) across global resolvers.', 'Authoritative DNS Resolver', 'Cloudflare 1.1.1.1 / Google DNS / Quad9', 'Miners query authoritative and anycast DNS resolvers to verify propagation and record parity.', '< 200ms', 'Low', 'Exact Match Comparator', null],
-  [6, 'Cybersecurity', 'SSL_CERTIFICATE_VERIFY', D, 'X.509 certificate chain, expiration, and CRL/OCSP status are cryptographically verified.', C, 'Validates TLS/SSL certificate chains, cipher suites, expiration dates, and revocation statuses.', 'PKI / Certificate Transparency', "Crt.sh / SSL Labs API / Let's Encrypt", 'Miners initiate TLS handshakes directly and query public Certificate Transparency logs.', '< 500ms', 'Low', 'Deterministic Rule Validator', null],
   [6, 'Cybersecurity', 'PORT_SCAN_AUDIT', D, 'TCP SYN/ACK handshake state or open UDP response is observable network truth.', C, 'Identifies open network service ports, banner disclosures, and listening daemon protocols on specified hosts.', 'Network Port Scanner / Telemetry', 'Shodan / Censys / Nmap API', 'Miners scan target endpoints using controlled SYN probes to confirm listening service ports.', '< 2s', 'Medium', 'Exact Match Comparator', null],
   [6, 'Enterprise Operations', 'SERVER_UPTIME_MONITOR', D, 'HTTP response code and TCP latency from synthetic edge probes.', C, 'Monitors HTTP/HTTPS endpoint availability, handshake latency, and uptime status from multiple edge regions.', 'Synthetic APM Probe', 'BetterStack / UptimeRobot / Pingdom', 'Miners execute concurrent HTTP GET requests from geo-distributed locations.', '< 600ms', 'Low', 'Exact Match Comparator', null],
   [6, 'Enterprise Operations', 'API_HEALTH_CHECK', D, 'Service payload validation and response code comparison against OpenAPI specification.', C, 'Verifies REST/GraphQL API responsiveness, JSON schema payload structure, and HTTP status codes.', 'API Monitoring Suite', 'Postman / Datadog / Runscope', 'Miners execute automated schema conformance checks against public health endpoints.', '< 400ms', 'Low', 'JSON Schema Validator', null],
@@ -143,8 +121,6 @@ const CORE: Row[] = [
   [6, 'Financial / Transactional', 'LOAN_INTEREST_RATE_QUOTE', D, 'Published benchmark APRs from institutional lending matrices.', C, 'Aggregates residential mortgage APRs, prime lending rates, and personal loan interest quotes.', 'Lending Rate Aggregator', 'Bankrate / FRED / LendingTree', 'Miners scrape and parse published APR tables across licensed lenders.', '< 1s', 'Low', 'Numeric Tolerance Comparator', null],
   [6, 'Blockchain & Web3', 'CRYPTO_YIELD_RATE', D, 'Calculated from smart contract liquidity pools and staking emission contracts.', C, 'Tracks annualized percentage yields, staking reward rates, and lending pool yields across DeFi protocols.', 'DeFi Yield Aggregator', 'DefiLlama / Yearn Finance / Compound', 'Miners query smart contract liquidity pools directly to calculate instantaneous lending APY.', '< 1.2s', 'Medium', 'Numeric Tolerance Comparator', null],
   [6, 'Blockchain & Web3', 'TOKEN_TOTAL_SUPPLY_VERIFY', D, 'Calling totalSupply() on an ERC-20/SPL contract returns an exact integer.', C, 'Verifies token circulating supply, burnt token balances, and total minted token counts on-chain.', 'Blockchain RPC Node', 'Etherscan / Solscan / Alchemy', 'Miners execute eth_call view functions against token contracts via independent archive nodes.', '< 500ms', 'Low', 'Exact Match Comparator', null],
-  [8, 'AI & Machine Learning', 'WEB_SEARCH_QUERY', H, 'SERP ranking hits are retrievable facts; relevance ordering is algorithmic judgment.', CA, 'Executes programmatic web search queries and returns top ranked organic URLs, snippets, and knowledge graphs.', 'Search Engine Index / SERP API', 'Brave Search / Serper / Google Custom Search', 'Miners query different search index providers to compute consensus ranking of top results.', '< 800ms', 'Medium', 'Rank Correlation (NDCG / Spearman)', null],
-  [7, 'AI & Machine Learning', 'URL_CONTENT_EXTRACTION', D, 'HTML DOM parsing and markdown content extraction follow deterministic rules.', C, 'Scrapes target web pages, cleans boilerplate DOM nodes, and extracts clean markdown article content.', 'Headless Browser / Web Scraper', 'Firecrawl / Jina Reader / Diffbot', 'Miners scrape the destination URL using headless chromium instances.', '< 2s', 'Low', 'Text Diff & Token Overlap', null],
   [7, 'AI & Machine Learning', 'ENTITY_EXTRACTION', H, 'Standard entity spans are verifiable; disambiguation and novel entity types require judgment.', CA, 'Extracts named entities (people, organizations, locations, dates) with character offsets from unstructured text.', 'NER Engine / NLP Model', 'spaCy / Hugging Face (GLiNER)', 'Miners run distinct open-source NER models to cross-verify entity span annotations.', '< 600ms', 'Medium', 'Span-Level F1 Score', null],
   [8, 'AI & Machine Learning', 'TEXT_SUMMARIZATION', N, 'Multiple valid summaries exist; evaluation is inherently comparative.', A, 'Generates concise, factual executive summaries capturing primary themes of long-form source documents.', 'LLM Generative Model', 'OpenRouter / Hugging Face', 'Miners generate summaries using varied foundation LLMs evaluated via ROUGE, BERTScore, and LLM-as-judge.', '< 3s', 'High', 'LLM-as-Judge & BERTScore', null],
   [7, 'AI & Machine Learning', 'SENTIMENT_ANALYSIS', H, 'Binary polarity on clear text is objective; nuanced tone and sarcasm require interpretation.', CA, 'Scores emotional valence, polarity, and subjective tone in textual messages.', 'NLP Classifier / Transformer', 'RoBERTa / Hugging Face Sentiment Pipeline', 'Miners classify input text across diverse pre-trained sentiment models and aggregate distributions.', '< 300ms', 'Medium', 'Probability Distribution Alignment', null],
@@ -158,18 +134,65 @@ const CORE: Row[] = [
   [7, 'AI & Machine Learning', 'TEXT_CLASSIFICATION', H, 'Clear category matches are mechanical; boundary cases require probabilistic inference.', CA, 'Assigns predefined category tags and topic hierarchies to incoming text documents.', 'Text Classification Pipeline', 'Hugging Face (BART-large-MNLI) / Cohere', 'Miners run zero-shot classification pipelines and vote on label distributions.', '< 400ms', 'Medium', 'Multi-Engine Voting Consensus', null],
   [6, 'Software / Engineering', 'GRAMMAR_SPELL_CHECK', D, 'Lexicon lookup and formal grammatical rules are deterministically verifiable.', C, 'Detects typographical, orthographic, punctuation, and grammatical errors with correction offsets.', 'Linguistic Rule Engine', 'LanguageTool API', 'Miners evaluate text against open-source linguistic rule sets.', '< 350ms', 'Low', 'Rule Match Comparator', null],
   [6, 'AI & Machine Learning', 'KEYWORD_EXTRACTION', H, 'Term frequency is mechanical; conceptual relevance ranking is judgment.', CA, 'Extracts representative topical keywords, keyphrases, and n-grams from body text.', 'NLP Keyphrase Extractor', 'KeyBERT / YAKE / RapidAPI (NLP)', 'Miners run distinct keyphrase algorithms and compute rank intersection.', '< 400ms', 'Low', 'Jaccard Index & Rank Overlap', null],
-  [7, 'AI & Machine Learning', 'INTENT_CLASSIFICATION', H, 'Exact triggers match deterministically; semantic matching requires probability scoring.', CA, 'Classifies natural language input into downstream system action intents and extracts slot arguments.', 'NLU Intent Engine', 'Rasa NLU / Hugging Face / Cohere Classify', 'Miners map inputs to canonical intent schemas using independent transformer classifiers.', '< 300ms', 'Medium', 'Top-1 Intent Match & Slot F1', null],
-  [8, 'Trust & Safety', 'FACT_CHECKING', H, 'Authoritative database entries provide ground truth; truthfulness of complex claims is judgment.', CA, 'Verifies factual claims against authoritative knowledge bases, peer-reviewed registries, and primary sources.', 'Fact Check Knowledge Base', 'Google Fact Check Tools / Snopes / PolitiFact API', 'Miners cross-reference claims against structured claim-review schemas and credible web archives.', '< 2.5s', 'High', 'Claim Verification Consensus', null],
   [7, 'Trust & Safety', 'PLAGIARISM_DETECTION', H, 'N-gram fingerprint matching is mechanical; paraphrasing and attribution require judgment.', CA, 'Detects verbatim duplication, disguised paraphrasing, and uncredited citations across corpus databases.', 'Plagiarism Search Engine', 'Copyleaks / Unicheck', 'Miners generate min-hash fingerprints and query web index corpora to calculate overlap.', '< 3s', 'High', 'Shingle Overlap & Similarity Threshold', null],
   [7, 'AI & Machine Learning', 'SEMANTIC_SIMILARITY', D, 'Cosine similarity between normalized embedding vectors is an exact calculation.', C, 'Calculates cosine similarity and semantic relatedness between pairs of sentences.', 'Sentence Transformer Engine', 'Hugging Face (all-MiniLM-L6-v2)', 'Miners generate vectors using standard reference models and compute cosine products.', '< 250ms', 'Low', 'Numeric Tolerance Comparator', null],
   [6, 'AI & Machine Learning', 'EMBEDDING_GENERATION', D, 'A fixed model with a deterministic forward pass returns invariant vectors.', C, 'Transforms text into standardized high-dimensional vector embeddings for retrieval systems.', 'Vector Embedding Service', 'Voyage AI / BGE-large', 'Miners run the exact model weights to confirm output vectors within floating-point epsilon.', '< 200ms', 'Low', 'Vector Epsilon Comparator', null],
-  [8, 'Trust & Safety', 'TOXICITY_MODERATION', H, 'Explicit blocklists are mechanical; contextual harassment and hate speech require judgment.', CA, 'Evaluates text for hate speech, harassment, sexual content, self-harm incitement, and toxicity.', 'Content Moderation Model', 'Perspective API / Llama Guard', 'Miners classify text across diverse safety classifiers and aggregate hazard scores.', '< 350ms', 'Medium', 'Multi-Model Safety Consensus', null],
+]
+
+// On-chain intents with no catalogue sheet entry: the Season I set plus media checks.
+// Descriptions are the on-chain routing descriptions; class and scoring come from the Season I tiers.
+const ONCHAIN_ONLY: Row[] = [
+  [null, 'AI & Machine Learning', 'LANGUAGE_GENERATION', H, null, CA, 'Query asks about how language generation works as a capability or technique, or requests free-form natural-language output from a described prompt. Prefer CHAT_COMPLETION for ordinary conversational questions.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'AI & Machine Learning', 'CHAT_COMPLETION', H, null, CA, 'General knowledge, reasoning, explanation, or conversational question answerable directly without live data, external sources, or specialized tooling. This is the default/general-purpose intent when nothing more specific clearly fits — e.g. \'explain what X does.\'', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'AI & Machine Learning', 'TEXT_GENERATION', H, null, CA, 'Query asks for free-form written output for a described task — drafting, rewriting, summarising or composing text. Prefer CHAT_COMPLETION when the user simply wants an answer rather than produced text.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Climate & Weather', 'WEATHER_CHECK', D, null, C, 'Query names a specific, resolvable location (city, region, coordinates) AND asks about CURRENT atmospheric/weather conditions there (e.g. current temperature). A location mentioned only in passing in an unrelated question does not qualify.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Climate & Weather', 'STORM_ALERT', D, null, C, 'Query names a specific, resolvable location and asks specifically about active or upcoming storm systems, high winds, or disruption risk from severe weather there — not general current conditions.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Climate & Weather', 'WEATHER_FORECAST', D, null, C, 'Query names a specific, resolvable location and asks for FUTURE weather conditions over a stated time window (e.g. \'next 24 hours\'), not current conditions.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Sports & Events', 'GAME_RESULT', D, null, C, 'Query names a specific completed sports fixture or competition and asks for its final outcome or winner. Distinct from an in-progress or live score, which is SPORTS_SCORE.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Blockchain & Web3', 'WALLET_BALANCE_CHECK', D, null, C, 'Query names a specific blockchain address or ENS name and asks for its current native-coin or token balance on a named chain. A question that merely mentions a wallet without asking what it holds does not qualify.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Financial / Transactional', 'FRAUD_DETECTION', H, null, CA, 'Query asks how likely a specific entity, transaction or action is to be fraudulent.', null, null, null, null, null, null, null],
+  [null, 'AI & Machine Learning', 'TASK_COMPLETION', H, null, CA, 'Query asks about what makes an AI agent effective at completing multi-step tasks, or is itself a request to complete a defined multi-step task end-to-end.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'AI & Machine Learning', 'AGENT_TASK', H, null, CA, 'Query asks about autonomous AI agent behavior specifically (tool use, taking actions, multi-step autonomy) as distinct from a standard chatbot, or is itself a request requiring autonomous multi-step action.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'AI & Machine Learning', 'WEB_SEARCH', H, null, CA, 'Query needs current, live, or externally-sourced information not reliably answerable from static/training knowledge — general \'what is the current price of Bitcoin\' questions that need up-to-date grounding.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'AI & Machine Learning', 'TWITTER_SEARCH', H, null, CA, 'Query asks to search posts, accounts or discussion on X/Twitter specifically. A question that merely mentions Twitter as a topic does not qualify — the user must want results from the platform.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'AI & Machine Learning', 'NEWS_SEARCH', H, null, CA, 'Query asks for news articles or coverage matching a topic, entity or time period. Prefer NEWS_HEADLINES when the user wants a headline list rather than article results.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'AI & Machine Learning', 'RESEARCH_SYNTHESIS', H, null, CA, 'Query asks to gather findings across multiple sources and synthesise them into a combined answer or summary, rather than returning a single fact or a list of links.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Trust & Safety', 'FACT_CHECK', H, null, CA, 'Query supplies a specific claim or statement and asks whether it is true, with supporting evidence. A general knowledge question is CHAT_COMPLETION — this intent requires a checkable claim.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Trust & Safety', 'TEXT_AUTHENTICITY_CHECK', H, null, CA, 'Query supplies a block of text and asks whether it is genuine, original, or machine-generated. Where the user explicitly asks about AI authorship, prefer AI_TEXT_DETECTION.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Trust & Safety', 'AI_TEXT_DETECTION', H, null, CA, 'Query provides a specific block of text and asks whether it was written by an AI or a human. The user must supply actual text content to analyze — a question that merely asks about AI detection conceptually (without providing text to analyze) is not this intent.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Trust & Safety', 'CONTENT_VERIFICATION', H, null, CA, 'Query asks whether a specific piece of supplied content is genuine and unaltered, covering provenance and integrity generally rather than media forensics specifically.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Trust & Safety', 'DEEPFAKE_DETECTION', N, null, A, 'Query includes an actual image or video URL/reference and specifically asks whether it is a deepfake or whether a face/person in it has been synthetically generated or swapped. Requires real attached media — the word \'deepfake\' alone with no media reference does not qualify.', null, null, null, null, null, null, null],
+  [null, 'Trust & Safety', 'MEDIA_AUTHENTICITY_CHECK', N, null, A, 'Query includes an actual image or video URL/reference and asks broadly whether it is authentic, real, or AI-generated. Words like \'authentic,\' \'real,\' \'validity,\' or \'genuine\' alone, with no actual media attached, do NOT qualify.', null, null, null, null, null, null, null],
+  [null, 'Trust & Safety', 'IMAGE_VERIFICATION', N, null, A, 'Query includes an actual image URL/reference and asks whether it has been digitally manipulated, edited, or spliced (distinct from asking if it\'s AI-generated outright — that\'s MEDIA_AUTHENTICITY_CHECK). Requires real attached media.', null, null, null, null, null, null, null],
+  [null, 'Trust & Safety', 'VIDEO_VERIFICATION', N, null, A, 'Query references an actual video file or URL and asks to verify its authenticity, origin, or whether it has been edited/deepfaked. The mere word \'video\' in an unrelated question does not qualify — requires a real attached video.', null, null, null, null, null, null, null],
+  [null, 'Blockchain & Web3', 'GAS_PRICE', D, null, C, 'Query asks for the current or recent transaction fee level on a named blockchain network. Distinct from the price of that chain\'s token, which is CRYPTO_PRICE.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Trust & Safety', 'CONTENT_MODERATION', H, null, CA, 'Query is itself asking to classify, flag, or moderate a specific piece of provided content, OR asks how automated content moderation works as a method/technique — not merely a question that mentions moderation as an unrelated concept.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Financial / Transactional', 'STOCK_PRICE', D, null, C, 'Query names a listed equity or ticker and asks for its current or historical share price. A company mentioned in passing does not qualify.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Blockchain & Web3', 'CRYPTO_PRICE', D, null, C, 'Query names a cryptocurrency asset and asks for its current or historical price. Prefer FINANCIAL_DATA for broader market or fundamentals questions.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Financial / Transactional', 'FINANCIAL_DATA', D, null, C, 'Query asks for market data, company fundamentals, or financial statistics beyond a single quoted price.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'AI & Machine Learning', 'ACADEMIC_SEARCH', H, null, CA, 'Query asks to search scholarly papers, journals or academic literature specifically, rather than the general web.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Blockchain & Web3', 'ONCHAIN_TX_LOOKUP', D, null, C, 'Query supplies a transaction hash or names a specific on-chain transaction and asks for its details, status or effects. Requires an actual transaction reference, not a general question about how transactions work.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Blockchain & Web3', 'TOKEN_HOLDER_COUNT', D, null, C, 'Query names a specific token or contract address and asks how many distinct addresses hold it. Not a request for the token\'s price, supply or market data.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Blockchain & Web3', 'TVL_LOOKUP', D, null, C, 'Query names a specific DeFi protocol, pool or chain and asks for the total value locked in it. Distinct from a token\'s market capitalisation.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'Cybersecurity', 'URL_SCAN', D, null, C, 'Query supplies a URL and asks for it to be scanned and judged safe or unsafe.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'AI & Machine Learning', 'RESEARCH_QUERY', H, null, CA, 'Query asks a research question and expects an answer supported by citations to sources.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Cybersecurity', 'IP_GEOLOCATION', D, null, C, 'Query supplies an IP address and asks where it is located geographically. For abuse history, use IP_REPUTATION.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'AI & Machine Learning', 'NEWS_HEADLINES', H, null, CA, 'Query asks for current news headlines for a topic or region, as a list rather than full articles.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Cybersecurity', 'CVE_LOOKUP', D, null, C, 'Query supplies a CVE identifier and asks for its details, severity or affected versions.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'AI & Machine Learning', 'TELEGRAPH_KNOWLEDGE', H, null, CA, 'Query asks about Telegraph, Telegraph protocol, its products, or ecosystem — including Alexandria (flagship intelligence layer), the Explorer (leaderboard, live feed, signal search), Hackathon, WASM/miner registration, intents, the Miner YAML Registry (integrate.telegraphprotocol.com), current miners or their details, and any applications built on Telegraph (TruthWire, TrustFilter, ScholarGuard, ReviewRadar). Also covers protocol fundamentals like tokenomics, architecture, documentation, earning, and how the system works. Also covers any question where the user addresses the assistant directly as "you" (e.g. "what can you do", "who are you", "how can I use you") — the assistant is Telegraph. Use this for ANY question related to Telegraph, its products, platforms, ecosystem, or the assistant itself, rather than routing to general CHAT_COMPLETION or WEB_SEARCH.', null, null, null, null, null, null, null],
+  [null, 'Cybersecurity', 'SSL_VERIFICATION', D, null, C, 'Query supplies a hostname or domain and asks about its TLS/SSL certificate, chain or configuration.', null, null, null, null, null, 'WASM Exact Match', null],
+  [null, 'AI & Machine Learning', 'CONTENT_EXTRACTION', H, null, CA, 'Query supplies unstructured content and asks for specific structured fields to be pulled out of it.', null, null, null, null, null, 'LLM Context + WASM', null],
+  [null, 'Sports & Events', 'SPORTS_SCORE', D, null, C, 'Query names a specific sports fixture, team or competition and asks for the current or most recent score. Distinct from asking who ultimately won a finished event, which is GAME_RESULT.', null, null, null, null, null, 'WASM Exact Match', null],
 ]
 
 function toIntent(group: IntentGroup) {
   return ([priority, category, name, cls, why, scoring, description, source, hubs, scale, latency, complexity, method, verifyNote]: Row): Intent => ({
-    name, group, category, cls, why, scoring, description, source, latency, complexity,
+    name, group, category, cls, scoring, description,
     ...(priority !== null && { priority }),
+    ...(why && { why }),
+    ...(source && { source }),
+    ...(latency && { latency }),
+    ...(complexity && { complexity }),
     ...(hubs && { hubs }),
     ...(scale && { scale }),
     ...(method && { method }),
@@ -179,8 +202,8 @@ function toIntent(group: IntentGroup) {
 
 export const INTENTS: Intent[] = [
   ...PRIORITY.map(toIntent('priority')),
-  ...EXTENDED.map(toIntent('extended')),
   ...CORE.map(toIntent('core')),
+  ...ONCHAIN_ONLY.map(toIntent('core')),
 ]
 
 export const INTENT_BY_NAME: Record<string, Intent> =
@@ -188,11 +211,10 @@ export const INTENT_BY_NAME: Record<string, Intent> =
 
 export const GROUP_LABEL: Record<IntentGroup, string> = {
   priority: 'Season II priority',
-  extended: 'Extended',
   core:     'Core',
 }
 
-/** WEATHER_CURRENT -> "Weather current" */
+/** WEATHER_CHECK -> "Weather check" */
 export function intentLabel(name: string) {
   const s = name.toLowerCase().replace(/_/g, ' ')
   return s.charAt(0).toUpperCase() + s.slice(1)

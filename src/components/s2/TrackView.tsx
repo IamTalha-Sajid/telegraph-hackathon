@@ -3,9 +3,9 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Anatomy from './Anatomy'
 import { useRegister } from './Shell'
-import { IntentChip, NeedChip, TagBadge } from './bits'
+import { IntentChip, TagBadge } from './bits'
 import {
-  TRACKS, TRACK_BY_SLUG, buyerLabel, pad2, trackExamples, trackIntents, trackNeeds,
+  TRACKS, TRACK_BY_SLUG, buyerLabel, pad2, trackExamples, trackIntents,
 } from '@/data/season2/tracks'
 import { INTENT_BY_NAME } from '@/data/season2/intents'
 import { ROLES } from '@/data/season2/event'
@@ -21,7 +21,6 @@ export default function TrackView({ slug }: { slug: string }) {
 
   const buyer = t.buyers[buyerIdx]
   const intents = trackIntents(t)
-  const needs = trackNeeds(t)
   const examples = trackExamples(t)
   const judgmentIntents = intents.filter(i => INTENT_BY_NAME[i]?.cls !== 'Deterministic')
   const prev = TRACKS[(t.n + TRACKS.length - 2) % TRACKS.length]
@@ -116,12 +115,6 @@ export default function TrackView({ slug }: { slug: string }) {
                   <div className="tv-ex-intel">
                     <span className="tv-label">Intents it buys</span>
                     <div className="s2-chips">{e.intents.map(n => <IntentChip key={n} name={n} />)}</div>
-                    {e.needs && (
-                      <>
-                        <span className="tv-label">Also needs, not in the catalogue yet</span>
-                        <div className="s2-chips">{e.needs.map(n => <NeedChip key={n} label={n} />)}</div>
-                      </>
-                    )}
                   </div>
                   <button className="s2-btn" aria-expanded={isOpen} onClick={() => setOpenFlow(isOpen ? null : e.title)}>
                     {isOpen ? 'Hide the flow' : 'See how it flows'}
@@ -154,7 +147,7 @@ export default function TrackView({ slug }: { slug: string }) {
                     <code className="tv-intent-name">{name}</code>
                     <span className="s2-card-body">{it.description}</span>
                     <span className="tv-intent-meta">
-                      {it.cls}, target {it.latency}, used by {usage(name)} {usage(name) === 1 ? 'example' : 'examples'}
+                      {it.cls}{it.latency ? `, target ${it.latency}` : ''}, used by {usage(name)} {usage(name) === 1 ? 'example' : 'examples'}
                     </span>
                   </Link>
                 </li>
@@ -165,13 +158,6 @@ export default function TrackView({ slug }: { slug: string }) {
             <button className="s2-btn tv-more" aria-expanded={allIntents} onClick={() => setAllIntents(v => !v)}>
               {allIntents ? 'Show fewer' : `Show all ${intents.length} intents`}
             </button>
-          )}
-          {needs.length > 0 && (
-            <div className="tv-gaps">
-              <h3 className="s2-card-title">Not in the catalogue yet</h3>
-              <p className="s2-card-body">These examples also need intelligence no intent covers today. That is open ground for Miners.</p>
-              <div className="s2-chips">{needs.map(n => <NeedChip key={n} label={n} />)}</div>
-            </div>
           )}
         </div>
       </section>
@@ -191,8 +177,7 @@ export default function TrackView({ slug }: { slug: string }) {
                 {r.key === 'miner' && (
                   <p className="s2-card-body">
                     Serve an intent these apps buy, such as{' '}
-                    {intents.slice(0, 3).map((n, k) => <span key={n}>{k > 0 && ', '}<code>{n}</code></span>)}
-                    {needs.length > 0 && <>, or supply something not in the catalogue yet, like {needs[0].toLowerCase()}</>}.
+                    {intents.slice(0, 3).map((n, k) => <span key={n}>{k > 0 && ', '}<code>{n}</code></span>)}.
                   </p>
                 )}
                 {r.key === 'evaluator' && (

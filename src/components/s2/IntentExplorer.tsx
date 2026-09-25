@@ -7,7 +7,7 @@ import { GROUP_LABEL, INTENTS, type IntentClass, type IntentGroup } from '@/data
 import { TRACKS_BY_INTENT, pad2 } from '@/data/season2/tracks'
 
 const CLASSES: IntentClass[] = ['Deterministic', 'Hybrid', 'Non-deterministic']
-const GROUPS: IntentGroup[] = ['priority', 'core', 'extended']
+const GROUPS: IntentGroup[] = ['priority', 'core']
 const CATEGORIES = Array.from(new Set(INTENTS.map(i => i.category))).sort()
 
 const CLASS_HINT: Record<IntentClass, string> = {
@@ -39,7 +39,7 @@ export default function IntentExplorer() {
       (!group || i.group === group) &&
       (!cat || i.category === cat) &&
       (!inTracks || TRACKS_BY_INTENT[i.name]) &&
-      words.every(w => [i.name, i.category, i.description, i.source, i.hubs ?? ''].join(' ').toLowerCase().includes(w)),
+      words.every(w => [i.name, i.category, i.description, i.source ?? '', i.hubs ?? ''].join(' ').toLowerCase().includes(w)),
     )
   }, [q, cls, group, cat, inTracks])
 
@@ -50,7 +50,7 @@ export default function IntentExplorer() {
           <p className="s2-eyebrow">Reference / Intents</p>
           <h1 className="s2-title">Intent catalogue.</h1>
           <p className="s2-sub">
-            An intent is one kind of intelligence Telegraph can rank and route. Apps combine several intents into
+            Every intent registered on-chain. An intent is one kind of intelligence Telegraph can rank and route. Apps combine several intents into
             one outcome; Miners serve an intent and compete on it; Evaluators decide how miners for an intent are scored.
             Start from a <Link href="/tracks">track</Link> if you want to see intents in context.
           </p>
@@ -118,11 +118,11 @@ export default function IntentExplorer() {
                       <div className="ix-detail">
                         <p className="ix-desc">{i.description}</p>
                         <dl className="ix-facts">
-                          <div><dt>Why it is {i.cls.toLowerCase()}</dt><dd>{i.why}</dd></div>
+                          {i.why && <div><dt>Why it is {i.cls.toLowerCase()}</dt><dd>{i.why}</dd></div>}
                           <div><dt>How it is scored</dt><dd>{i.scoring}{i.method ? `, ${i.method}` : ''}</dd></div>
-                          <div><dt>Data source</dt><dd>{i.source}{i.hubs ? `, e.g. ${i.hubs}` : ''}</dd></div>
+                          {i.source && <div><dt>Data source</dt><dd>{i.source}{i.hubs ? `, e.g. ${i.hubs}` : ''}</dd></div>}
                           {i.scale && <div><dt>How miners compete</dt><dd>{i.scale}</dd></div>}
-                          <div><dt>Target latency</dt><dd>{i.latency}</dd></div>
+                          {i.latency && <div><dt>Target latency</dt><dd>{i.latency}</dd></div>}
                           <div><dt>Group</dt><dd>{GROUP_LABEL[i.group]}</dd></div>
                           {i.verifyNote && <div className="ix-warn"><dt>Verification caveat</dt><dd>{i.verifyNote}</dd></div>}
                         </dl>

@@ -17,7 +17,7 @@ function buildIndex(t: Track) {
     e,
     text: [
       t.name, t.sector, buyerLabel(b), b.generic,
-      e.title, e.body, e.output, ...e.intents, ...(e.needs ?? []),
+      e.title, e.body, e.output, ...e.intents,
     ].join(' ').toLowerCase(),
   })))
 }
