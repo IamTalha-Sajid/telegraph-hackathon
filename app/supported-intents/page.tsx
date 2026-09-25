@@ -154,8 +154,8 @@ export default function SupportedIntentsPage() {
         </Link>
         <span className="nav-badge">Hackathon</span>
         <div style={{ flex: 1 }} />
-        <Link href="/rules" className="rules-nav-back">Rules</Link>
-        <Link href="/" className="rules-nav-back">← Back to site</Link>
+        <Link href="/season-1/rules" className="rules-nav-back">Rules</Link>
+        <Link href="/season-1" className="rules-nav-back">← Back to site</Link>
       </nav>
 
       <header className="rules-hero">
@@ -238,7 +238,7 @@ export default function SupportedIntentsPage() {
             <p className="rules-final-text">
               Building a Miner or an application around one of these intents? Check the hackathon rules to see how it fits into the tracks and prize pools.
             </p>
-            <Link href="/rules" className="btn-register" style={{ display: 'inline-block', marginTop: '32px', textDecoration: 'none' }}>
+            <Link href="/season-1/rules" className="btn-register" style={{ display: 'inline-block', marginTop: '32px', textDecoration: 'none' }}>
               View Hackathon Rules
             </Link>
           </Reveal>

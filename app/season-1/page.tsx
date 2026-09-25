@@ -40,6 +40,17 @@ export default function Home() {
         <Footer />
       </div>
 
+      <a
+        href="/"
+        style={{
+          position: 'fixed', left: 16, right: 16, bottom: 16, zIndex: 60, maxWidth: 560, margin: '0 auto',
+          padding: '12px 16px', background: '#fff', color: '#000', textDecoration: 'none',
+          fontSize: 13, textAlign: 'center',
+        }}
+      >
+        You are viewing the Season I archive. Season II runs 16 Nov to 16 Dec 2026. See Season II
+      </a>
+
       {showRegister && <RegisterModal onClose={closeRegister} />}
     </>
   )

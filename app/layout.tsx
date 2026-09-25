@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Telegraph Hackathon',
-  description: 'Build on Telegraph\'s verified inference layer. USD prizes across three tracks.',
+  title: 'Telegraph Hackathon Season II',
+  description: 'Thirty days, fifteen commercial tracks, one winner per track. Build agents that buy verified, ranked intelligence through Telegraph. 16 Nov to 16 Dec 2026.',
   metadataBase: new URL('https://hackathon.telegraphprotocol.com'),
   icons: {
     icon: [
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
     apple: '/Telegraoh-Logo.png',
   },
   openGraph: {
-    title: 'Telegraph Hackathon',
-    description: 'Build on Telegraph\'s verified inference layer. USD prizes across 3 tracks.',
+    title: 'Telegraph Hackathon Season II',
+    description: 'Thirty days, fifteen commercial tracks, one winner per track. Build the market the machines will buy from.',
     url: 'https://hackathon.telegraphprotocol.com',
     siteName: 'Telegraph Hackathon',
     images: [
@@ -29,16 +29,22 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Telegraph Hackathon',
-    description: 'Build on Telegraph\'s verified inference layer. USD prizes across 3 tracks.',
+    title: 'Telegraph Hackathon Season II',
+    description: 'Thirty days, fifteen commercial tracks, one winner per track. Build the market the machines will buy from.',
     images: ['/telegraph-social-card.jpg'],
   },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
+        {/* Season II theme: dark by default, visitor's choice remembered. Set before paint to avoid a flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{document.documentElement.dataset.theme=localStorage.getItem('tg-theme')==='light'?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}`,
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />

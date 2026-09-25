@@ -122,7 +122,7 @@ export default function RulesPage() {
         <span className="nav-badge">Hackathon</span>
         <div style={{ flex: 1 }} />
         <Link href="/supported-intents" className="rules-nav-back">Intents</Link>
-        <Link href="/" className="rules-nav-back">← Back to site</Link>
+        <Link href="/season-1" className="rules-nav-back">← Back to site</Link>
       </nav>
 
       <header className="rules-hero">
@@ -369,7 +369,7 @@ export default function RulesPage() {
             <p className="rules-final-text" style={{ marginTop: '24px', fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>
               Good luck.
             </p>
-            <Link href="/" className="btn-register" style={{ display: 'inline-block', marginTop: '32px', textDecoration: 'none' }}>
+            <Link href="/season-1" className="btn-register" style={{ display: 'inline-block', marginTop: '32px', textDecoration: 'none' }}>
               Register Now
             </Link>
           </Reveal>

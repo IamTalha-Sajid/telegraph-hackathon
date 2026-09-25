@@ -1,14 +1,14 @@
 'use client'
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import { TRACKS, TRACK_BY_SLUG, buyerLabel, pad2 } from '@/data/season2/tracks'
 
 declare global {
   interface Window { twq?: (...args: unknown[]) => void }
 }
 
-interface Props { onClose: () => void }
+interface Props { onClose: () => void; initialTrack?: string }
 
 type ParticipantType = 'individual' | 'team'
-type Level           = 'beginner' | 'intermediate' | 'advanced'
 type Step            = 'email' | 'otp' | 'form' | 'done'
 
 interface FormData {
@@ -20,10 +20,11 @@ interface FormData {
   wallet:      string
   twitter:     string
   discord:     string
-  level:       Level
+  track:       string
+  buyer:       string
+  roles:       string[]
   projectName: string
   projectDesc: string
-  subnets:     string[]
   techStack:   string
   github:      string
 }
@@ -32,20 +33,15 @@ type Errors = Partial<Record<keyof FormData, string>>
 
 const EMPTY: FormData = {
   name: '', email: '', type: 'individual', orgName: '', teamSize: '2 – 5',
-  wallet: '', twitter: '', discord: '', level: 'intermediate',
-  projectName: '', projectDesc: '', subnets: [], techStack: '', github: '',
+  wallet: '', twitter: '', discord: '', track: '', buyer: '', roles: [],
+  projectName: '', projectDesc: '', techStack: '', github: '',
 }
 
-const MINERS     = [
-  'Financial Data', 'Weather & Climate', 'Social Sentiment',
-  'On-chain Analytics', 'AI / LLM Inference', 'Sports & Events',
-  'News & Media', 'Custom / Other',
-]
 const TEAM_SIZES = ['2 – 5', '6 – 10', '11 – 20', '20+']
-const LEVELS: { v: Level; label: string }[] = [
-  { v: 'beginner',     label: 'Beginner'     },
-  { v: 'intermediate', label: 'Intermediate' },
-  { v: 'advanced',     label: 'Advanced'     },
+const ROLE_OPTS = [
+  { v: 'App / Agent', hint: 'Build the end-user agent or app' },
+  { v: 'Miner',       hint: 'Supply intelligence the apps buy' },
+  { v: 'Evaluator',   hint: 'Improve how miners are scored' },
 ]
 
 const STEP_LABELS: Record<Step, string> = {
@@ -74,7 +70,7 @@ function Field({
   )
 }
 
-export default function RegisterModal({ onClose }: Props) {
+export default function RegisterModal({ onClose, initialTrack = '' }: Props) {
   const [step,          setStep]          = useState<Step>('email')
   const [email,         setEmail]         = useState('')
   const [emailErr,      setEmailErr]      = useState('')
@@ -84,6 +80,7 @@ export default function RegisterModal({ onClose }: Props) {
   const [otpErr,        setOtpErr]        = useState('')
   const [verifying,     setVerifying]     = useState(false)
   const [isReturning,   setIsReturning]   = useState(false)
+  const [fromSeasonOne, setFromSeasonOne] = useState(false)
   const [form,          setForm]          = useState<FormData>(EMPTY)
   const [errors,        setErrors]        = useState<Errors>({})
   const [submitting,    setSubmitting]    = useState(false)
@@ -114,13 +111,15 @@ export default function RegisterModal({ onClose }: Props) {
   const set = useCallback(<K extends keyof FormData>(k: K, v: FormData[K]) =>
     setForm(f => ({ ...f, [k]: v })), [])
 
-  const toggleMiner = useCallback((s: string) =>
+  const toggleRole = useCallback((r: string) =>
     setForm(f => ({
       ...f,
-      subnets: f.subnets.includes(s)
-        ? f.subnets.filter(x => x !== s)
-        : [...f.subnets, s],
+      roles: f.roles.includes(r)
+        ? f.roles.filter(x => x !== r)
+        : [...f.roles, r],
     })), [])
+
+  const trackBuyers = form.track ? TRACK_BY_SLUG[form.track]?.buyers ?? [] : []
 
   /* ── Email step ── */
   const handleSendOtp = async (emailOverride?: string) => {
@@ -178,11 +177,14 @@ export default function RegisterModal({ onClose }: Props) {
       const data = await res.json()
       if (!res.ok) { setOtpErr(data.error ?? 'Verification failed'); return }
       if (data.existing) {
-        setForm({ ...EMPTY, ...data.existing })
-        setIsReturning(true)
+        const existingTrack = TRACKS.find(t => t.name === data.existing.track)?.slug
+        setForm({ ...EMPTY, ...data.existing, track: existingTrack ?? initialTrack })
+        setIsReturning(data.season === 2)
+        setFromSeasonOne(data.season === 1)
       } else {
-        setForm({ ...EMPTY, email: data.email })
+        setForm({ ...EMPTY, email: data.email, track: initialTrack })
         setIsReturning(false)
+        setFromSeasonOne(false)
       }
       setErrors({})
       setStep('form')
@@ -199,7 +201,7 @@ export default function RegisterModal({ onClose }: Props) {
     if (!form.name.trim())        e.name        = 'Required'
     if (form.type === 'team' && !form.orgName.trim()) e.orgName = 'Required'
     if (!form.discord.trim())     e.discord     = 'Required'
-    if (!form.projectName.trim()) e.projectName = 'Required'
+    if (form.roles.length === 0)  e.roles       = 'Pick at least one'
     if (form.projectDesc.trim().length > 0 && form.projectDesc.trim().length < 20)
       e.projectDesc = 'Please describe your project (min 20 characters)'
     setErrors(e)
@@ -362,6 +364,13 @@ export default function RegisterModal({ onClose }: Props) {
                 </div>
               )}
 
+              {fromSeasonOne && (
+                <div className="reg-returning-banner">
+                  <span className="reg-returning-icon">✓</span>
+                  Welcome back from Season I. We've pre-filled your details; pick a track and role for Season II.
+                </div>
+              )}
+
               <p className="form-section-label">About You</p>
 
               <Field label="Full Name" id="r-name" error={errors.name}>
@@ -418,24 +427,8 @@ export default function RegisterModal({ onClose }: Props) {
                 </div>
               )}
 
-              <Field label="Experience Level">
-                <div className="radio-row">
-                  {LEVELS.map(({ v, label }) => (
-                    <button
-                      key={v}
-                      type="button"
-                      className={`radio-opt${form.level === v ? ' radio-on' : ''}`}
-                      onClick={() => set('level', v)}
-                    >
-                      <span className="radio-pip" />
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              </Field>
-
               <div className="two-col">
-                <Field label="Base Wallet Address" id="r-wallet" optional>
+                <Field label="EVM Wallet Address" id="r-wallet" optional>
                   <input
                     id="r-wallet"
                     className="mi"
@@ -466,41 +459,63 @@ export default function RegisterModal({ onClose }: Props) {
               </Field>
 
 
-              <p className="form-section-label" style={{ marginTop: '24px' }}>Your Project</p>
+              <p className="form-section-label" style={{ marginTop: '24px' }}>Season II</p>
+
+              <Field
+                label="Track"
+                id="r-track"
+                hint="Your best guess is fine. Teams confirm their track and use case in week one."
+              >
+                <select
+                  id="r-track"
+                  className="mi"
+                  value={form.track}
+                  onChange={e => setForm(f => ({ ...f, track: e.target.value, buyer: '' }))}
+                >
+                  <option value="">Not decided yet</option>
+                  {TRACKS.map(t => <option key={t.slug} value={t.slug}>{pad2(t.n)} {t.name}</option>)}
+                </select>
+              </Field>
+
+              {trackBuyers.length > 1 && (
+                <Field label="Buyer" id="r-buyer" optional hint="Which buyer in this track you plan to build for.">
+                  <select id="r-buyer" className="mi" value={form.buyer} onChange={e => set('buyer', e.target.value)}>
+                    <option value="">Not decided yet</option>
+                    {trackBuyers.map(b => <option key={b.generic} value={buyerLabel(b)}>{buyerLabel(b)}</option>)}
+                  </select>
+                </Field>
+              )}
+
+              <Field label="How you'll take part" error={errors.roles} hint="Pick all that apply.">
+                <div className="subnet-grid">
+                  {ROLE_OPTS.map(r => (
+                    <button
+                      key={r.v}
+                      type="button"
+                      title={r.hint}
+                      className={`subnet-chip${form.roles.includes(r.v) ? ' subnet-on' : ''}`}
+                      onClick={() => toggleRole(r.v)}
+                    >
+                      <span className="subnet-chk">{form.roles.includes(r.v) ? '✓' : ''}</span>
+                      {r.v}
+                    </button>
+                  ))}
+                </div>
+              </Field>
 
               <Field
                 label="Project Name"
                 id="r-pname"
-                error={errors.projectName}
-                hint="What's your project called? It doesn't have to be final — you can change it later."
+                optional
+                hint="Working title. You can change it later."
               >
                 <input
                   id="r-pname"
-                  className={`mi${errors.projectName ? ' mi-e' : ''}`}
-                  placeholder="e.g. AlphaSignal, WeatherOracle, TruthNet"
+                  className="mi"
+                  placeholder="e.g. ListingDesk, CurtailBot"
                   value={form.projectName}
                   onChange={e => set('projectName', e.target.value)}
                 />
-              </Field>
-
-              <Field
-                label="Miners you plan to use"
-                optional
-                hint="Miners are Telegraph's data providers — each one serves a different type of verified data feed. Select the ones relevant to your project. Not sure yet? Pick your best guess."
-              >
-                <div className="subnet-grid">
-                  {MINERS.map(s => (
-                    <button
-                      key={s}
-                      type="button"
-                      className={`subnet-chip${form.subnets.includes(s) ? ' subnet-on' : ''}`}
-                      onClick={() => toggleMiner(s)}
-                    >
-                      <span className="subnet-chk">{form.subnets.includes(s) ? '✓' : ''}</span>
-                      {s}
-                    </button>
-                  ))}
-                </div>
               </Field>
 
               <Field
@@ -508,12 +523,12 @@ export default function RegisterModal({ onClose }: Props) {
                 id="r-desc"
                 optional
                 error={errors.projectDesc}
-                hint="Briefly describe what you're building and how it uses Telegraph's verified data. 2–3 sentences is enough."
+                hint="What you're building, who would buy it, and which intelligence it buys through Telegraph. 2–3 sentences is enough."
               >
                 <textarea
                   id="r-desc"
                   className={`mi mi-ta${errors.projectDesc ? ' mi-e' : ''}`}
-                  placeholder="e.g. A trading bot that pulls verified price feeds from Telegraph miners and only executes when signal confidence exceeds 95%. Built with Python and deployed on Base."
+                  placeholder="e.g. An exchange listings agent that buys contract audit, sanctions and holder-concentration answers in parallel and returns a signed risk memo with a cost line."
                   rows={4}
                   value={form.projectDesc}
                   onChange={e => set('projectDesc', e.target.value)}

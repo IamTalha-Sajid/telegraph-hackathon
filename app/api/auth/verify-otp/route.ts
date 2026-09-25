@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
-import { getSheets, findRowByEmail } from '@/lib/sheets'
+import { getSheets, lookupRegistrant } from '@/lib/sheets'
 
 const secret = new TextEncoder().encode(process.env.OTP_SECRET!)
 
@@ -23,32 +23,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Incorrect code. Please try again.' }, { status: 401 })
     }
 
-    // Look up existing registration in Google Sheets
+    // Prefill from a Season II registration, or from Season I for returning builders
     const { sheets, auth } = await getSheets()
-    const found = await findRowByEmail(sheets, auth, payload.email)
+    const found = await lookupRegistrant(sheets, auth, payload.email)
 
-    let existing = null
-    if (found) {
-      const r = found.row
-      existing = {
-        name:        r[1]  ?? '',
-        email:       r[2]  ?? '',
-        type:        (r[3] ?? 'individual') as 'individual' | 'team',
-        orgName:     r[4]  ?? '',
-        teamSize:    r[5]  ?? '2 – 5',
-        wallet:      r[6]  ?? '',
-        twitter:     r[7]  ?? '',
-        discord:     r[8]  ?? '',
-        level:       (r[9] ?? 'intermediate') as 'beginner' | 'intermediate' | 'advanced',
-        projectName: r[10] ?? '',
-        subnets:     r[11] ? r[11].split(', ').filter(Boolean) : [],
-        projectDesc: r[12] ?? '',
-        techStack:   r[13] ?? '',
-        github:      r[14] ?? '',
-      }
-    }
-
-    return NextResponse.json({ ok: true, email: payload.email, existing })
+    return NextResponse.json({
+      ok: true,
+      email: payload.email,
+      existing: found?.existing ?? null,
+      season: found?.season ?? null,
+    })
   } catch (err) {
     console.error('[verify-otp]', err)
     return NextResponse.json({ error: 'Server error. Please try again.' }, { status: 500 })

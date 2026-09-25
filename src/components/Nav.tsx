@@ -41,7 +41,7 @@ export default function Nav({ onRegister }: Props) {
 
         {/* Desktop */}
         <div className="nav-right nav-right-desktop">
-          <Link href="/rules" className="nav-rules-btn">Rules</Link>
+          <Link href="/season-1/rules" className="nav-rules-btn">Rules</Link>
           <Link href="/supported-intents" className="nav-rules-btn">Intents</Link>
           <a href="https://docs.telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-rules-btn">Docs ↗</a>
           <a href="https://github.com/telegraphprotocol/telegraph-usecases" target="_blank" rel="noopener noreferrer" className="nav-rules-btn">GitHub ↗</a>
@@ -51,7 +51,7 @@ export default function Nav({ onRegister }: Props) {
 
         {/* Mobile controls */}
         <div className="nav-right nav-right-mobile">
-          <Link href="/rules" className="nav-rules-btn">Rules</Link>
+          <Link href="/season-1/rules" className="nav-rules-btn">Rules</Link>
           <button
             className="nav-hamburger"
             onClick={() => setMenuOpen(o => !o)}
@@ -71,7 +71,7 @@ export default function Nav({ onRegister }: Props) {
           <div className="mobile-drawer" onClick={e => e.stopPropagation()}>
             <div className="mobile-drawer-inner">
               <div className="mobile-drawer-divider" />
-              <Link href="/rules" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>Rules</Link>
+              <Link href="/season-1/rules" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>Rules</Link>
               <Link href="/supported-intents" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>Intents</Link>
               <a href="https://docs.telegraphprotocol.com/" target="_blank" rel="noopener noreferrer" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>Docs ↗</a>
               <a href="https://github.com/telegraphprotocol/telegraph-usecases" target="_blank" rel="noopener noreferrer" className="nav-rules-btn mobile-drawer-btn" onClick={closeMenu}>GitHub ↗</a>

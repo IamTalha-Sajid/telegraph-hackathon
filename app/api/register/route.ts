@@ -1,25 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSheets, findRowByEmail, ensureHeaders, SHEET_ID, SHEET_TAB } from '@/lib/sheets'
+import { getSheets, findRowByEmail, ensureS2Tab, SHEET_ID, S2_TAB, S2_LAST_COL } from '@/lib/sheets'
 import { sendConfirmationEmail } from '@/lib/email'
-import { google } from 'googleapis'
+import { TRACK_BY_SLUG } from '@/data/season2/tracks'
 
-const REMINDER_TRACKING_COL = 'P' // "Reminder Sent At" -- keep in sync with scripts/send-reminder-emails.mjs
+const CONFIRMATION_COL = 'R' // "Confirmation Sent At" -- keep in sync with S2_HEADERS in src/lib/sheets.ts
+const ROLES = ['App / Agent', 'Miner', 'Evaluator']
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     const {
       name, email, type, orgName, teamSize,
-      wallet, twitter, discord, level,
-      projectName, projectDesc, subnets, techStack, github,
+      wallet, twitter, discord, track, buyer, roles,
+      projectName, projectDesc, techStack, github,
     } = body
 
-    if (!name || !email || !projectName || !discord) {
+    const roleList = Array.isArray(roles) ? roles.filter((r: unknown) => ROLES.includes(r as string)) : []
+    if (!name || !email || !discord || roleList.length === 0) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    }
+    const trackName = track ? TRACK_BY_SLUG[track]?.name : 'Undecided'
+    if (!trackName) {
+      return NextResponse.json({ error: 'Unknown track' }, { status: 400 })
     }
 
     const { sheets, auth } = await getSheets()
-    await ensureHeaders(sheets, auth)
+    await ensureS2Tab(sheets, auth)
+
+    const seasonOne = await findRowByEmail(sheets, auth, email)
 
     const timestamp = new Date().toLocaleString('en-GB', { timeZone: 'UTC' }) + ' UTC'
     const row = [
@@ -32,50 +40,49 @@ export async function POST(req: NextRequest) {
       wallet      || '',
       twitter     || '',
       discord     || '',
-      level,
-      projectName,
-      Array.isArray(subnets) ? subnets.join(', ') : '',
+      trackName,
+      buyer       || '',
+      roleList.join(', '),
+      projectName || '',
       projectDesc || '',
       techStack   || '',
       github      || '',
+      seasonOne ? 'Yes' : 'No',
     ]
 
-    const found = await findRowByEmail(sheets, auth, email)
+    const found = await findRowByEmail(sheets, auth, email, S2_TAB, S2_LAST_COL)
     let newRowNumber: number | null = null
 
     if (found) {
-      // Update existing row
       await sheets.spreadsheets.values.update({
         auth,
         spreadsheetId: SHEET_ID,
-        range: `${SHEET_TAB}!A${found.rowIndex}:O${found.rowIndex}`,
+        range: `'${S2_TAB}'!A${found.rowIndex}:Q${found.rowIndex}`,
         valueInputOption: 'RAW',
         requestBody: { values: [row] },
       })
     } else {
-      // Append new row
       const appendRes = await sheets.spreadsheets.values.append({
         auth,
         spreadsheetId: SHEET_ID,
-        range: `${SHEET_TAB}!A1`,
+        range: `'${S2_TAB}'!A1`,
         valueInputOption: 'RAW',
         insertDataOption: 'INSERT_ROWS',
         requestBody: { values: [row] },
       })
-      const updatedRange = appendRes.data.updates?.updatedRange // e.g. "Sheet1!A123:N123"
-      const match = updatedRange?.match(/!A(\d+):/)
+      const match = appendRes.data.updates?.updatedRange?.match(/!A(\d+):/)
       newRowNumber = match ? Number(match[1]) : null
     }
 
-    // Only email brand-new registrants, not people re-submitting/updating their entry.
+    // Only email brand-new registrants, not people updating their entry.
     if (!found) {
       try {
-        await sendConfirmationEmail(email, name)
+        await sendConfirmationEmail(email, name, trackName)
         if (newRowNumber) {
           await sheets.spreadsheets.values.update({
             auth,
             spreadsheetId: SHEET_ID,
-            range: `${SHEET_TAB}!${REMINDER_TRACKING_COL}${newRowNumber}`,
+            range: `'${S2_TAB}'!${CONFIRMATION_COL}${newRowNumber}`,
             valueInputOption: 'RAW',
             requestBody: { values: [[new Date().toISOString()]] },
           })
