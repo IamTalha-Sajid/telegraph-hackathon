@@ -46,7 +46,6 @@ export default function IntentExplorer() {
   return (
     <>
       <section className="s2-page-hero">
-        <img src="/Website/IMG_7093.jpeg" alt="" aria-hidden="true" className="s2-art" />
         <div className="s2-inner">
           <p className="s2-eyebrow">Reference / Intents</p>
           <h1 className="s2-title">Intent catalogue.</h1>

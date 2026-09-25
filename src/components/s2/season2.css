@@ -1,5 +1,5 @@
 /* Season II. Follows the Season I visual language (Roboto Mono, amber accents, eyebrow rules,
-   glass cards over engraved artwork) with a dark theme (default) and a light theme.
+   glass cards) with a dark theme (default) and a light theme.
    Theme is set on <html data-theme> by the script in app/layout.tsx. Everything is scoped under .s2. */
 
 .s2 {
@@ -20,9 +20,6 @@
   --accent-line: rgba(180, 110, 10, 0.55);
   --accent-fill: #fbbf24;      /* amber button fill, black text in both themes */
   --accent-soft: rgba(251, 191, 36, 0.16);
-  --art-filter: none;
-  --art-blend: normal;
-  --art-opacity: 0.16;
   --nav-bg: rgba(244, 244, 241, 0.86);
 
   --mono: 'Roboto Mono', 'Roboto Mono Fallback', ui-monospace, monospace;
@@ -55,9 +52,6 @@ html[data-theme="dark"] .s2 {
   --accent: rgba(251, 191, 36, 1);
   --accent-line: rgba(251, 191, 36, 0.6);
   --accent-soft: rgba(251, 191, 36, 0.1);
-  --art-filter: none;
-  --art-blend: screen;
-  --art-opacity: 0.3;
   --nav-bg: rgba(0, 0, 0, 0.82);
 }
 
@@ -208,11 +202,6 @@ html[data-theme="light"] .s2 .s2-brand-mark { filter: invert(1); }
   display: block; width: 100%; max-width: min(440px, 62vh); height: auto;
   pointer-events: none; animation: s2-float 14s ease-in-out infinite;
 }
-/* Light theme shows page artwork as-is; soft edges keep the black backgrounds from reading as boxes. */
-html[data-theme="light"] .s2 .s2-art {
-  mask-image: radial-gradient(ellipse 70% 70% at 60% 45%, #000 20%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 45%, #000 20%, transparent 75%);
-}
 @keyframes s2-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 .s2-hero-body { min-width: 0; }
 .s2-hero-title { font-size: clamp(34px, min(6.2vw, 7.8vh), 96px); line-height: 1.05; letter-spacing: 0.01em; max-width: none; margin-bottom: clamp(12px, 2.2vh, 20px); }
@@ -241,15 +230,6 @@ html[data-theme="light"] .s2 .hero-prize-badge { background: var(--accent-soft);
 
 /* ── Page hero + blocks ──────────────────── */
 .s2-page-hero { position: relative; overflow: hidden; padding: 88px 0 72px; }
-.s2-page-hero::after, .s2-hero::after {
-  content: ''; position: absolute; inset: auto 0 0 0; height: 120px; z-index: 1; pointer-events: none;
-  background: linear-gradient(to bottom, transparent, var(--bg));
-}
-.s2-art {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%;
-  filter: var(--art-filter); mix-blend-mode: var(--art-blend); opacity: var(--art-opacity);
-  pointer-events: none; user-select: none;
-}
 .s2-page-hero > .s2-inner > .s2-sub { margin-bottom: 8px; }
 .s2-page-hero .s2-grid, .s2-page-hero .s2-weights, .s2-page-hero .ix-classes { margin-top: 48px; }
 .s2-block { position: relative; padding: 72px 0; }

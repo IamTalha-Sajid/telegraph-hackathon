@@ -2,14 +2,13 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { PAGES, pageIndex, type PageHref } from '@/data/season2/pages'
 
-/** Page header in the Season I style: eyebrow with an amber rule, bold title, engraving behind. */
-export function PageHero({ page, title, sub, children, art }: {
-  page: PageHref; title: ReactNode; sub?: ReactNode; children?: ReactNode; art?: string
+/** Page header in the Season I style: eyebrow with an amber rule, then the title. */
+export function PageHero({ page, title, sub, children }: {
+  page: PageHref; title: ReactNode; sub?: ReactNode; children?: ReactNode
 }) {
   const i = pageIndex(page)
   return (
     <section className="s2-page-hero">
-      <img src={art ?? PAGES[i].art} alt="" aria-hidden="true" className="s2-art" />
       <div className="s2-inner">
         <p className="s2-eyebrow">{String(i + 1).padStart(2, '0')} / {PAGES[i].label}</p>
         <h1 className="s2-title">{title}</h1>

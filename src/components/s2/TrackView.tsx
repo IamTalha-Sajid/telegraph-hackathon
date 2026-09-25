@@ -37,7 +37,6 @@ export default function TrackView({ slug }: { slug: string }) {
   return (
     <>
       <section className="s2-page-hero">
-        <img src="/Website/telegraph_web_1.png" alt="" aria-hidden="true" className="s2-art" />
         <div className="s2-inner">
           <nav className="tv-crumbs" aria-label="Breadcrumb">
             <Link href="/tracks">All tracks</Link>
