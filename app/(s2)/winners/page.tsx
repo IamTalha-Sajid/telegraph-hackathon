@@ -28,6 +28,11 @@ function WinnerCard({ w }: { w: Winner }) {
           )}
         </div>
       ))}
+      {(w.explorer || w.app) && (
+        <a className="s2-btn wn-link" href={w.explorer ?? w.app} target="_blank" rel="noopener noreferrer">
+          {w.explorer ? 'View on Explorer' : 'Open the app'} ↗
+        </a>
+      )}
     </li>
   )
 }
@@ -63,7 +68,7 @@ export default function WinnersPage() {
         <div className="s2-inner">
           <p className="s2-eyebrow">Season II</p>
           <h2 className="s2-h2">Build the next one.</h2>
-          <p className="s2-sub">Season II runs 16 November to 16 December 2026, with the same three tracks and fifteen commercial missions for app builders.</p>
+          <p className="s2-sub">Season II runs November to December 2026 (dates to be announced), with the same three tracks and fifteen commercial missions for app builders.</p>
           <div className="s2-actions">
             <RegisterButton>Register for Season II</RegisterButton>
             <Link className="s2-btn s2-btn-lg" href="/tracks">See the 3 tracks</Link>

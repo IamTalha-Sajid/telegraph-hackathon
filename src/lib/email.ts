@@ -1,12 +1,5 @@
 import nodemailer from 'nodemailer'
 
-export const EVENT_DATE = new Date('2026-11-16T00:00:00Z')
-
-export function daysUntilEvent(): number {
-  const msPerDay = 24 * 60 * 60 * 1000
-  return Math.ceil((EVENT_DATE.getTime() - Date.now()) / msPerDay)
-}
-
 export function getTransporter() {
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST ?? 'smtp.office365.com',
@@ -20,8 +13,7 @@ export function getTransporter() {
   })
 }
 
-export function buildConfirmationEmailHtml(name: string, days: number) {
-  const dayLabel = days === 1 ? '1 day' : `${days} days`
+export function buildConfirmationEmailHtml(name: string) {
   const firstName = (name || '').trim().split(/\s+/)[0] || 'there'
   return `
     <div style="font-family:monospace;background:#000;color:#fff;padding:40px;max-width:480px;margin:0 auto;">
@@ -32,13 +24,10 @@ export function buildConfirmationEmailHtml(name: string, days: number) {
         Hey ${firstName},
       </p>
       <p style="font-size:15px;margin:0 0 24px;color:rgba(255,255,255,0.8);">
-        You're confirmed for Telegraph Hackathon Season II. Get ready &mdash; we start in
-      </p>
-      <p style="font-size:40px;font-weight:700;letter-spacing:0.05em;color:#fbbf24;margin:0 0 24px;">
-        ${dayLabel}
+        You're confirmed for Telegraph Hackathon Season II, running November to December 2026.
       </p>
       <p style="font-size:15px;margin:0 0 32px;color:rgba(255,255,255,0.8);">
-        Kickoff: <strong>November 16</strong>. You're eligible for all three tracks: Miners, Evaluators, and Apps &amp; Agents. The starter kit ships before day one &mdash; keep an eye on your inbox.
+        Exact dates will be announced soon. You're eligible for all three tracks: Miners, Evaluators, and Apps &amp; Agents. The starter kit ships before day one &mdash; keep an eye on your inbox.
       </p>
       <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:0;">
         You're receiving this because you registered for Telegraph Hackathon Season II.
@@ -49,11 +38,10 @@ export function buildConfirmationEmailHtml(name: string, days: number) {
 
 export async function sendConfirmationEmail(to: string, name: string) {
   const transporter = getTransporter()
-  const days = daysUntilEvent()
   await transporter.sendMail({
     from: `"Telegraph Hackathon" <${process.env.OUTLOOK_USER}>`,
     to,
-    subject: `You're in! Telegraph Hackathon Season II starts in ${days} day${days === 1 ? '' : 's'}`,
-    html: buildConfirmationEmailHtml(name, days),
+    subject: "You're in! Telegraph Hackathon Season II",
+    html: buildConfirmationEmailHtml(name),
   })
 }

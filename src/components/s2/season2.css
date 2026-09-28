@@ -197,7 +197,6 @@ html[data-theme="light"] .s2 .s2-brand-mark { filter: invert(1); }
 .s2-hero .s2-eyebrow { margin-bottom: clamp(12px, 2.4vh, 24px); }
 .s2-hero .hero-prize-badge { margin-bottom: clamp(14px, 2.4vh, 24px); }
 .s2-hero .s2-actions { align-items: center; }
-.s2-hero .s2-actions .s2-count { margin: 0 0 0 6px; }
 .s2-hero .s2-inner { width: 100%; }
 /* Two columns inside the content container: copy on the left, mascot centred on the right. */
 .s2-hero-grid {
@@ -224,8 +223,6 @@ html[data-theme="light"] .s2 .hero-prize-badge { background: var(--accent-soft);
 .s2-facts > div:first-child { padding-left: 0; border-left: 0; }
 .s2-facts dt { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .s2-facts dd { font-size: clamp(20px, 1.7vw, 24px); font-weight: 500; margin: 0; font-variant-numeric: tabular-nums; }
-.s2-count { display: block; font-size: 12px; letter-spacing: 0.06em; color: var(--muted); min-height: 1.5em; margin-top: 12px; }
-.s2-count strong { color: var(--accent); font-weight: 500; font-variant-numeric: tabular-nums; }
 
 @media (max-width: 820px) {
   .s2-hero { min-height: auto; padding: 24px 0 56px; }
@@ -283,11 +280,11 @@ html[data-theme="light"] .s2 .hero-prize-badge { background: var(--accent-soft);
 /* Stats */
 .s2-stats-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin: 40px 0 0; }
 .s2-stats { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line-2); margin-top: 12px; }
-.s2-stats-3 { grid-template-columns: repeat(3, 1fr); }
+.s2-stats-2 { grid-template-columns: repeat(2, minmax(0, 320px)); }
 .s2-stats > div { padding: 20px 20px 0 0; }
 .s2-stats dt { font-size: clamp(22px, 2.2vw, 30px); font-weight: 500; letter-spacing: 0.005em; font-variant-numeric: tabular-nums; }
 .s2-stats dd { font-size: 12px; font-weight: 400; color: var(--muted); line-height: 1.6; margin-top: 6px; max-width: 22ch; }
-@media (max-width: 820px) { .s2-stats, .s2-stats-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 820px) { .s2-stats, .s2-stats-2 { grid-template-columns: repeat(2, 1fr); } }
 
 /* Flow list (How it works) */
 .s2-flow { list-style: none; counter-reset: flow; padding: 0; border-left: 1px solid var(--line-2); }
@@ -331,10 +328,7 @@ a.s2-chip:hover { border-color: var(--accent); color: var(--accent); }
   display: flex; flex-direction: column; gap: 10px; padding: 26px 22px;
   background: var(--card); border: 1px solid var(--line); border-top: 2px solid var(--line-2); border-radius: 2px;
 }
-.s2-phase.is-done { opacity: 0.55; }
-.s2-phase.is-now { border-top-color: var(--accent-fill); background: var(--card-hover); }
 .s2-phase-dates { font-size: 15px; font-weight: 500; color: var(--accent); }
-.s2-phase.is-now .s2-idx::after { content: 'Now'; margin-left: 10px; padding: 2px 6px; background: var(--accent-fill); color: #000; letter-spacing: 0.1em; font-weight: 700; }
 @media (max-width: 1100px) { .s2-timeline { grid-template-columns: 1fr; } }
 
 /* Judging weights */
@@ -614,6 +608,7 @@ a.s2-chip:hover { border-color: var(--accent); color: var(--accent); }
 .wn-handle { align-self: flex-start; font-size: 13px; color: var(--accent); text-decoration: none; }
 .wn-handle:hover { text-decoration: underline; text-underline-offset: 3px; }
 .wn-compact .wn-handle { font-size: 18px; font-weight: 500; }
+.wn-link { align-self: flex-start; margin-top: auto; }
 .wn-points { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 6px; }
 .wn-points li { position: relative; padding-left: 18px; font-size: 13px; line-height: 1.6; color: var(--text); }
 .wn-points li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-size: 11px; top: 1px; }

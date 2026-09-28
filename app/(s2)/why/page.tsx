@@ -10,7 +10,7 @@ export default function WhyPage() {
       <PageHero
         page="/why"
         title="Why this hackathon exists."
-        sub="Mainnet goes live between December 2026 and January 2027. Season II is how the network arrives with real products, real demand and real miners already on it."
+        sub="Season II is how the network arrives at mainnet with real products, real demand and real miners already on it."
       >
         <ul className="s2-grid s2-grid-3">
           {WHY.map((w, i) => (

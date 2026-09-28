@@ -3,7 +3,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Telegraph Hackathon Season II',
-  description: 'Thirty days, three tracks and fifteen commercial missions. Build Miners, Evaluators, and agents that buy verified, ranked intelligence through Telegraph. 16 Nov to 16 Dec 2026.',
+  description: 'Thirty days, three tracks and fifteen commercial missions. Build Miners, Evaluators, and agents that buy verified, ranked intelligence through Telegraph. November to December 2026, dates TBA.',
   metadataBase: new URL('https://hackathon.telegraphprotocol.com'),
   icons: {
     icon: [

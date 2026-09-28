@@ -164,7 +164,7 @@ export default function MissionView({ slug }: { slug: string }) {
       <section className="s2-block s2-cta">
         <div className="s2-inner">
           <h2 className="s2-h2">Build an app for {t.name}.</h2>
-          <p className="s2-sub">Register once and you are eligible for all three tracks. App builders pick their commercial mission in week one. The starter kit ships before 16 November.</p>
+          <p className="s2-sub">Register once and you are eligible for all three tracks. App builders pick their commercial mission in week one. The starter kit ships before kickoff.</p>
           <div className="s2-actions">
             <button className="s2-btn s2-btn-accent s2-btn-lg" onClick={register}>Register for Season II</button>
             <Link className="s2-btn s2-btn-lg" href="/rules">Read the Apps &amp; Agents rules</Link>

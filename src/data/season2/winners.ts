@@ -5,6 +5,10 @@ export interface Winner {
   project?: string
   handle: string
   score?: string
+  /** Miner page on the Telegraph explorer. */
+  explorer?: string
+  /** Live app, for Apps / Use Cases winners. */
+  app?: string
   /** Paragraphs, in order. */
   about: string[]
   /** Optional list shown after the first paragraph. */
@@ -25,6 +29,7 @@ export const SEASON1_WINNERS: WinnerTrack[] = [
     winners: [
       {
         place: 1, project: 'TXlens', handle: 'sireadell', score: '97.9',
+        explorer: 'https://explorer.telegraphprotocol.com/miners/txlens',
         about: [
           'TXlens takes a specific blockchain transaction reference and returns structured transaction intelligence, including confirmed, reverted, pending or not-found status, sender and recipient, value in wei and ETH, block number and block hash, receipt status, and decoded contract method where calldata permits it.',
           'It turns raw blockchain transaction data into a machine-callable intelligence service that other applications and agents can consume through Telegraph.',
@@ -32,6 +37,7 @@ export const SEASON1_WINNERS: WinnerTrack[] = [
       },
       {
         place: 2, project: 'Chainsight Oracle', handle: 'shadrakbsh', score: '86.9',
+        explorer: 'https://explorer.telegraphprotocol.com/miners/chainsight-oracle',
         about: [
           'Chainsight Oracle provides a broad source of real-time onchain and market intelligence, including crypto prices, market capitalization and volume, DeFi TVL, fiat exchange rates, network gas prices, wallet balances, and Ethereum/Base transaction lookups.',
           'It demonstrates the broader definition of a Telegraph Miner: not simply an AI model, but any useful machine-callable intelligence service that can participate in an Intent and be ranked against alternatives.',
@@ -39,6 +45,7 @@ export const SEASON1_WINNERS: WinnerTrack[] = [
       },
       {
         place: 3, project: 'Oathcast Weather', handle: 'fexx_off', score: '85.4',
+        explorer: 'https://explorer.telegraphprotocol.com/miners/oathcast-weather',
         about: [
           "Oathcast Weather serves Telegraph's WEATHER_FORECAST Intent, providing location-based forecast intelligence to applications and autonomous agents through Telegraph.",
           'It shows the core model clearly: the application asks for the intelligence it needs, while Telegraph routes that demand through ranked providers rather than forcing the application to hardcode a single weather source.',
@@ -65,6 +72,7 @@ export const SEASON1_WINNERS: WinnerTrack[] = [
     winners: [
       {
         place: 1, project: 'Scam Shield', handle: 'mshoaibfiaz47', score: '0.69 / 1',
+        app: 'https://scam-shield-rouge.vercel.app/',
         about: [
           'Scam Shield detects potential scams across messages, emails and other communication.',
           'What made the project stand out was that it extended beyond a standalone demo into multiple real user surfaces. The team built:',
@@ -78,6 +86,7 @@ export const SEASON1_WINNERS: WinnerTrack[] = [
       },
       {
         place: 2, project: 'Truvian Shield', handle: 'encrypt_wizard', score: '0.59 / 1',
+        app: 'https://truvian.xyz/',
         about: [
           'Truvian Shield acts as an execution-safety checkpoint for autonomous onchain agents.',
           'Before an agent signs a transaction, Shield purchases four separate pieces of intelligence from live Telegraph Miners:',
@@ -93,6 +102,7 @@ export const SEASON1_WINNERS: WinnerTrack[] = [
       },
       {
         place: 3, project: 'ProofPact', handle: 'DefiPreacherr', score: '0.45 / 1',
+        app: 'https://proofpact.vercel.app/app',
         about: [
           'ProofPact is a verified settlement layer connecting work environments with payment rails.',
           "It freezes acceptance criteria before funding, collects signed delivery evidence, purchases independent intelligence through Telegraph's ranked Miner network, and applies deterministic settlement policy to determine whether payment conditions have been met.",

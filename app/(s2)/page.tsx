@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { RegisterButton } from '@/components/s2/Shell'
-import { Countdown } from '@/components/s2/bits'
 import { Section } from '@/components/s2/Page'
-import { END, START, STATS } from '@/data/season2/event'
+import { STATS, WHEN } from '@/data/season2/event'
 import { PAGES } from '@/data/season2/pages'
 import { TAGLINE, TRACKS } from '@/data/season2/structure'
 
@@ -24,7 +23,7 @@ export default function Overview() {
       <section className="s2-hero">
         <div className="s2-inner s2-hero-grid">
           <div className="s2-hero-body">
-            <p className="s2-eyebrow">Season II · 16 Nov to 16 Dec 2026</p>
+            <p className="s2-eyebrow">Season II · {WHEN} · Dates TBA</p>
             <h1 className="s2-hero-title">Build the market the machines will buy from.</h1>
             <div className="hero-prize-badge">
               <span className="hero-prize-badge-label">Prize pool</span>
@@ -38,7 +37,6 @@ export default function Overview() {
             <div className="s2-actions">
               <RegisterButton>Register for Season II</RegisterButton>
               <Link className="s2-btn s2-btn-lg" href="/tracks">See the 3 tracks</Link>
-              <Countdown start={START} end={END} />
             </div>
             <dl className="s2-facts">
               <div><dt>Tracks</dt><dd>3</dd></div>
@@ -77,7 +75,7 @@ export default function Overview() {
           {STATS.testnet.map(s => <div key={s.label}><dt>{s.value}</dt><dd>{s.label}</dd></div>)}
         </dl>
         <p className="s2-stats-label">Coming</p>
-        <dl className="s2-stats s2-stats-3">
+        <dl className="s2-stats s2-stats-2">
           {STATS.soon.map(s => <div key={s.label}><dt>{s.value}</dt><dd>{s.label}</dd></div>)}
         </dl>
       </Section>
@@ -98,7 +96,7 @@ export default function Overview() {
             <RegisterButton className="s2-card s2-card-link s2-card-cta">
               <span className="s2-idx">Ready?</span>
               <span className="s2-card-title">Register for Season II</span>
-              <span className="s2-card-body">One registration covers all three tracks. The starter kit ships before 16 November.</span>
+              <span className="s2-card-body">One registration covers all three tracks. The starter kit ships before kickoff.</span>
               <span className="s2-card-go" aria-hidden="true">→</span>
             </RegisterButton>
           </li>

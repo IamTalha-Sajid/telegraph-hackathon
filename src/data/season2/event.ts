@@ -1,8 +1,8 @@
 // Season II event content. Structure and copy follow the Season II deck;
 // judging weights follow the updated criteria (mainnet readiness leads).
 
-export const START = new Date('2026-11-16T00:00:00Z')
-export const END   = new Date('2026-12-16T23:59:59Z')
+/** Season II runs November to December 2026; exact dates are to be announced. */
+export const WHEN = 'Nov – Dec 2026'
 
 export const STATS = {
   testnet: [
@@ -14,8 +14,7 @@ export const STATS = {
   ],
   soon: [
     { value: '1,000+',   label: 'models for machines to query' },
-    { value: '30 days',  label: 'Season II, 16 November to 16 December' },
-    { value: 'Dec - Jan', label: 'mainnet, December 2026 to January 2027' },
+    { value: '30 days',  label: 'Season II, November to December 2026, dates TBA' },
   ],
 }
 
@@ -51,11 +50,11 @@ export const TAGS = {
 }
 
 export const PHASES = [
-  { dates: 'Before 16 Nov', from: null,         to: '2026-11-15', title: 'Starter kit ships', body: 'Spend panel, faucet flow, reference miners, a worked example and the mainnet-flip config, published before anyone writes a line.' },
-  { dates: '16 - 22 Nov',   from: '2026-11-16', to: '2026-11-22', title: 'Pick your track and start building', body: 'Teams form and choose a track: Miners and Evaluators pick the Intents they will serve or score, and App builders pick a commercial mission.' },
-  { dates: '23 - 29 Nov',   from: '2026-11-23', to: '2026-11-29', title: 'Build to the checkpoint', body: 'Apps & Agents teams have one settled transaction on the board by the end of week two, or they are cut from reward eligibility.' },
-  { dates: '30 Nov - 6 Dec', from: '2026-11-30', to: '2026-12-06', title: 'Build and integrate', body: 'Office hours with the core engineering team. Miners tune against real requests coming off real builds.' },
-  { dates: '7 - 16 Dec',    from: '2026-12-07', to: '2026-12-16', title: 'Submission and demo day', body: 'Submissions close and judging runs against the published criteria. Rewards to be announced.' },
+  { dates: 'Before kickoff', title: 'Starter kit ships', body: 'Spend panel, faucet flow, reference miners, a worked example and the mainnet-flip config, published before anyone writes a line.' },
+  { dates: 'Week 1', title: 'Pick your track and start building', body: 'Teams form and choose a track: Miners and Evaluators pick the Intents they will serve or score, and App builders pick a commercial mission.' },
+  { dates: 'Week 2', title: 'Build to the checkpoint', body: 'Apps & Agents teams have one settled transaction on the board by the end of week two, or they are cut from reward eligibility.' },
+  { dates: 'Week 3', title: 'Build and integrate', body: 'Office hours with the core engineering team. Miners tune against real requests coming off real builds.' },
+  { dates: 'Week 4', title: 'Submission and demo day', body: 'Submissions close and judging runs against the published criteria. Rewards to be announced.' },
 ]
 
 export const SHIP = [
