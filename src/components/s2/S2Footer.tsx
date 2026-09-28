@@ -16,6 +16,7 @@ export default function S2Footer() {
             <a href={LINKS.protocol} target="_blank" rel="noopener noreferrer">Protocol ↗</a>
             <a href={LINKS.alexandria} target="_blank" rel="noopener noreferrer">Alexandria ↗</a>
             <a href={LINKS.docs} target="_blank" rel="noopener noreferrer">Docs ↗</a>
+            <Link href="/winners">Season I winners</Link>
             <Link href="/season-1">Season I archive</Link>
           </nav>
         </div>

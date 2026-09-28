@@ -59,6 +59,7 @@ export default function S2Nav({ onRegister }: { onRegister: () => void }) {
         </Link>
 
         <div className="s2-nav-actions">
+          <Link href="/winners" className={`s2-nav-btn s2-hide-sm${pathname.startsWith('/winners') ? ' is-on' : ''}`}>S1 Winners</Link>
           <Link href="/intents" className={`s2-nav-btn s2-hide-sm${pathname.startsWith('/intents') ? ' is-on' : ''}`}>Intents</Link>
           <a href={LINKS.docs} target="_blank" rel="noopener noreferrer" className="s2-nav-btn s2-hide-sm">Docs ↗</a>
           <ThemeToggle />
@@ -81,6 +82,7 @@ export default function S2Nav({ onRegister }: { onRegister: () => void }) {
             <span className="s2-tab-n">{String(i + 1).padStart(2, '0')}</span>{p.label}
           </Link>
         ))}
+        <Link href="/winners" onClick={close} className={`s2-show-sm${pathname.startsWith('/winners') ? ' is-on' : ''}`}>Season I winners</Link>
         <Link href="/intents" onClick={close} className={`s2-show-sm${pathname.startsWith('/intents') ? ' is-on' : ''}`}>Intent catalogue</Link>
         <a href={LINKS.docs} target="_blank" rel="noopener noreferrer" className="s2-show-sm">Docs ↗</a>
         <Link href="/season-1" onClick={close} className="s2-show-sm">Season I archive</Link>
