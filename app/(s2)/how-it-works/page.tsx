@@ -3,12 +3,12 @@ import Link from 'next/link'
 import Anatomy from '@/components/s2/Anatomy'
 import { IntentChip } from '@/components/s2/bits'
 import { NextPage, PageHero, Section } from '@/components/s2/Page'
-import { ROLES } from '@/data/season2/event'
-import { TRACK_BY_SLUG } from '@/data/season2/tracks'
+import { TRACKS } from '@/data/season2/structure'
+import { MISSION_BY_SLUG } from '@/data/season2/missions'
 
 export const metadata: Metadata = { title: 'How it works | Telegraph Hackathon Season II' }
 
-const LISTING_DESK = TRACK_BY_SLUG.exchange.buyers[0].examples[0]
+const LISTING_DESK = MISSION_BY_SLUG.exchange.buyers[0].examples[0]
 
 export default function HowItWorksPage() {
   return (
@@ -20,7 +20,7 @@ export default function HowItWorksPage() {
       />
 
       <Section
-        label="Worked example, Track 01"
+        label="Worked example, Exchange mission"
         title="The autonomous listings desk."
         sub="A token listing application arrives. An agent has ninety seconds to say whether the venue should touch it."
       >
@@ -52,19 +52,20 @@ export default function HowItWorksPage() {
       </Section>
 
       <Section
-        label="Three ways in"
-        title="Every track is open to all three sides of the network."
-        sub="The commercial track is the top-level category. These are the ways you can take part inside it."
+        label="Who builds what"
+        title="Three tracks, one shared Intent network."
+        sub="Miners serve Intents and Evaluators score them, for every mission at once. Apps & Agents builders pick one of the fifteen commercial missions and buy those Intents to solve a real problem in it."
       >
         <ul className="s2-grid s2-grid-3">
-          {ROLES.map((r, i) => (
-            <li key={r.key} className="s2-card">
-              <span className="s2-idx">{String(i + 1).padStart(2, '0')}</span>
-              <h3 className="s2-card-title">{r.title}</h3>
-              <p className="s2-card-body">{r.body}</p>
+          {TRACKS.map((t, i) => (
+            <li key={t.key} className="s2-card">
+              <span className="s2-idx">Track {String(i + 1).padStart(2, '0')}</span>
+              <h3 className="s2-card-title">{t.title}</h3>
+              <p className="s2-card-body">{t.pick}.</p>
             </li>
           ))}
         </ul>
+        <Link className="s2-link" href="/tracks">How the three tracks fit together →</Link>
       </Section>
 
       <NextPage page="/how-it-works" />

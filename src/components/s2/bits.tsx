@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { INTENT_BY_NAME, intentLabel } from '@/data/season2/intents'
 import { TAGS } from '@/data/season2/event'
-import type { Tag } from '@/data/season2/tracks'
+import type { Tag } from '@/data/season2/missions'
 
 export function TagBadge({ tag }: { tag: Tag }) {
   return (

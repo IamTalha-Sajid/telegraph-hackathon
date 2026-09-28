@@ -63,10 +63,10 @@ export default function WinnersPage() {
         <div className="s2-inner">
           <p className="s2-eyebrow">Season II</p>
           <h2 className="s2-h2">Build the next one.</h2>
-          <p className="s2-sub">Season II runs 16 November to 16 December 2026, with fifteen commercial tracks and one winner in each.</p>
+          <p className="s2-sub">Season II runs 16 November to 16 December 2026, with the same three tracks and fifteen commercial missions for app builders.</p>
           <div className="s2-actions">
             <RegisterButton>Register for Season II</RegisterButton>
-            <Link className="s2-btn s2-btn-lg" href="/tracks">Explore the 15 tracks</Link>
+            <Link className="s2-btn s2-btn-lg" href="/tracks">See the 3 tracks</Link>
           </div>
         </div>
       </section>

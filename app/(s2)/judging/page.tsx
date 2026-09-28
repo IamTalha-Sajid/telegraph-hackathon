@@ -9,7 +9,7 @@ export default function JudgingPage() {
     <>
       <PageHero
         page="/judging"
-        title="Judging."
+        title="Judging for Apps & Agents."
         sub="Optimise for mainnet readiness. A build that does not convert to mainnet will not qualify, and after that, what matters most is whether someone would buy it."
       >
         <ul className="s2-weights">
@@ -21,11 +21,12 @@ export default function JudgingPage() {
             </li>
           ))}
         </ul>
+        <p className="s2-note">These apply to the Apps &amp; Agents track. Rules and judging for Miner and Evaluator submissions will be published separately.</p>
       </PageHero>
 
       <Section
         label="What you ship"
-        title="Five things with every submission."
+        title="Five things with every app submission."
         sub="Your video may be used in Telegraph's paid ads on X to showcase your build."
       >
         <ol className="s2-grid s2-grid-5">
@@ -40,9 +41,9 @@ export default function JudgingPage() {
       </Section>
 
       <Section
-        label="Prizes"
-        title="Fifteen track winners, not one grand prize."
-        sub="Prize pool to be announced, split across the fifteen tracks."
+        label="Rewards"
+        title="Rewards to be announced."
+        sub="The reward structure for all three tracks will be published before launch. Beyond rewards, strong app builds get:"
       >
         <ul className="s2-grid s2-grid-4">
           {PRIZES.map(p => (

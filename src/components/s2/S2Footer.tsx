@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { LINKS } from '@/data/season2/event'
-import { SHOW_BUYER_NAMES } from '@/data/season2/tracks'
+import { SHOW_BUYER_NAMES } from '@/data/season2/missions'
 
 export default function S2Footer() {
   return (
@@ -22,7 +22,7 @@ export default function S2Footer() {
         </div>
         {SHOW_BUYER_NAMES && (
           <p className="s2-disclaimer">
-            Companies named in the tracks are examples of the buyers each use case is designed for.
+            Companies named in the commercial missions are examples of the buyers each use case is designed for.
             Telegraph is not affiliated with, sponsored by or endorsed by any of them, and naming them
             does not imply they have reviewed or requested these builds.
           </p>

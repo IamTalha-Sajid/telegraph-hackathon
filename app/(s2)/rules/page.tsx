@@ -10,8 +10,8 @@ export default function RulesPage() {
     <>
       <PageHero
         page="/rules"
-        title="Three rules."
-        sub="Every submission in every track meets all three. A build that misses one does not score, however good it looks."
+        title="Rules for Apps & Agents."
+        sub="Every Apps & Agents submission meets all three. A build that misses one does not score, however good it looks."
       >
         <ol className="s2-grid s2-grid-3">
           {RULES.map((r, i) => (
@@ -22,6 +22,7 @@ export default function RulesPage() {
             </li>
           ))}
         </ol>
+        <p className="s2-note">These apply to the Apps &amp; Agents track. Rules and judging for Miner and Evaluator submissions will be published separately.</p>
       </PageHero>
 
       <Section

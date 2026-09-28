@@ -7,11 +7,11 @@ export const S2_TAB    = 'Sheet3'      // Season II registrations (created on fi
 // Keep in sync with app/api/register/route.ts
 export const S2_HEADERS = [
   'Timestamp', 'Name', 'Email', 'Type', 'Org / Team Name', 'Team Size',
-  'Wallet', 'Twitter', 'Discord', 'Track', 'Buyer', 'Roles',
+  'Wallet', 'Twitter', 'Discord',
   'Project Name', 'Project Description', 'Tech Stack', 'GitHub',
   'Season I Registrant', 'Confirmation Sent At',
 ]
-export const S2_LAST_COL = 'R'
+export const S2_LAST_COL = 'O'
 
 type Sheets = ReturnType<typeof google.sheets>
 
@@ -90,9 +90,7 @@ export async function lookupRegistrant(sheets: Sheets, auth: never, email: strin
         type: (r[3] || 'individual') as 'individual' | 'team',
         orgName: r[4] ?? '', teamSize: r[5] || '2 – 5',
         wallet: r[6] ?? '', twitter: r[7] ?? '', discord: r[8] ?? '',
-        track: r[9] ?? '', buyer: r[10] ?? '',
-        roles: r[11] ? r[11].split(', ').filter(Boolean) : [],
-        projectName: r[12] ?? '', projectDesc: r[13] ?? '', techStack: r[14] ?? '', github: r[15] ?? '',
+        projectName: r[9] ?? '', projectDesc: r[10] ?? '', techStack: r[11] ?? '', github: r[12] ?? '',
       },
     }
   }

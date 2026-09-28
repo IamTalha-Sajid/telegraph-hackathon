@@ -2,17 +2,17 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import Select from './Select'
-import { TRACKS, buyerLabel, pad2, trackExamples, type Tag, type Track } from '@/data/season2/tracks'
+import { MISSIONS, buyerLabel, pad2, missionExamples, type Tag, type Mission } from '@/data/season2/missions'
 import { INTENT_BY_NAME } from '@/data/season2/intents'
 
 type TagFilter = 'all' | Tag
 
 const CATEGORIES = Array.from(new Set(
-  TRACKS.flatMap(t => trackExamples(t).flatMap(e => e.intents.map(i => INTENT_BY_NAME[i]?.category))).filter(Boolean) as string[],
+  MISSIONS.flatMap(t => missionExamples(t).flatMap(e => e.intents.map(i => INTENT_BY_NAME[i]?.category))).filter(Boolean) as string[],
 )).sort()
 
 /** Searchable text per example, including its track and buyer so "legal" or a company name finds every build under it. */
-function buildIndex(t: Track) {
+function buildIndex(t: Mission) {
   return t.buyers.flatMap(b => b.examples.map(e => ({
     e,
     text: [
@@ -22,12 +22,12 @@ function buildIndex(t: Track) {
   })))
 }
 
-export default function TrackGrid() {
+export default function MissionGrid() {
   const [q, setQ] = useState('')
   const [tag, setTag] = useState<TagFilter>('all')
   const [cat, setCat] = useState('')
 
-  const index = useMemo(() => TRACKS.map(t => ({ t, builds: buildIndex(t) })), [])
+  const index = useMemo(() => MISSIONS.map(t => ({ t, builds: buildIndex(t) })), [])
 
   const results = useMemo(() => {
     const words = q.toLowerCase().split(/\s+/).filter(Boolean)
@@ -80,7 +80,7 @@ export default function TrackGrid() {
         <ul className="tg-grid">
           {results.map(({ t, examples }) => (
             <li key={t.slug}>
-              <Link href={`/tracks/${t.slug}`} className="tg-card">
+              <Link href={`/missions/${t.slug}`} className="tg-card">
                 <span className="tg-n">{pad2(t.n)}</span>
                 <span className="tg-name">{t.name}</span>
                 <span className="tg-sector">{t.sector}</span>
@@ -93,7 +93,7 @@ export default function TrackGrid() {
                   <span className="tg-summary">{t.summary}</span>
                 )}
                 <span className="tg-meta">
-                  {trackExamples(t).length} example builds{t.buyers.length > 1 ? `, ${t.buyers.length} buyers` : ''}
+                  {missionExamples(t).length} example builds{t.buyers.length > 1 ? `, ${t.buyers.length} buyers` : ''}
                 </span>
               </Link>
             </li>

@@ -22,7 +22,7 @@ export const STATS = {
 export const WHY = [
   { title: 'Mainnet is the deadline', body: 'Same contracts, same settlement path, same proof format, so nothing you build is rewritten later.' },
   { title: 'Miners need machines', body: 'Ranked intelligence needs demand. Every build creates real requests for miners.' },
-  { title: 'Machines need a market', body: 'Each track is a real industry with a problem solved slowly, expensively, or not at all.' },
+  { title: 'Machines need a market', body: 'Each commercial mission is a real industry with a problem solved slowly, expensively, or not at all.' },
 ]
 
 export const GET = [
@@ -39,23 +39,6 @@ export const ANATOMY_STEPS = [
   { title: 'The app turns answers into an outcome', body: 'A finished result with a verification hash and a cost line at the bottom.' },
 ]
 
-export const ROLES = [
-  {
-    key: 'app', title: 'Apps and agents',
-    body: 'Build the end-user product for the industry: the agent that buys intelligence through Telegraph and turns it into an outcome.',
-  },
-  {
-    key: 'miner', title: 'Miners',
-    body: 'Supply the specialised intelligence those apps buy. Serve an intent, get ranked against other miners, and get paid per request.',
-  },
-  {
-    key: 'evaluator', title: 'Evaluators',
-    body: 'Build or improve the evaluator that scores miners for an intent, so the ranking rewards the answers that were actually right.',
-  },
-] as const
-
-export type RoleKey = typeof ROLES[number]['key']
-
 export const RULES = [
   { title: 'The agent buys', body: 'The app cannot call an API directly. It routes a paid request through Telegraph and consumes the verified, ranked answer, in the app or in a dashboard.' },
   { title: 'The money is visible', body: 'Request, miner, amount, Sepolia transaction hash and network label, on screen. If a judge cannot click through to the transaction, the submission does not score.' },
@@ -69,10 +52,10 @@ export const TAGS = {
 
 export const PHASES = [
   { dates: 'Before 16 Nov', from: null,         to: '2026-11-15', title: 'Starter kit ships', body: 'Spend panel, faucet flow, reference miners, a worked example and the mainnet-flip config, published before anyone writes a line.' },
-  { dates: '16 - 22 Nov',   from: '2026-11-16', to: '2026-11-22', title: 'Pick a track and start building', body: 'Teams form, pick a track and a use case, and start building.' },
-  { dates: '23 - 29 Nov',   from: '2026-11-23', to: '2026-11-29', title: 'Build to the checkpoint', body: 'One settled transaction on the board by the end of week two, or the team is cut from prize eligibility.' },
+  { dates: '16 - 22 Nov',   from: '2026-11-16', to: '2026-11-22', title: 'Pick your track and start building', body: 'Teams form and choose a track: Miners and Evaluators pick the Intents they will serve or score, and App builders pick a commercial mission.' },
+  { dates: '23 - 29 Nov',   from: '2026-11-23', to: '2026-11-29', title: 'Build to the checkpoint', body: 'Apps & Agents teams have one settled transaction on the board by the end of week two, or they are cut from reward eligibility.' },
   { dates: '30 Nov - 6 Dec', from: '2026-11-30', to: '2026-12-06', title: 'Build and integrate', body: 'Office hours with the core engineering team. Miners tune against real requests coming off real builds.' },
-  { dates: '7 - 16 Dec',    from: '2026-12-07', to: '2026-12-16', title: 'Submission and demo day', body: 'Judging against the published weights, one winner per track, runners-up named per use case.' },
+  { dates: '7 - 16 Dec',    from: '2026-12-07', to: '2026-12-16', title: 'Submission and demo day', body: 'Submissions close and judging runs against the published criteria. Rewards to be announced.' },
 ]
 
 export const SHIP = [
@@ -92,7 +75,6 @@ export const JUDGING = [
 ]
 
 export const PRIZES = [
-  { title: 'One winner per track', body: 'Judged inside the track, against the other teams working that use case. A strong second team on a different use case is still named.' },
   { title: 'A product live on mainnet', body: 'What you built runs on the same contracts at launch, so the day the network opens your product is already live.' },
   { title: 'Put in front of the industry', body: 'Your commercial summary goes to a company that has this problem today.' },
   { title: 'A demo the network shows off', body: 'Winning builds anchor six weeks of daily posts, each with its transaction hashes, its cost and the use case it was built for.' },

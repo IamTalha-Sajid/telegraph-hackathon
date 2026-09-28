@@ -1,12 +1,11 @@
 'use client'
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
-import { TRACKS, TRACK_BY_SLUG, buyerLabel, pad2 } from '@/data/season2/tracks'
 
 declare global {
   interface Window { twq?: (...args: unknown[]) => void }
 }
 
-interface Props { onClose: () => void; initialTrack?: string }
+interface Props { onClose: () => void }
 
 type ParticipantType = 'individual' | 'team'
 type Step            = 'email' | 'otp' | 'form' | 'done'
@@ -20,9 +19,6 @@ interface FormData {
   wallet:      string
   twitter:     string
   discord:     string
-  track:       string
-  buyer:       string
-  roles:       string[]
   projectName: string
   projectDesc: string
   techStack:   string
@@ -33,16 +29,11 @@ type Errors = Partial<Record<keyof FormData, string>>
 
 const EMPTY: FormData = {
   name: '', email: '', type: 'individual', orgName: '', teamSize: '2 – 5',
-  wallet: '', twitter: '', discord: '', track: '', buyer: '', roles: [],
+  wallet: '', twitter: '', discord: '',
   projectName: '', projectDesc: '', techStack: '', github: '',
 }
 
 const TEAM_SIZES = ['2 – 5', '6 – 10', '11 – 20', '20+']
-const ROLE_OPTS = [
-  { v: 'App / Agent', hint: 'Build the end-user agent or app' },
-  { v: 'Miner',       hint: 'Supply intelligence the apps buy' },
-  { v: 'Evaluator',   hint: 'Improve how miners are scored' },
-]
 
 const STEP_LABELS: Record<Step, string> = {
   email: 'Verify your email',
@@ -70,7 +61,7 @@ function Field({
   )
 }
 
-export default function RegisterModal({ onClose, initialTrack = '' }: Props) {
+export default function RegisterModal({ onClose }: Props) {
   const [step,          setStep]          = useState<Step>('email')
   const [email,         setEmail]         = useState('')
   const [emailErr,      setEmailErr]      = useState('')
@@ -110,16 +101,6 @@ export default function RegisterModal({ onClose, initialTrack = '' }: Props) {
 
   const set = useCallback(<K extends keyof FormData>(k: K, v: FormData[K]) =>
     setForm(f => ({ ...f, [k]: v })), [])
-
-  const toggleRole = useCallback((r: string) =>
-    setForm(f => ({
-      ...f,
-      roles: f.roles.includes(r)
-        ? f.roles.filter(x => x !== r)
-        : [...f.roles, r],
-    })), [])
-
-  const trackBuyers = form.track ? TRACK_BY_SLUG[form.track]?.buyers ?? [] : []
 
   /* ── Email step ── */
   const handleSendOtp = async (emailOverride?: string) => {
@@ -177,12 +158,11 @@ export default function RegisterModal({ onClose, initialTrack = '' }: Props) {
       const data = await res.json()
       if (!res.ok) { setOtpErr(data.error ?? 'Verification failed'); return }
       if (data.existing) {
-        const existingTrack = TRACKS.find(t => t.name === data.existing.track)?.slug
-        setForm({ ...EMPTY, ...data.existing, track: existingTrack ?? initialTrack })
+        setForm({ ...EMPTY, ...data.existing })
         setIsReturning(data.season === 2)
         setFromSeasonOne(data.season === 1)
       } else {
-        setForm({ ...EMPTY, email: data.email, track: initialTrack })
+        setForm({ ...EMPTY, email: data.email })
         setIsReturning(false)
         setFromSeasonOne(false)
       }
@@ -201,7 +181,6 @@ export default function RegisterModal({ onClose, initialTrack = '' }: Props) {
     if (!form.name.trim())        e.name        = 'Required'
     if (form.type === 'team' && !form.orgName.trim()) e.orgName = 'Required'
     if (!form.discord.trim())     e.discord     = 'Required'
-    if (form.roles.length === 0)  e.roles       = 'Pick at least one'
     if (form.projectDesc.trim().length > 0 && form.projectDesc.trim().length < 20)
       e.projectDesc = 'Please describe your project (min 20 characters)'
     setErrors(e)
@@ -367,7 +346,7 @@ export default function RegisterModal({ onClose, initialTrack = '' }: Props) {
               {fromSeasonOne && (
                 <div className="reg-returning-banner">
                   <span className="reg-returning-icon">✓</span>
-                  Welcome back from Season I. We've pre-filled your details; pick a track and role for Season II.
+                  Welcome back from Season I. We've pre-filled your details for Season II.
                 </div>
               )}
 
@@ -461,47 +440,10 @@ export default function RegisterModal({ onClose, initialTrack = '' }: Props) {
 
               <p className="form-section-label" style={{ marginTop: '24px' }}>Season II</p>
 
-              <Field
-                label="Track"
-                id="r-track"
-                hint="Your best guess is fine. Teams confirm their track and use case in week one."
-              >
-                <select
-                  id="r-track"
-                  className="mi"
-                  value={form.track}
-                  onChange={e => setForm(f => ({ ...f, track: e.target.value, buyer: '' }))}
-                >
-                  <option value="">Not decided yet</option>
-                  {TRACKS.map(t => <option key={t.slug} value={t.slug}>{pad2(t.n)} {t.name}</option>)}
-                </select>
-              </Field>
-
-              {trackBuyers.length > 1 && (
-                <Field label="Buyer" id="r-buyer" optional hint="Which buyer in this track you plan to build for.">
-                  <select id="r-buyer" className="mi" value={form.buyer} onChange={e => set('buyer', e.target.value)}>
-                    <option value="">Not decided yet</option>
-                    {trackBuyers.map(b => <option key={b.generic} value={buyerLabel(b)}>{buyerLabel(b)}</option>)}
-                  </select>
-                </Field>
-              )}
-
-              <Field label="How you'll take part" error={errors.roles} hint="Pick all that apply.">
-                <div className="subnet-grid">
-                  {ROLE_OPTS.map(r => (
-                    <button
-                      key={r.v}
-                      type="button"
-                      title={r.hint}
-                      className={`subnet-chip${form.roles.includes(r.v) ? ' subnet-on' : ''}`}
-                      onClick={() => toggleRole(r.v)}
-                    >
-                      <span className="subnet-chk">{form.roles.includes(r.v) ? '✓' : ''}</span>
-                      {r.v}
-                    </button>
-                  ))}
-                </div>
-              </Field>
+              <div className="reg-returning-banner">
+                <span className="reg-returning-icon">✓</span>
+                One registration covers all three tracks: Miners, Evaluators, and Apps &amp; Agents. You choose what you&apos;re submitting later.
+              </div>
 
               <Field
                 label="Project Name"
@@ -523,7 +465,7 @@ export default function RegisterModal({ onClose, initialTrack = '' }: Props) {
                 id="r-desc"
                 optional
                 error={errors.projectDesc}
-                hint="What you're building, who would buy it, and which intelligence it buys through Telegraph. 2–3 sentences is enough."
+                hint="What you're building: a Miner, an Evaluator, or an app or agent, and which Intents it serves, scores or buys. 2–3 sentences is enough."
               >
                 <textarea
                   id="r-desc"

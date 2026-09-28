@@ -142,6 +142,12 @@ html[data-theme="light"] .s2 .s2-brand-mark { filter: invert(1); }
 .s2-tabs a.is-on { color: var(--fg); border-bottom-color: var(--accent-fill); }
 .s2-tab-n { font-size: 10px; color: var(--accent); letter-spacing: 0.1em; }
 .s2-show-sm { display: none !important; }
+/* Ten tabs: on mid-width screens drop the numbers and tighten spacing so they all fit. */
+@media (min-width: 901px) and (max-width: 1240px) {
+  .s2-tabs { gap: 0; }
+  .s2-tabs a { padding: 0 9px; font-size: 13px; }
+  .s2-tab-n { display: none; }
+}
 
 @media (max-width: 900px) {
   .s2-hide-sm { display: none !important; }
@@ -584,6 +590,12 @@ a.s2-chip:hover { border-color: var(--accent); color: var(--accent); }
 .tv-intent-meta { font-size: 11px; color: var(--muted); margin-top: auto; }
 .tv-more { margin-top: 14px; }
 
+/* ── Tracks page ─────────────────────────── */
+.tr-pick { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-top: auto; padding-top: 8px; }
+.tr-link { margin-top: 0; }
+.tr-shared { display: grid; gap: 14px; justify-items: start; }
+.tr-shared-text { font-size: 14px; color: var(--text); }
+
 /* ── Season I winners ────────────────────── */
 .s2-block .wn-intro { margin-bottom: 12px; }
 .s2-block .wn-intro:last-of-type { margin-bottom: 32px; }
@@ -607,6 +619,9 @@ a.s2-chip:hover { border-color: var(--accent); color: var(--accent); }
 .wn-points li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-size: 11px; top: 1px; }
 
 /* ── Intent explorer ─────────────────────── */
+.ix-roles { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 8px; font-size: 14px; line-height: 1.7; color: var(--text); }
+.ix-roles strong { color: var(--fg); font-weight: 500; }
+.ix-roles a { color: var(--accent); }
 .ix-classes { list-style: none; display: grid; gap: 10px; padding: 0; font-size: 13px; font-weight: 400; color: var(--text); }
 .ix-classes li { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .ix-section { padding-top: 24px; }

@@ -27,7 +27,7 @@ export interface Buyer {
   examples: Example[]
 }
 
-export interface Track {
+export interface Mission {
   n: number
   slug: string
   name: string
@@ -40,7 +40,7 @@ export interface Track {
   buyers: Buyer[]
 }
 
-export const TRACKS: Track[] = [
+export const MISSIONS: Mission[] = [
   {
     n: 1, slug: 'exchange', name: 'Exchange',
     sector: 'Global spot and derivatives venues',
@@ -119,7 +119,7 @@ export const TRACKS: Track[] = [
           },
           {
             title: 'Gold-collateralised agent wallets', tag: 'Mechanism',
-            body: 'An agent funds its intelligence budget from a tokenised gold position rather than a cash balance, converting only what it spends. The conversion and spend path are built end to end; the collateral is test-denominated until mainnet. Pairs with the mining examples in Track 6.',
+            body: 'An agent funds its intelligence budget from a tokenised gold position rather than a cash balance, converting only what it spends. The conversion and spend path are built end to end; the collateral is test-denominated until mainnet. Pairs with the mining examples in Mission 06.',
             output: 'Intelligence budget funded from tokenised gold',
             intents: ['ASSET_RESERVE_ATTESTATION', 'CRYPTO_PRICE', 'FX_NOW'],
           },
@@ -963,29 +963,29 @@ export const TRACKS: Track[] = [
   },
 ]
 
-export const TRACK_BY_SLUG: Record<string, Track> =
-  Object.fromEntries(TRACKS.map(t => [t.slug, t]))
+export const MISSION_BY_SLUG: Record<string, Mission> =
+  Object.fromEntries(MISSIONS.map(t => [t.slug, t]))
 
 export function buyerLabel(b: Buyer) {
   if (b.names.length && (SHOW_BUYER_NAMES || b.platform)) return b.names.join(', ')
   return b.generic
 }
 
-export function trackExamples(t: Track) {
+export function missionExamples(t: Mission) {
   return t.buyers.flatMap(b => b.examples)
 }
 
 /** Every intent a track uses, most-used first. */
-export function trackIntents(t: Track) {
+export function missionIntents(t: Mission) {
   const count = new Map<string, number>()
-  for (const ex of trackExamples(t)) for (const i of ex.intents) count.set(i, (count.get(i) ?? 0) + 1)
+  for (const ex of missionExamples(t)) for (const i of ex.intents) count.set(i, (count.get(i) ?? 0) + 1)
   return Array.from(count.entries()).sort((a, b) => b[1] - a[1]).map(([name]) => name)
 }
 
 /** intent name -> tracks that use it */
-export const TRACKS_BY_INTENT: Record<string, Track[]> = (() => {
-  const map: Record<string, Track[]> = {}
-  for (const t of TRACKS) for (const name of trackIntents(t)) (map[name] ??= []).push(t)
+export const MISSIONS_BY_INTENT: Record<string, Mission[]> = (() => {
+  const map: Record<string, Mission[]> = {}
+  for (const t of MISSIONS) for (const name of missionIntents(t)) (map[name] ??= []).push(t)
   return map
 })()
 

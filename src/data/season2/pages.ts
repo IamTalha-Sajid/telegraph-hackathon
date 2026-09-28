@@ -4,6 +4,8 @@ export const PAGES = [
   { href: '/why',          label: 'Why' },
   { href: '/how-it-works', label: 'How it works' },
   { href: '/tracks',       label: 'Tracks' },
+  { href: '/missions',     label: 'Missions' },
+  { href: '/intents',      label: 'Intents' },
   { href: '/rules',        label: 'Rules' },
   { href: '/timeline',     label: 'Timeline' },
   { href: '/judging',      label: 'Judging' },

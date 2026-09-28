@@ -26,11 +26,11 @@ export default function BuildPage() {
       </PageHero>
 
       <Section label="Get going" className="s2-cta">
-        <h2 className="s2-h2">Thirty days. Fifteen tracks. One winner in each.</h2>
-        <p className="s2-sub">Register now, pick a track in week one, and have one settled transaction on the board by the end of week two.</p>
+        <h2 className="s2-h2">Thirty days. Three tracks. Fifteen commercial missions.</h2>
+        <p className="s2-sub">Register once and you are eligible for all three tracks. Pick what you are building in week one; app builders also pick a commercial mission and have one settled transaction on the board by the end of week two.</p>
         <div className="s2-actions">
           <RegisterButton>Register for Season II</RegisterButton>
-          <Link className="s2-btn s2-btn-lg" href="/tracks">Pick a track</Link>
+          <Link className="s2-btn s2-btn-lg" href="/tracks">See the tracks</Link>
           <a className="s2-btn s2-btn-lg" href={LINKS.docs} target="_blank" rel="noopener noreferrer">Read the docs ↗</a>
         </div>
         <p className="s2-note">Questions? <a href={`mailto:${LINKS.email}`}>{LINKS.email}</a></p>

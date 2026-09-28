@@ -1,27 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSheets, findRowByEmail, ensureS2Tab, SHEET_ID, S2_TAB, S2_LAST_COL } from '@/lib/sheets'
 import { sendConfirmationEmail } from '@/lib/email'
-import { TRACK_BY_SLUG } from '@/data/season2/tracks'
 
-const CONFIRMATION_COL = 'R' // "Confirmation Sent At" -- keep in sync with S2_HEADERS in src/lib/sheets.ts
-const ROLES = ['App / Agent', 'Miner', 'Evaluator']
+// One registration covers all three tracks, so no track is collected here.
+const CONFIRMATION_COL = 'O' // "Confirmation Sent At" -- keep in sync with S2_HEADERS in src/lib/sheets.ts
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     const {
       name, email, type, orgName, teamSize,
-      wallet, twitter, discord, track, buyer, roles,
+      wallet, twitter, discord,
       projectName, projectDesc, techStack, github,
     } = body
 
-    const roleList = Array.isArray(roles) ? roles.filter((r: unknown) => ROLES.includes(r as string)) : []
-    if (!name || !email || !discord || roleList.length === 0) {
+    if (!name || !email || !discord) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
-    }
-    const trackName = track ? TRACK_BY_SLUG[track]?.name : 'Undecided'
-    if (!trackName) {
-      return NextResponse.json({ error: 'Unknown track' }, { status: 400 })
     }
 
     const { sheets, auth } = await getSheets()
@@ -40,9 +34,6 @@ export async function POST(req: NextRequest) {
       wallet      || '',
       twitter     || '',
       discord     || '',
-      trackName,
-      buyer       || '',
-      roleList.join(', '),
       projectName || '',
       projectDesc || '',
       techStack   || '',
@@ -57,7 +48,7 @@ export async function POST(req: NextRequest) {
       await sheets.spreadsheets.values.update({
         auth,
         spreadsheetId: SHEET_ID,
-        range: `'${S2_TAB}'!A${found.rowIndex}:Q${found.rowIndex}`,
+        range: `'${S2_TAB}'!A${found.rowIndex}:N${found.rowIndex}`,
         valueInputOption: 'RAW',
         requestBody: { values: [row] },
       })
@@ -77,7 +68,7 @@ export async function POST(req: NextRequest) {
     // Only email brand-new registrants, not people updating their entry.
     if (!found) {
       try {
-        await sendConfirmationEmail(email, name, trackName)
+        await sendConfirmationEmail(email, name)
         if (newRowNumber) {
           await sheets.spreadsheets.values.update({
             auth,

@@ -3,7 +3,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Telegraph Hackathon Season II',
-  description: 'Thirty days, fifteen commercial tracks, one winner per track. Build agents that buy verified, ranked intelligence through Telegraph. 16 Nov to 16 Dec 2026.',
+  description: 'Thirty days, three tracks and fifteen commercial missions. Build Miners, Evaluators, and agents that buy verified, ranked intelligence through Telegraph. 16 Nov to 16 Dec 2026.',
   metadataBase: new URL('https://hackathon.telegraphprotocol.com'),
   icons: {
     icon: [
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Telegraph Hackathon Season II',
-    description: 'Thirty days, fifteen commercial tracks, one winner per track. Build the market the machines will buy from.',
+    description: 'Three tracks. Fifteen commercial missions. One shared Intent network. Build the market the machines will buy from.',
     url: 'https://hackathon.telegraphprotocol.com',
     siteName: 'Telegraph Hackathon',
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Telegraph Hackathon Season II',
-    description: 'Thirty days, fifteen commercial tracks, one winner per track. Build the market the machines will buy from.',
+    description: 'Three tracks. Fifteen commercial missions. One shared Intent network. Build the market the machines will buy from.',
     images: ['/telegraph-social-card.jpg'],
   },
 }

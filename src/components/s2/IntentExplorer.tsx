@@ -4,7 +4,9 @@ import Link from 'next/link'
 import Select from './Select'
 import { useSearchParams } from 'next/navigation'
 import { GROUP_LABEL, INTENTS, type IntentClass, type IntentGroup } from '@/data/season2/intents'
-import { TRACKS_BY_INTENT, pad2 } from '@/data/season2/tracks'
+import { MISSIONS_BY_INTENT, pad2 } from '@/data/season2/missions'
+import { pageIndex } from '@/data/season2/pages'
+import { NextPage } from './Page'
 
 const CLASSES: IntentClass[] = ['Deterministic', 'Hybrid', 'Non-deterministic']
 const GROUPS: IntentGroup[] = ['priority', 'core']
@@ -23,7 +25,7 @@ export default function IntentExplorer() {
   const [cls, setCls] = useState<IntentClass | ''>('')
   const [group, setGroup] = useState<IntentGroup | ''>('')
   const [cat, setCat] = useState('')
-  const [inTracks, setInTracks] = useState(false)
+  const [inMissions, setInMissions] = useState(false)
   const [open, setOpen] = useState<string | null>(initial)
 
   useEffect(() => {
@@ -38,22 +40,26 @@ export default function IntentExplorer() {
       (!cls || i.cls === cls) &&
       (!group || i.group === group) &&
       (!cat || i.category === cat) &&
-      (!inTracks || TRACKS_BY_INTENT[i.name]) &&
+      (!inMissions || MISSIONS_BY_INTENT[i.name]) &&
       words.every(w => [i.name, i.category, i.description, i.source ?? '', i.hubs ?? ''].join(' ').toLowerCase().includes(w)),
     )
-  }, [q, cls, group, cat, inTracks])
+  }, [q, cls, group, cat, inMissions])
 
   return (
     <>
       <section className="s2-page-hero">
         <div className="s2-inner">
-          <p className="s2-eyebrow">Reference / Intents</p>
-          <h1 className="s2-title">Intent catalogue.</h1>
+          <p className="s2-eyebrow">{String(pageIndex('/intents') + 1).padStart(2, '0')} / Intents</p>
+          <h1 className="s2-title">The shared Intent catalogue.</h1>
           <p className="s2-sub">
-            Every intent registered on-chain. An intent is one kind of intelligence Telegraph can rank and route. Apps combine several intents into
-            one outcome; Miners serve an intent and compete on it; Evaluators decide how miners for an intent are scored.
-            Start from a <Link href="/tracks">track</Link> if you want to see intents in context.
+            Every Intent registered on-chain, shared by all three tracks. An Intent is one kind of intelligence Telegraph
+            can rank and route, and it is the same for every industry.
           </p>
+          <ul className="ix-roles">
+            <li><strong>Miners</strong> choose Intents to serve and compete globally on each one.</li>
+            <li><strong>Evaluators</strong> choose Intents to evaluate, deciding how Miners for that Intent are scored.</li>
+            <li><strong>Apps &amp; Agents</strong> buy Intents to solve a problem in a <Link href="/missions">commercial mission</Link>.</li>
+          </ul>
           <ul className="ix-classes">
             {CLASSES.map(c => (
               <li key={c}><span className={`s2-chip s2-chip-${c.toLowerCase().replace('-', '')}`}>{c}</span>{CLASS_HINT[c]}</li>
@@ -88,8 +94,8 @@ export default function IntentExplorer() {
                 onChange={setCat}
                 options={[{ value: '', label: 'Any category' }, ...CATEGORIES.map(c => ({ value: c, label: c }))]}
               />
-              <button className={`tg-pill${inTracks ? ' is-on' : ''}`} aria-pressed={inTracks} onClick={() => setInTracks(v => !v)}>
-                Used in a track
+              <button className={`tg-pill${inMissions ? ' is-on' : ''}`} aria-pressed={inMissions} onClick={() => setInMissions(v => !v)}>
+                Used by a mission
               </button>
             </div>
           </div>
@@ -99,20 +105,20 @@ export default function IntentExplorer() {
           {list.length === 0 ? (
             <div className="tg-empty">
               <p>No intents match. Clear a filter or try another word.</p>
-              <button className="s2-btn" onClick={() => { setQ(''); setCls(''); setGroup(''); setCat(''); setInTracks(false) }}>Clear filters</button>
+              <button className="s2-btn" onClick={() => { setQ(''); setCls(''); setGroup(''); setCat(''); setInMissions(false) }}>Clear filters</button>
             </div>
           ) : (
             <ul className="ix-list">
               {list.map(i => {
                 const isOpen = open === i.name
-                const tracks = TRACKS_BY_INTENT[i.name] ?? []
+                const missions = MISSIONS_BY_INTENT[i.name] ?? []
                 return (
                   <li key={i.name} id={`intent-${i.name}`} className={`ix-row${isOpen ? ' is-open' : ''}`}>
                     <button className="ix-summary" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : i.name)}>
                       <code className="ix-name">{i.name}</code>
                       <span className="ix-cat">{i.category}</span>
                       <span className={`s2-chip s2-chip-${i.cls.toLowerCase().replace('-', '')}`}>{i.cls}</span>
-                      <span className="ix-tracks">{tracks.length ? `${tracks.length} ${tracks.length === 1 ? 'track' : 'tracks'}` : ''}</span>
+                      <span className="ix-tracks">{missions.length ? `${missions.length} ${missions.length === 1 ? 'mission' : 'missions'}` : ''}</span>
                     </button>
                     {isOpen && (
                       <div className="ix-detail">
@@ -126,11 +132,11 @@ export default function IntentExplorer() {
                           <div><dt>Group</dt><dd>{GROUP_LABEL[i.group]}</dd></div>
                           {i.verifyNote && <div className="ix-warn"><dt>Verification caveat</dt><dd>{i.verifyNote}</dd></div>}
                         </dl>
-                        {tracks.length > 0 && (
+                        {missions.length > 0 && (
                           <div className="ix-used">
-                            <span className="tv-label">Used in</span>
+                            <span className="tv-label">Bought by example builds in these missions</span>
                             <div className="tv-chips">
-                              {tracks.map(t => <Link key={t.slug} className="s2-chip" href={`/tracks/${t.slug}`}>{pad2(t.n)} {t.name}</Link>)}
+                              {missions.map(t => <Link key={t.slug} className="s2-chip" href={`/missions/${t.slug}`}>{pad2(t.n)} {t.name}</Link>)}
                             </div>
                           </div>
                         )}
@@ -143,6 +149,7 @@ export default function IntentExplorer() {
           )}
         </div>
       </section>
+      <NextPage page="/intents" />
     </>
   )
 }

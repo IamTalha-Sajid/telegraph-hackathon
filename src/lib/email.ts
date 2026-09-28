@@ -20,7 +20,7 @@ export function getTransporter() {
   })
 }
 
-export function buildConfirmationEmailHtml(name: string, days: number, track: string) {
+export function buildConfirmationEmailHtml(name: string, days: number) {
   const dayLabel = days === 1 ? '1 day' : `${days} days`
   const firstName = (name || '').trim().split(/\s+/)[0] || 'there'
   return `
@@ -38,7 +38,7 @@ export function buildConfirmationEmailHtml(name: string, days: number, track: st
         ${dayLabel}
       </p>
       <p style="font-size:15px;margin:0 0 32px;color:rgba(255,255,255,0.8);">
-        Kickoff: <strong>November 16</strong>. Track: <strong>${track}</strong>. The starter kit ships before day one &mdash; keep an eye on your inbox.
+        Kickoff: <strong>November 16</strong>. You're eligible for all three tracks: Miners, Evaluators, and Apps &amp; Agents. The starter kit ships before day one &mdash; keep an eye on your inbox.
       </p>
       <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:0;">
         You're receiving this because you registered for Telegraph Hackathon Season II.
@@ -47,13 +47,13 @@ export function buildConfirmationEmailHtml(name: string, days: number, track: st
   `
 }
 
-export async function sendConfirmationEmail(to: string, name: string, track: string) {
+export async function sendConfirmationEmail(to: string, name: string) {
   const transporter = getTransporter()
   const days = daysUntilEvent()
   await transporter.sendMail({
     from: `"Telegraph Hackathon" <${process.env.OUTLOOK_USER}>`,
     to,
     subject: `You're in! Telegraph Hackathon Season II starts in ${days} day${days === 1 ? '' : 's'}`,
-    html: buildConfirmationEmailHtml(name, days, track),
+    html: buildConfirmationEmailHtml(name, days),
   })
 }

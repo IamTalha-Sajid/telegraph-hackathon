@@ -5,14 +5,14 @@ import RegisterModal from '@/components/RegisterModal'
 import S2Nav from './S2Nav'
 import S2Footer from './S2Footer'
 
-const RegisterCtx = createContext<(track?: string) => void>(() => {})
+const RegisterCtx = createContext<() => void>(() => {})
 
-/** Opens the registration modal, optionally with a track preselected. */
+/** Opens the registration modal. */
 export const useRegister = () => useContext(RegisterCtx)
 
 export default function Shell({ children }: { children: ReactNode }) {
-  const [track, setTrack] = useState<string | null>(null)
-  const open = useCallback((t?: string) => setTrack(t ?? ''), [])
+  const [isOpen, setOpen] = useState(false)
+  const open = useCallback(() => setOpen(true), [])
 
   return (
     <RegisterCtx.Provider value={open}>
@@ -21,15 +21,15 @@ export default function Shell({ children }: { children: ReactNode }) {
         <S2Nav onRegister={() => open()} />
         <main className="s2-main">{children}</main>
         <S2Footer />
-        {track !== null && <RegisterModal onClose={() => setTrack(null)} initialTrack={track} />}
+        {isOpen && <RegisterModal onClose={() => setOpen(false)} />}
       </div>
     </RegisterCtx.Provider>
   )
 }
 
-export function RegisterButton({ track, children, className = 's2-btn s2-btn-accent s2-btn-lg' }: {
-  track?: string; children: ReactNode; className?: string
+export function RegisterButton({ children, className = 's2-btn s2-btn-accent s2-btn-lg' }: {
+  children: ReactNode; className?: string
 }) {
   const open = useRegister()
-  return <button className={className} onClick={() => open(track)}>{children}</button>
+  return <button className={className} onClick={open}>{children}</button>
 }
